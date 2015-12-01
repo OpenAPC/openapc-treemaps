@@ -1,5 +1,6 @@
 venv/
 build/
+node_modules/
 *.pyc
-offenerhaushalt/static/vendor
-offenerhaushalt/static/gen
+offenerhaushalt/static/vendor/
+offenerhaushalt/static/gen/
