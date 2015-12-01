@@ -1,3 +1,5 @@
 venv/
 build/
 *.pyc
+offenerhaushalt/static/vendor
+offenerhaushalt/static/gen
