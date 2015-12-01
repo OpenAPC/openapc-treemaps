@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+  Open APC - Gesamt
+ - OffenerHaushalt</title>
+  <meta name="description" content="Open APC - Gesamtübersicht">
+
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' type='text/css'>
+
+  
+    <link type="text/css" href="/static/gen/style.f3a31f3a.css" rel="stylesheet">
+  
+
+  <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
+  <link rel="canonical" href="http://offenerhaushalt.de/haushalt/openapc/embed/" />
+</head>
+<body>
+  
+<div style="overflow:hidden">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="treemap"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="table"></div>
+    </div>
+    <!--div class="col-md-2">
+      huhu
+    </div-->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <a class="pull-right" href="/">OffenerHaushalt.de</a>
+    </div>
+  </div>
+</div>
+
+  
+      <script type="text/javascript" src="/static/gen/app.68baa1d1.js"></script>
+  
+
+  
+  <script id="table-template" type="text/x-handlebars-template">
+    <table class="table table-condensed">
+      <tr>
+        <th>Titel</th>
+        <th class="num">Betrag</th>
+        <th class="num">Anteil</th>
+      </tr>
+      {{#each cells}}
+        <tr {{#if _small}}class="small"{{/if}}>
+          <td>
+            <i style="color: {{_color}};" class="fa fa-square"></i>
+            {{#if _url}}
+              <a href="{{_url}}">{{_current_label}}</a>
+            {{/if}}
+            {{#if _no_url}}
+              {{_current_label}}
+            {{/if}}
+          </td>
+          <td class="num">{{_value_fmt}}</td>
+          <td class="num">{{_percentage_fmt}}</td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td colspan="3">
+          <span class="pull-right">
+            <a class="show-small" href="#"><i class="fa fa-plus-square"></i> kleine Posten anzeigen</a>
+            <a class="hide-small" href="#"><i class="fa fa-minus-square"></i> kleine Posten verstecken</a></span>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Total
+        </th>
+        <th class="num">{{summary._value_fmt}}</th>
+        <th class="num">100%</th>
+      </tr>
+    </table>
+  </script>
+
+  <script id="embed-template" type="text/x-handlebars-template"><iframe src="{{baseurl}}embed/{{hash}}" width="100%" height="520px" frameborder="0" style="margin:0">
+    <a href="{{url}}">Offener Haushalt: {{name}}</a></iframe><br><small>
+    <a href="{{url}}">OffenerHaushalt.de</a></small></script>
+
+  <script id="site-config" type="application/json">{"data_url": "https://raw.githubusercontent.com/OpenAPC/openapc-de/master/data/unibi/2014_gesamt.csv", "name": "Open APC - Gesamt", "level": "kommune", "default": "institution", "tagline": "Open APC - Gesamt\u00fcbersicht", "source_url": "http://www.uni-bielefeld.de/", "source": "Open APC", "state": "NW", "api": "http://129.70.40.89:3000/cube/openapc", "keyrefs": {"publisher": "publisher", "journal": "journal", "institution": "institution", "period": "period"}, "labelrefs": {"publisher": "publisher", "journal": "journal", "institution": "institution", "period": "period"}, "filters": [{"name": "Jahr", "default": 2014, "label_ref": "period", "field": "period", "values": [{"key": "2007", "label": "2007"}, {"key": "2008", "label": "2008"}, {"key": "2009", "label": "2009"}, {"key": "2010", "label": "2010"}, {"key": "2011", "label": "2011"}, {"key": "2012", "label": "2012"}, {"key": "2013", "label": "2013"}, {"key": "2014", "label": "2014"}, {"key": "2015", "label": "2015"}], "key_ref": "period"}], "aggregate": "apc_amount_sum", "hierarchies": {"publisher": {"drilldowns": ["publisher"], "name": "Publisher"}, "journal": {"drilldowns": ["journal"], "name": "Journal"}, "institution": {"drilldowns": ["institution"], "name": "Institution"}}, "dataset": "openapc", "slug": "openapc"}</script>
+  
+      <script type="text/javascript" src="/static/gen/budget.38d1745c.js"></script>
+  
+
+
+  
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(["setCookieDomain", "*.offenerhaushalt.de"]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//piwik.okfn.de/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 4]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//piwik.okfn.de/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
+  
+</body>
+</html>

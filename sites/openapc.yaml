@@ -1,0 +1,29 @@
+name: Open APC - Gesamt
+slug: openapc
+tagline: "Open APC - Gesamtübersicht"
+source: Open APC
+source_url: http://www.uni-bielefeld.de/
+data_url: https://raw.githubusercontent.com/OpenAPC/openapc-de/master/data/unibi/2014_gesamt.csv
+state: NW
+level: kommune
+dataset: openapc
+default: institution
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    default: 2014
+
+hierarchies:
+    institution:
+        name: Institution
+        drilldowns:
+            - institution
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+    journal:
+        name: Journal
+        drilldowns:
+            - journal
