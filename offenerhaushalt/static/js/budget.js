@@ -164,6 +164,7 @@ $(function(){
 
         data.summary._value = data.summary[site.aggregate];
         data.summary._value_fmt = OSDE.amount(data.summary._value);
+        data.summary._num_items = data.summary['apc_num_items'];
 
         $.each(data.cells, function(e, cell) {
           cell._current_label = cell[site.labelrefs[dimension]];
@@ -174,6 +175,8 @@ $(function(){
           cell._small = cell._percentage < 0.01;
           cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
           cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
+          cell._avg_fmt = OSDE.amount(cell['apc_amount_avg']);
+          cell._num_items = cell['apc_num_items'];
 
           if (!path.bottom) {
             var modifiers = {};
@@ -187,6 +190,8 @@ $(function(){
         });
 
         treemap.render(data, path.drilldown);
+        console.log(data);
+        console.log(path.drilldown);
         table.render(data, path.drilldown);
       });
     });

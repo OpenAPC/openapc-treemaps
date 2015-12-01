@@ -19,11 +19,15 @@ hierarchies:
         name: Institution
         drilldowns:
             - institution
+            - journal
     publisher:
         name: Publisher
         drilldowns:
             - publisher
+            - journal
+            - institution
     journal:
         name: Journal
         drilldowns:
             - journal
+            - institution
