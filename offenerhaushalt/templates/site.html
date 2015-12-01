@@ -106,7 +106,9 @@
     <table class="table table-condensed">
       <tr>
         <th>Titel</th>
-        <th class="num">Betrag</th>
+        <th class="num">Anzahl Artikel</th>
+        <th class="num">Gesamtbetrag</th>
+        <th class="num">Durchschnitt</th>
         <th class="num">Anteil</th>
       </tr>
       {{#each cells}}
@@ -120,7 +122,9 @@
               {{_current_label}}
             {{/if}}
           </td>
+          <td class="num">{{_num_items}}</td>
           <td class="num">{{_value_fmt}}</td>
+          <td class="num">{{_avg_fmt}}</td>
           <td class="num">{{_percentage_fmt}}</td>
         </tr>
       {{/each}}
@@ -136,7 +140,9 @@
         <th>
           Total
         </th>
+        <th class="num">{{summary._num_items}}</th>
         <th class="num">{{summary._value_fmt}}</th>
+        <th class="num">{{summary._value_avg}}</th>
         <th class="num">100%</th>
       </tr>
     </table>
