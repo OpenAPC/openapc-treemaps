@@ -124,6 +124,9 @@
             {{#if _url}}
               <a href="{{_url}}">{{_current_label}}</a>
             {{/if}}
+            {{#if _doi}}
+              <a href="{{_doi}}" target="_blank">{{_current_label}}</a>
+            {{/if}}
             {{#if _no_url}}
               {{_current_label}}
             {{/if}}

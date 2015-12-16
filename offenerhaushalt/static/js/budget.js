@@ -59,9 +59,7 @@ $(function(){
         levels = location.slice(1, location.length-1);
 
     path.hierarchyName = location[0];
-    console.log(path)
     path.hierarchy = site.hierarchies[path.hierarchyName];
-    console.log(site)
     path.hierarchy.cuts = path.hierarchy.cuts || {};
     path.level = levels.length;
     path.root = path.level == 0;
@@ -188,11 +186,17 @@ $(function(){
             var modifiers = {};
             modifiers[dimension] = cell._current_key;
             cell._url = makeUrl(path, modifiers);
-          } else {
+          } else if (cell.doi) {
+            cell._doi = "http://dx.doi.org/" + cell.doi;
+          }
+          else {
             cell._no_url = true;
           }
           cell._color = color(e);
-
+          
+          if (cell.doi) {
+            cell._doi = "http://dx.doi.org/" + cell.doi;
+          }
         });
 
         treemap.render(data, path.drilldown);
@@ -204,7 +208,7 @@ $(function(){
         else {
           var sort_key = $('[data-sort-key].active').data('sort-key');
         }
-        
+        console.log(path.args)
         table.render(data, path.drilldown);
         
         $('[data-sort-key]').removeClass('active');

@@ -21,6 +21,7 @@ hierarchies:
         drilldowns:
             - institution
             - journal
+            - doi
     publisher:
         name: Publisher
         drilldowns:
@@ -32,3 +33,4 @@ hierarchies:
         drilldowns:
             - journal
             - institution
+            - doi
