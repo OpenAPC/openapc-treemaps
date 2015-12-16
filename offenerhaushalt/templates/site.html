@@ -103,6 +103,12 @@
 
 {% block js %}
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
+    <div id="sort-menu" class="btn-group btn-group-sm">
+      <a class="btn btn-default"><strong>Sortierung:</strong></a>
+      <a class="btn btn-default" data-sort-key="apc_num_items">Anzahl Artikel</a>
+      <a class="btn btn-default" data-sort-key="apc_amount_sum">Gesamtbetrag</a>
+      <a class="btn btn-default" data-sort-key="apc_amount_avg">Durchschnitt</a>
+    </div>
     <table class="table table-condensed">
       <tr>
         <th>Titel</th>

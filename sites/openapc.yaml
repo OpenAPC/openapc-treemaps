@@ -13,6 +13,7 @@ filters:
   - field: 'period'
     name: 'Jahr'
     default: 2014
+    nullable: true
 
 hierarchies:
     institution:

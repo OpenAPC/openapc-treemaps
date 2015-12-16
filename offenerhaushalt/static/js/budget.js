@@ -14,11 +14,14 @@ $(function(){
       treemap = new OSDE.TreeMap('#treemap'),
       table =  new OSDE.Table('#table');
 
-  function getData(drilldown, cut) {
+  function getData(drilldown, cut, sortkey) {
     //console.log(drilldown, cut);
-    console.log(site)
+    //console.log(site)
     var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + v; }});
     var drilldowns = [site.keyrefs[drilldown]]
+    if (!sortkey) {
+      sortkey = OSDE.default_sort;
+    }
     if (site.keyrefs[drilldown] != site.labelrefs[drilldown]) {
       drilldowns.push(site.labelrefs[drilldown]);
     }
@@ -28,7 +31,7 @@ $(function(){
       data: {
         drilldown: drilldowns.join('|'),
         cut: cutStr.join('|'),
-        order: site.aggregate + ':desc',
+        order: sortkey + ':desc',
         page: 0,
         pagesize: 500
       },
@@ -38,6 +41,7 @@ $(function(){
   }
 
   $('#infobox-toggle').click(function(e) {
+    console.log("Hallo");
     var $e = $(e.target);
     if ($e.hasClass('active')) {
       $e.removeClass('active');
@@ -142,7 +146,9 @@ $(function(){
     });
 
     var baseCuts = $.extend({}, baseFilters, path.hierarchy.cuts);
-    getData(rootDimension, baseCuts).done(function(base) {
+    var sortKey = $('[data-sort-key].active').data('sort-key');
+
+    getData(rootDimension, baseCuts, sortKey).done(function(base) {
 
       $.each(base.cells, function(i, drilldown) {
         drilldown._color = color(i);
@@ -152,7 +158,7 @@ $(function(){
         }
       });
 
-      getData(path.drilldown, cuts).done(function(data) {
+      getData(path.drilldown, cuts, sortKey).done(function(data) {
         var dimension = path.drilldown;
 
         if (dimension != rootDimension) {
@@ -190,9 +196,28 @@ $(function(){
         });
 
         treemap.render(data, path.drilldown);
-        console.log(data);
-        console.log(path.drilldown);
+        //store current sort key and set it again after rendering
+        if (!$('[data-sort-key].active').length) {
+          $('[data-sort-key="' + OSDE.default_sort + '"]').addClass('active');
+          var sort_key = OSDE.default_sort;
+        }
+        else {
+          var sort_key = $('[data-sort-key].active').data('sort-key');
+        }
+        
         table.render(data, path.drilldown);
+        
+        $('[data-sort-key]').removeClass('active');
+        $('[data-sort-key="' + sort_key + '"]').addClass('active');
+        
+        $('[data-sort-key]').each(function() {
+          $(this).click(function(e) {
+            $('[data-sort-key]').removeClass('active');
+            var $e = $(e.target);
+            $e.addClass('active');
+            update();
+          });
+        });
       });
     });
     $embedCode.text(embedTemplate({

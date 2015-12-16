@@ -6,6 +6,8 @@ OSDE.categoryColors = [
     "#60C4B1", "#27C4F4", "#478DCB", "#3E67B1", "#4251A3", "#59449B", 
     "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
     ];
+    
+
 
 OSDE.parseArgs = function(args) {
 	var queryString = {};
@@ -29,3 +31,5 @@ OSDE.mergeArgs = function(args) {
 OSDE.amount = function(num) {
 	return accounting.formatMoney(num, "€", 0, ".");
 }
+
+OSDE.default_sort = "apc_amount_sum";
