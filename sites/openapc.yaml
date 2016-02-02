@@ -20,17 +20,17 @@ hierarchies:
         name: Institution
         drilldowns:
             - institution
-            - journal
+            - journal_full_title
             - doi
     publisher:
         name: Publisher
         drilldowns:
             - publisher
-            - journal
+            - journal_full_title
             - institution
     journal:
         name: Journal
         drilldowns:
-            - journal
+            - journal_full_title
             - institution
             - doi
