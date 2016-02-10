@@ -7,14 +7,14 @@ from offenerhaushalt.sites import load_sites
 sites = load_sites()
 
 
-@app.route('/haushalt/<slug>/')
+@app.route('/apcdata/<slug>/')
 def site(slug, template='site.html'):
     site = sites.get(slug)
     site_json = JSONEncoder().encode(site)
     return render_template(template, site=site, site_json=site_json)
 
 
-@app.route('/haushalt/<slug>/embed/')
+@app.route('/apcdata/<slug>/embed/')
 def embed_site(slug):
     return site(slug, template='embed.html')
 
