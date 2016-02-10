@@ -13,11 +13,19 @@ $(function(){
       $filterValues = $('.site-filters .value'),
       treemap = new OSDE.TreeMap('#treemap'),
       table =  new OSDE.Table('#table');
+      
+      
+  function escapeCutString(cutString) {
+      console.log(cutString);
+      return cutString.replace('-', '\\-');
+  }
 
   function getData(drilldown, cut, sortkey) {
     //console.log(drilldown, cut);
     //console.log(site)
-    var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + v; }});
+    console.log(cut)
+    var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
+    console.log(cutStr);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
       sortkey = OSDE.default_sort;
@@ -208,7 +216,6 @@ $(function(){
         else {
           var sort_key = $('[data-sort-key].active').data('sort-key');
         }
-        console.log(path.args)
         table.render(data, path.drilldown);
         
         $('[data-sort-key]').removeClass('active');
