@@ -1,0 +1,23 @@
+name: Bamberg University
+slug: bamberg_u
+tagline: Bamberg University APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+state: BY
+level: kommune
+dataset: 'bamberg_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

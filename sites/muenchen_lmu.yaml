@@ -1,0 +1,23 @@
+name: Ludwig-Maximilians-Universität München
+slug: muenchen_lmu
+tagline: Ludwig-Maximilians-Universität München APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+state: BY
+level: kommune
+dataset: 'muenchen_lmu'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

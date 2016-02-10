@@ -1,0 +1,23 @@
+name: Forschungszentrum Jülich
+slug: fzj_fb
+tagline: Forschungszentrum Jülich APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+state: NW
+level: kommune
+dataset: 'fzj_fb'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

@@ -1,0 +1,23 @@
+name: University of Duisburg-Essen
+slug: duisburg_essen_u
+tagline: University of Duisburg-Essen APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+state: NW
+level: kommune
+dataset: 'duisburg_essen_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
