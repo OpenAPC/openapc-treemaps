@@ -25,7 +25,7 @@
             ]
           ],
           "properties": {
-            "name": "Nordrhein-Westfalen",
+            "name": "North Rhine-Westphalia",
             "code": "NW"
           }
         },
@@ -57,7 +57,7 @@
             ]
           ],
           "properties": {
-            "name": "Hessen",
+            "name": "Hesse",
             "code": "HE"
           }
         },
@@ -144,7 +144,7 @@
             ]
           ],
           "properties": {
-            "name": "Niedersachsen",
+            "name": "Lower Saxony",
             "code": "NI"
           }
         },
@@ -160,7 +160,7 @@
             ]
           ],
           "properties": {
-            "name": "Thüringen",
+            "name": "Thuringia",
             "code": "TH"
           }
         },
@@ -248,7 +248,7 @@
             ]
           ],
           "properties": {
-            "name": "Rheinland-Pfalz",
+            "name": "Rhineland-Palatinate",
             "code": "RP"
           }
         },
@@ -277,7 +277,7 @@
             ]
           ],
           "properties": {
-            "name": "Bayern",
+            "name": "Bavaria",
             "code": "BY"
           }
         },
@@ -304,7 +304,7 @@
             ]
           ],
           "properties": {
-            "name": "Sachsen-Anhalt",
+            "name": "Saxony-Anhalt",
             "code": "ST"
           }
         },
@@ -320,7 +320,7 @@
             ]
           ],
           "properties": {
-            "name": "Sachsen",
+            "name": "Saxony",
             "code": "SN"
           }
         },
