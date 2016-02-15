@@ -2,6 +2,7 @@ venv/
 build/
 node_modules/
 *.pyc
-offenerhaushalt/static/vendor/
-offenerhaushalt/static/gen/
-offenerhaushalt/static/.webassets-cache/
+openapc_visual/static/vendor/
+openapc_visual/static/gen/
+openapc_visual/static/.webassets-cache/
+openapc_visual.egg-info

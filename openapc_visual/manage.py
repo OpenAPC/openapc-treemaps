@@ -1,7 +1,7 @@
 from flask.ext.script import Manager, Server
 
-from offenerhaushalt.web import app
-from offenerhaushalt.generators import freezer
+from openapc_visual.web import app
+from openapc_visual.generators import freezer
 
 server = Server(host='0.0.0.0', port=5000)
 manager = Manager(app)

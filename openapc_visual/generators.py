@@ -1,5 +1,5 @@
-from offenerhaushalt.core import freezer, pages
-from offenerhaushalt.sites import load_sites
+from openapc_visual.core import freezer, pages
+from openapc_visual.sites import load_sites
 
 sites = load_sites()
 

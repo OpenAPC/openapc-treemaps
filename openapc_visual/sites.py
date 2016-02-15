@@ -3,7 +3,7 @@ import requests
 import os
 from slugify import slugify
 
-from offenerhaushalt.core import app
+from openapc_visual.core import app
 
 
 def urlpath(*a):

@@ -6,7 +6,7 @@ from flask_frozen import Freezer
 from flask_flatpages import FlatPages
 
 
-from offenerhaushalt import default_settings
+from openapc_visual import default_settings
 
 logging.basicConfig(level=logging.DEBUG)
 
