@@ -1,8 +1,8 @@
 ## openapc_visual
 
-openapc_visual serves as a visual frontend for the [OpenAPC project](https://github.com/OpenAPC/openapc-de), which collects and disseminates information on fee-based Open Access publishing from participating universities and research institutes.
+openapc_visual implements a visual frontend for the [OpenAPC project](https://github.com/OpenAPC/openapc-de), which collects and disseminates information on fee-based Open Access publishing from participating universities and research institutes.
 The data is provided by a small backend OLAP service named openapc_cubes.
-openapc_visual is based on the project [OffenerHaushalt](http://offenerhaushalt.de/) by the [Open Knowlege Foundation](http://okfn.de/).
+openapc_visual is based on the project [OffenerHaushalt](http://offenerhaushalt.de/) [(GitHub)](https://github.com/okfde/offenerhaushalt.de) by the [Open Knowlege Foundation](http://okfn.de/).
 
 ### Building the site
 
@@ -30,4 +30,4 @@ Having verified that the application work, you can build a frozen version of all
 python openapc_visual/manage.py freeze
 ```
 
-This will make a plain HTML version of the visualizations, ready to be deployed to S3 or another file hosting platform.
+This will make a plain HTML version of the visualizations.
