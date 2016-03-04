@@ -1,0 +1,40 @@
+title: About this site
+
+
+## Open APC
+
+The [Open APC initiative](http://intact-project.org/openapc) releases datasets on fees paid for open access journal articles by universities and research insitutions under an open database license.
+Open APC, which is also supported by the DINI Working Group Electronic Publishing, is located at [Bielefeld University Library](http://www.ub.uni-bielefeld.de/english/).
+Since October 2015 Open APC ist part of the [INTACT](http://intact-project.org) project.
+
+## The data
+   
+Main place for Open APC to collect and maintain its data is [GitHub](https://github.com/OpenAPC), where the core data file is kept and redacted in CSV format.
+This site and its open [backend](http://129.70.40.89:3000) were established to improve accessibility and re-use of the data, which means that there are 3 different ways to access the Open APC dataset:
+
+## Raw data
+
+The most basic way to access the Open APC data is the [main APC file](https://raw.githubusercontent.com/OpenAPC/openapc-de/master/data/apc_de.csv) on GitHub.
+It is a [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file, meaning that it should be easily processable by a wide range of tools and programing languages.
+A schema description of the file can be found [here](https://github.com/OpenAPC/openapc-de/wiki/schema). 
+
+## OLAP
+
+Since the raw CSV data can be difficult to analyze without tool support, a more advanced method is to query the Open APC [OLAP Server](http://olap.intact-project.org).
+This service implements an [online analytical processing](https://en.wikipedia.org/wiki/Online_analytical_processing) framework based on [cubes](http://cubes.databrewery.org/), forming the backend of data.intact-project.org.
+
+Some example queries:
+
+<http://129.70.40.89:3000/cube/openapc/aggregate?drilldown=publisher&cut=period:2014>
+
+(How much did every individual publisher receive in 2014?)
+
+<http://129.70.40.89:3000/cube/openapc/aggregate?drilldown=journal_full_title&cut=institution:Bielefeld U>
+
+(What journals did Bielefeld University pay for?)
+
+<http://129.70.40.89:3000/cube/openapc/aggregate?drilldown=journal_full_title|doi&cut=institution:Regensburg U|period:2013>
+
+(A listing of journal title and DOI of every article Regensburg University paid for in 2013)
+
+Note: The query return format is JSON. If you want to view the results directly in your browser, it is highly advisable to use an addon or extension or that properly formats JSON, like [JSONView](http://jsonview.com) for Firefox.

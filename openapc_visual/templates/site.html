@@ -11,9 +11,9 @@
 
   <div class="row">
     <div class="col-sm-12 col-md-6 site-menu">
-      <a class="btn btn-default btn-sm" id="parent"><strong><i class="fa fa-level-up"></i> Ebene hoch</strong></a>
+      <a class="btn btn-default btn-sm" id="parent"><strong><i class="fa fa-level-up"></i> Parent Level</strong></a>
       <div class="btn-group btn-group-sm" id="hierarchy-menu">
-        <a class="btn btn-default"><strong>Ansicht:</strong></a>
+        <a class="btn btn-default"><strong>View:</strong></a>
         {% for name, data in site.hierarchies.items() %}
           <a class="btn btn-default {{name}}" href="#{{name}}/">{{data.name}}</a>
         {% endfor %}
@@ -104,18 +104,18 @@
 {% block js %}
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
     <div id="sort-menu" class="btn-group btn-group-sm">
-      <a class="btn btn-default"><strong>Sortierung:</strong></a>
-      <a class="btn btn-default" data-sort-key="apc_num_items">Anzahl Artikel</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_sum">Gesamtbetrag</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_avg">Durchschnitt</a>
+      <a class="btn btn-default"><strong>Sort by:</strong></a>
+      <a class="btn btn-default" data-sort-key="apc_num_items">Number of Articles</a>
+      <a class="btn btn-default" data-sort-key="apc_amount_sum">Sum</a>
+      <a class="btn btn-default" data-sort-key="apc_amount_avg">Mean Value</a>
     </div>
     <table class="table table-condensed">
       <tr>
-        <th>Titel</th>
-        <th class="num">Anzahl Artikel</th>
-        <th class="num">Gesamtbetrag</th>
-        <th class="num">Durchschnitt</th>
-        <th class="num">Anteil</th>
+        <th>Title</th>
+        <th class="num">Number of Articles</th>
+        <th class="num">Sum</th>
+        <th class="num">Mean Value</th>
+        <th class="num">Percentage</th>
       </tr>
       {{#each cells}}
         <tr {{#if _small}}class="small"{{/if}}>
@@ -140,8 +140,8 @@
       <tr>
         <td colspan="3">
           <span class="pull-right">
-            <a class="show-small" href="#"><i class="fa fa-plus-square"></i> kleine Posten anzeigen</a>
-            <a class="hide-small" href="#"><i class="fa fa-minus-square"></i> kleine Posten verstecken</a></span>
+            <a class="show-small" href="#"><i class="fa fa-plus-square"></i> view small values</a>
+            <a class="hide-small" href="#"><i class="fa fa-minus-square"></i> hide small values</a></span>
           </span>
         </td>
       </tr>

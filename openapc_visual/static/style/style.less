@@ -2,10 +2,6 @@
 @linkColor: #265475;
 @brandColor: #e9643c;
 
-html {
-  background-color: @bgColor;
-}
-
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -81,6 +77,8 @@ hr {
   }
 
   li > a {
+    font-size: 1.5em;
+    line-height: 1.5em;
     text-transform: uppercase;
     font-weight: 600;
     color: #777;
@@ -101,11 +99,10 @@ hr {
 /* Footer */
 
 footer {
-  margin: 2em 0 0 0;
+  margin: 2em 0 2em;
   /*border-top: 1px solid #e0e0e0;*/
   border-top: 1px solid #ccc;
   padding: 2em 0 0 0;
-  background-color: @bgColor;
   font-size: 0.9em;
 
   .logo img {
