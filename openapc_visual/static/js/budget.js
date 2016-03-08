@@ -16,8 +16,9 @@ $(function(){
       
       
   function escapeCutString(cutString) {
-      console.log(cutString);
-      return cutString.replace('-', '\\-');
+      cutString = cutString.replace(/,/g, '\\,');
+      cutString = cutString.replace(/-/g, '\\-');
+      return cutString;
   }
 
   function getData(drilldown, cut, sortkey) {
