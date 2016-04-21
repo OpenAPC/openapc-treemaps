@@ -1,7 +1,9 @@
 $(function(){
   var site = JSON.parse($('#site-config').html()),
       embedTemplate = Handlebars.compile($('#embed-template').html());
+      embedTemplateReduced = Handlebars.compile($('#embed-template-reduced').html());
       $embedCode = $('#embed-code')
+      $embedCodeReduced = $('#embed-code-reduced')
       baseFilters = {};
   $.each(site.filters, function(i, f) {
     baseFilters[f.field] = f.default;
@@ -238,7 +240,12 @@ $(function(){
       url: document.location.href,
       hash: document.location.hash,
     }));
+    $embedCodeReduced.text(embedTemplateReduced({
+      name: site.name,
+      baseurl: document.location.href.split('#')[0],
+      url: document.location.href,
+      hash: document.location.hash,
+    }));
   }
-
   hashtrack.onhashchange(update);
 });

@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import abort, render_template
 
 from openapc_visual.core import app, pages
 from openapc_visual.util import JSONEncoder
@@ -14,10 +14,14 @@ def site(slug, template='site.html'):
     return render_template(template, site=site, site_json=site_json)
 
 
-@app.route('/apcdata/<slug>/embed/')
-def embed_site(slug):
-    return site(slug, template='embed.html')
-
+@app.route('/apcdata/<slug>/embed/<coverage>')
+def embed_site(slug, coverage):
+    if coverage == 'full':
+        return site(slug, template='embed.html')
+    elif coverage == 'reduced':
+        return site(slug, template='embed_reduced.html')
+    else:
+        abort(404)
 
 @app.route('/page/<path:path>.html')
 def page(path):
