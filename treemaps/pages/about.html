@@ -10,7 +10,7 @@ Since October 2015 Open APC ist part of the [INTACT](http://intact-project.org) 
 ## Data Access
    
 Main place for Open APC to collect and maintain its data is [GitHub](https://github.com/OpenAPC), where the core data file is kept and redacted in CSV format.
-This site and its open [backend](http://129.70.40.89:3000) were established to improve accessibility and re-use of the data, which means that there are 3 ways to access the Open APC dataset, differing in their tradeoff between flexibility and ease of handling:
+This site and its open [backend](http://olap.intact-project.org) were established to improve accessibility and re-use of the data, which means that there are 3 ways to access the Open APC dataset, differing in their tradeoff between flexibility and ease of handling:
 
 * Raw data
 
@@ -25,15 +25,15 @@ This site and its open [backend](http://129.70.40.89:3000) were established to i
 
     Some example queries:
 
-    <http://129.70.40.89:3000/cube/openapc/aggregate?drilldown=publisher&cut=period:2014>
+    <http://olap.intact-project.org/cube/openapc/aggregate?drilldown=publisher&cut=period:2014>
 
     *(How much did every individual publisher receive in 2014?)*
 
-    <http://129.70.40.89:3000/cube/openapc/aggregate?drilldown=journal_full_title&cut=institution:Bielefeld U>
+    <http://olap.intact-project.org/cube/openapc/aggregate?drilldown=journal_full_title&cut=institution:Bielefeld U>
 
     *(What journals did Bielefeld University pay for?)*
 
-    <http://129.70.40.89:3000/cube/openapc/facts?cut=institution:Regensburg%20U|period:2013>
+    <http://olap.intact-project.org/cube/openapc/facts?cut=institution:Regensburg%20U|period:2013>
 
     *(List detailed facts about every article Regensburg University paid for in 2013)*
 
