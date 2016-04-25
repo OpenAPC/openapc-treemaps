@@ -6,7 +6,7 @@ from flask_frozen import Freezer
 from flask_flatpages import FlatPages
 
 
-from openapc_visual import default_settings
+from treemaps import default_settings
 
 logging.basicConfig(level=logging.DEBUG)
 

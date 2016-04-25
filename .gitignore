@@ -2,7 +2,7 @@ venv/
 build/
 node_modules/
 *.pyc
-openapc_visual/static/vendor/
-openapc_visual/static/gen/
-openapc_visual/static/.webassets-cache/
-openapc_visual.egg-info
+treemaps/static/vendor/
+treemaps/static/gen/
+treemaps/static/.webassets-cache/
+treemaps.egg-info

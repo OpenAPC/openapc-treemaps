@@ -1,7 +1,7 @@
 {
-  "name": "openapc_visual",
+  "name": "openapc-treemaps",
   "version": "1.0",
-  "main": "openapc_visual/static/style/style.less",
+  "main": "treemaps/static/style/style.less",
   "ignore": [
     ".jshintrc",
     "**/*.txt"

@@ -3,7 +3,7 @@ import requests
 import os
 from slugify import slugify
 
-from openapc_visual.core import app
+from treemaps.core import app
 
 
 def urlpath(*a):

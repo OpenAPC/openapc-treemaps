@@ -1,8 +1,8 @@
 from flask import abort, render_template
 
-from openapc_visual.core import app, pages
-from openapc_visual.util import JSONEncoder
-from openapc_visual.sites import load_sites
+from treemaps.core import app, pages
+from treemaps.util import JSONEncoder
+from treemaps.sites import load_sites
 
 sites = load_sites()
 
@@ -14,14 +14,15 @@ def site(slug, template='site.html'):
     return render_template(template, site=site, site_json=site_json)
 
 
-@app.route('/apcdata/<slug>/embed/<coverage>')
-def embed_site(slug, coverage):
-    if coverage == 'full':
-        return site(slug, template='embed.html')
-    elif coverage == 'reduced':
-        return site(slug, template='embed_reduced.html')
-    else:
-        abort(404)
+@app.route('/apcdata/<slug>/embed/full')
+def embed_full(slug):
+    return site(slug, template='embed.html')
+
+
+@app.route('/apcdata/<slug>/embed/reduced')
+def embed_reduced(slug):
+    return site(slug, template='embed_reduced.html')
+   
 
 @app.route('/page/<path:path>.html')
 def page(path):

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='openapc_visual',
+    name='openapc-treemaps',
     version='1.0',
     description="Visual Frontend for OpenAPC data, based on OffenerHaushalt",
     long_description='',

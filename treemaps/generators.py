@@ -1,5 +1,5 @@
-from openapc_visual.core import freezer, pages
-from openapc_visual.sites import load_sites
+from treemaps.core import freezer, pages
+from treemaps.sites import load_sites
 
 sites = load_sites()
 
@@ -17,6 +17,12 @@ def site():
 
 
 @freezer.register_generator
-def embed_site():
+def embed_full():
+    for site in sites:
+        yield {'slug': site.slug}
+        
+        
+@freezer.register_generator
+def embed_reduced():
     for site in sites:
         yield {'slug': site.slug}

@@ -1,7 +1,7 @@
 from flask.ext.script import Manager, Server
 
-from openapc_visual.web import app
-from openapc_visual.generators import freezer
+from treemaps.web import app
+from treemaps.generators import freezer
 
 server = Server(host='0.0.0.0', port=5000)
 manager = Manager(app)
