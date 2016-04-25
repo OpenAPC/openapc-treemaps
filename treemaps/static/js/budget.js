@@ -151,7 +151,7 @@ $(function(){
           label = v.label;
         }
       });
-      $('.site-filters strong[data-field="' + f.field + '"]').html(label || 'Alle');
+      $('.site-filters strong[data-field="' + f.field + '"]').html(label || 'All');
     });
 
     var baseCuts = $.extend({}, baseFilters, path.hierarchy.cuts);
