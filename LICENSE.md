@@ -1,4 +1,5 @@
 Original Work Copyright (c) 2013: Friedrich Lindenberg, Stefan Wehrmeyer, Urs Kleinert
+
 Modified Work Copyright (c) 2016: Christoph Broschinski
 
 Permission is hereby granted, free of charge, to any person obtaining a
