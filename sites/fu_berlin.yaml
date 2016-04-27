@@ -1,6 +1,6 @@
-name: Free University of Berlin
+name: Freie Universität Berlin
 slug: fu_berlin
-tagline: Free University of Berlin APC data
+tagline: Freie Universität Berlin APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
