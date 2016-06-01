@@ -22,8 +22,8 @@ $(function() {
     	var subunits = topojson.feature(de, de.objects.deu);
 
 	    var projection = d3.geo.mercator()
-	        .center([10.5, 51.35])
-	        .scale(2500)
+	        .center([10.5, 51])
+	        .scale(2200)
 	        .translate([width / 2, height / 2]);
 
 
