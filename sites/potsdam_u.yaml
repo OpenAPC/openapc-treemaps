@@ -4,6 +4,7 @@ tagline: University of Potsdam APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+country: DEU
 state: BB
 level: kommune
 dataset: 'potsdam_u'
