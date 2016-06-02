@@ -10,7 +10,7 @@
 			<div class="row welcome">
 				<div class="col-xs-12 col-md-6">
 					<p class="claim">
-                        The Open APC initiative release datasets on fees paid for Open Access journal articles by German universities and research institutions under an Open Database License.
+                        The Open APC initiative releases datasets on fees paid for Open Access journal articles by universities and research institutions under an Open Database License.
 					</p>
 					<div id="default-welcome">
 						<p>
@@ -29,20 +29,32 @@
 	
 
 	<script id="listing-template" type="text/x-handlebars-template">{% raw %}
-		{{#if has_sites}}
-			<p>
-				The following institutions from <strong>{{state.name}}</strong> have contributed to the Open APC project:</p>
-			<ul>
-				{{#each sites}}
-					<li><strong><a href="/apcdata/{{slug}}">{{name}}</a></strong></li>
-				{{/each}}
-			</ul>
-		{{/if}}
 		{{#if no_sites}}
 			<p>
-				There are no contributing institutions from <strong>{{state.name}}</strong> yet.
+				There are no contributing institutions from <strong>{{country.name}}</strong> yet.
 			</p>
-		{{/if}}
+        {{else}}
+            {{#if list_sites}}
+                <p>
+                    The following institutions from <strong>{{country.name}}</strong> have contributed to the Open APC project:
+                </p>
+                <ul>
+                    {{#each sites}}
+                        <li><strong><a href="/apcdata/{{slug}}">{{name}}</a></strong></li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                {{#if only_one}}
+                <p>
+                    <strong>1</strong> institution from <strong>{{country.name}}</strong> has contributed to the Open APC project. Click on the country for details.
+                </p>
+                {{else}}
+                <p>
+                    <strong>{{length}}</strong> institutions from <strong>{{country.name}}</strong> have contributed to the Open APC project. Click on the country for details.
+                </p> 
+                 {{/if}}
+            {{/if}}
+        {{/if}}
 		<p>
 			<strong>Is your institution paying article processing charges for gold open access publishing?</strong> 
 			<a href="https://github.com/OpenAPC/openapc-de/wiki/Handreichung-Dateneingabe">Join the OpenAPC Initiative</a>, and help building an open data set on publishing fees!
