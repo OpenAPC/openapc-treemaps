@@ -16,8 +16,8 @@ OSDE.TreeMap = function(elementID) {
 		treemap = d3.layout.treemap()
 		  .size([width, height])
 		  .sticky(true)
-		  .sort(function(a, b) { return a.value - b.value; })
-		  .value(function(d) { return d.value; });
+      .sort(function(a, b) { return a.value - b.value; })
+      .value(function(d) { return d.value; });
 
 		div = d3.select("#treemap").append("div")
 		  .style("position", "relative")
@@ -49,20 +49,49 @@ OSDE.TreeMap = function(elementID) {
 		    .attr("class", "node")
 		    .call(positionNode)
 		    .style("background", '#fff')
-		    .classed("big", function(d) { return d.value > data.summary._value / 50 })
+		    .classed("big", function(d) { return d.dx > 250 && d.dy > 65})
+        .classed("medium", function(d) { return d.dx <= 250 && d.dx > 100 && d.dy > 65})
+        .classed("small", function(d) { return d.dx <= 100 || d.dy <= 65})
 		    .html(function(d) {
-				if (d.percentage < 0.03) {
-					return '';
-				}
-		    	return d.children ? null : '<span class="amount">' + d.value_fmt + '</span>' + d.name;
+            return d.children ? null : '<span class="amount">' + d.value_fmt + '</span>' + d.name;
 		    })
 		    .on("mouseover", function(d) {
-		      d3.select(this).transition().duration(200)
-		        .style({'background': d3.rgb(d.color).darker() });  
+          if (d3.select(this).classed("small")) {
+            var new_width = Math.max(d.dx, 170);
+            var new_height = Math.max(d.dy, 70);
+            var new_left = Math.min(d.x, $treemap.width() - new_width);
+            var new_top = Math.min(d.y, $treemap.height() - new_height);
+            d3.select(this)
+              .classed("small-zoomed", true)
+              .transition().duration(200)
+              .style({'width': new_width + "px",
+                      'height': new_height + "px",
+                      'left': new_left + "px",
+                      'top': new_top + "px"
+              });
+          }
+          else {
+            d3.select(this)
+              .transition().duration(200)
+              .style({'background': d3.rgb(d.color).darker()});
+          }
 		    })
 		    .on("mouseout", function(d) {
-		      d3.select(this).transition().duration(500)
-		        .style({'background': d.color});
+          if (d3.select(this).classed("small-zoomed")) {
+            d3.select(this)
+              .classed("small-zoomed", false)
+              .transition().duration(200)
+              .style({'width': d.dx + "px",
+                      'height': d.dy + "px",
+                      'left': d.x + "px",
+                      'top': d.y + "px"
+              });
+          }
+          else {
+            d3.select(this)
+              .transition().duration(200)
+              .style({'background': d.color});
+          }
 		    })
 		    .transition()
 		    .duration(500)
@@ -75,5 +104,6 @@ OSDE.TreeMap = function(elementID) {
 	        .style("top", function(d) { return d.y + "px"; })
 	        .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
 	        .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
-    }
+  }
+  
 };
