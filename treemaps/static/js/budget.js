@@ -24,11 +24,7 @@ $(function(){
   }
 
   function getData(drilldown, cut, sortkey) {
-    console.log(drilldown);
-    console.log(site)
-    console.log(cut)
     var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
-    console.log(cutStr);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
       sortkey = site["aggregate"];
@@ -52,7 +48,6 @@ $(function(){
   }
 
   $('#infobox-toggle').click(function(e) {
-    console.log("Hallo");
     var $e = $(e.target);
     if ($e.hasClass('active')) {
       $e.removeClass('active');
@@ -168,7 +163,7 @@ $(function(){
       });
 
       getData(path.drilldown, cuts, sortKey).done(function(data) {
-          console.log(data);
+
         var dimension = path.drilldown;
 
         if (dimension != rootDimension) {
@@ -178,8 +173,15 @@ $(function(){
           color = color.domain([data.total_cell_count, 0]);
         }
 
+        data.all_aggregates = site.all_aggregates;
         data.summary._value = data.summary[site.aggregate];
         data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
+        data.other_aggregate_summaries = {};
+        $.each(site.all_aggregates, function(f, aggregate) {
+          if (aggregate.name != site.aggregate) {
+            data.other_aggregate_summaries[aggregate.name] = OSDE.format_value(data.summary[aggregate.name], aggregate.function);
+          }
+        });
         data.summary._num_items = data.summary['apc_num_items'];
 
         $.each(data.cells, function(e, cell) {
@@ -191,9 +193,12 @@ $(function(){
           cell._small = cell._percentage < 0.01;
           cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
           cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
-          cell._avg_fmt = OSDE.format_value(cell['apc_amount_avg'], site.aggregate_function);
-          cell._num_items = cell['apc_num_items'];
-
+          cell.other_aggregate_values = {};
+          $.each(site.all_aggregates, function(f, aggregate) {
+            if (aggregate.name != site.aggregate) {
+              cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
+            }
+          });
           if (!path.bottom) {
             var modifiers = {};
             modifiers[dimension] = cell._current_key;

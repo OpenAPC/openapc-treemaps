@@ -29,7 +29,7 @@ OSDE.mergeArgs = function(args) {
 };
 
 OSDE.format_value = function(num, aggregate_function) {
-    if (aggregate_function == "sum") {
+    if (["sum", "avg"].indexOf(aggregate_function) > -1) {
         return accounting.formatMoney(num, "€", 0, ".");
     }
     return num;

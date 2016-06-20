@@ -130,7 +130,7 @@ class Site(_DataObject):
         aggregate_dict = self.get_aggregate()
         data['aggregate'] = aggregate_dict["aggregate"]
         data['aggregate_function'] = aggregate_dict["function"]
-        data['all_aggregates'] = map(lambda x: {x['name']: x['label']}, self.model.get('aggregates'))
+        data['all_aggregates'] = self.model.get('aggregates')
 
         # This seems hacky.
         data['keyrefs'] = {}
