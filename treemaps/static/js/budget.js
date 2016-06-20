@@ -24,14 +24,14 @@ $(function(){
   }
 
   function getData(drilldown, cut, sortkey) {
-    //console.log(drilldown, cut);
-    //console.log(site)
+    console.log(drilldown);
+    console.log(site)
     console.log(cut)
     var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
     console.log(cutStr);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
-      sortkey = OSDE.default_sort;
+      sortkey = site["aggregate"];
     }
     if (site.keyrefs[drilldown] != site.labelrefs[drilldown]) {
       drilldowns.push(site.labelrefs[drilldown]);
@@ -168,6 +168,7 @@ $(function(){
       });
 
       getData(path.drilldown, cuts, sortKey).done(function(data) {
+          console.log(data);
         var dimension = path.drilldown;
 
         if (dimension != rootDimension) {
@@ -178,19 +179,19 @@ $(function(){
         }
 
         data.summary._value = data.summary[site.aggregate];
-        data.summary._value_fmt = OSDE.amount(data.summary._value);
+        data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
         data.summary._num_items = data.summary['apc_num_items'];
 
         $.each(data.cells, function(e, cell) {
           cell._current_label = cell[site.labelrefs[dimension]];
           cell._current_key = cell[site.keyrefs[dimension]];
           cell._value = cell[site.aggregate];
-          cell._value_fmt = OSDE.amount(cell._value);
+          cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
           cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
           cell._small = cell._percentage < 0.01;
           cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
           cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
-          cell._avg_fmt = OSDE.amount(cell['apc_amount_avg']);
+          cell._avg_fmt = OSDE.format_value(cell['apc_amount_avg'], site.aggregate_function);
           cell._num_items = cell['apc_num_items'];
 
           if (!path.bottom) {

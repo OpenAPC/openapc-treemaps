@@ -109,9 +109,9 @@
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
     <div id="sort-menu" class="btn-group btn-group-sm">
       <a class="btn btn-default"><strong>Sort by:</strong></a>
-      <a class="btn btn-default" data-sort-key="apc_num_items">Number of Articles</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_sum">Sum</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_avg">Mean Value</a>
+      {% for aggregate in site.all_aggregates %}
+      <a class="btn btn-default" data-sort-key="{{aggregate}}">Number of Articles</a>
+      {% endfor %}
     </div>
     <table class="table table-condensed">
       <tr>

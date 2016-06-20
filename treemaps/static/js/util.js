@@ -28,8 +28,9 @@ OSDE.mergeArgs = function(args) {
 	return query.join('&');
 };
 
-OSDE.amount = function(num) {
-	return accounting.formatMoney(num, "€", 0, ".");
+OSDE.format_value = function(num, aggregate_function) {
+    if (aggregate_function == "sum") {
+        return accounting.formatMoney(num, "€", 0, ".");
+    }
+    return num;
 }
-
-OSDE.default_sort = "apc_amount_sum";
