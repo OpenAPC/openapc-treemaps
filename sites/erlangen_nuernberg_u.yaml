@@ -1,0 +1,24 @@
+name: Friedrich-Alexander-Universität Erlangen-Nürnberg
+slug: erlangen_nuernberg_u
+tagline: Friedrich-Alexander-Universität Erlangen-Nürnberg APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+country: DEU
+state: BY
+level: kommune
+dataset: 'erlangen_nuernberg_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
