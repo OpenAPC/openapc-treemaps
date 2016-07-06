@@ -9,6 +9,10 @@ $(function() {
             'scale': 4000,
             'center': [13.3, 47.6]
         },
+        'GBR': {
+            'scale': 1800,
+            'center': [-3, 55.0]
+        }
     };
     
 	var sites = JSON.parse($('#sites-data').html()),
