@@ -109,16 +109,16 @@
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
     <div id="sort-menu" class="btn-group btn-group-sm">
       <a class="btn btn-default"><strong>Sort by:</strong></a>
-      <a class="btn btn-default" data-sort-key="apc_num_items">Number of Articles</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_sum">Sum</a>
-      <a class="btn btn-default" data-sort-key="apc_amount_avg">Mean Value</a>
+      {{#each all_aggregates}}
+      <a class="btn btn-default" data-sort-key="{{name}}">{{label}}</a>
+      {{/each}}
     </div>
     <table class="table table-condensed">
       <tr>
         <th>Title</th>
-        <th class="num">Number of Articles</th>
-        <th class="num">Sum</th>
-        <th class="num">Mean Value</th>
+        {{#each all_aggregates}}
+        <th class="num">{{label}}</th>
+        {{/each}}
         <th class="num">Percentage</th>
       </tr>
       {{#each cells}}
@@ -135,9 +135,10 @@
               {{_current_label}}
             {{/if}}
           </td>
-          <td class="num">{{_num_items}}</td>
           <td class="num">{{_value_fmt}}</td>
-          <td class="num">{{_avg_fmt}}</td>
+          {{#each other_aggregate_values}}
+          <td class="num">{{this}}</td>
+          {{/each}}
           <td class="num">{{_percentage_fmt}}</td>
         </tr>
       {{/each}}
@@ -153,9 +154,10 @@
         <th>
           Total
         </th>
-        <th class="num">{{summary._num_items}}</th>
         <th class="num">{{summary._value_fmt}}</th>
-        <th class="num">{{summary._value_avg}}</th>
+        {{#each other_aggregate_summaries}}
+          <th class="num">{{this}}</th>
+          {{/each}}
         <th class="num">100%</th>
       </tr>
     </table>

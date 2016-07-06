@@ -108,20 +108,29 @@ class Site(_DataObject):
     def get_aggregate(self):
         if 'aggregate' in self.data:
             return self.data.get('aggregate')
-        aggs = []
+        sum_aggs = []
+        count_aggs = []
         print self.model.get('aggregates')
         for agg in self.model.get('aggregates'):
             if agg.get('function') == 'sum':
-                aggs.append(agg['ref'])
-        if len(aggs) != 1:
-            raise ValueError('Ambiguous aggregates: %r' % aggs)
-        return aggs[0]
+                sum_aggs.append(agg['ref'])
+            elif agg.get('function') == 'count':
+                count_aggs.append(agg['ref'])
+        if len(sum_aggs) == 1:
+            return {"aggregate": sum_aggs[0], "function": "sum"}
+        elif len(count_aggs) == 1:
+            return {"aggregate": count_aggs[0], "function": "count"}
+        else:
+            raise ValueError('Neither a singular sum aggregate nor a singular count aggregate found!')
 
     def to_dict(self):
         data = self.data.copy()
         data['slug'] = self.slug
         data['api'] = self.api_base
-        data['aggregate'] = self.get_aggregate()
+        aggregate_dict = self.get_aggregate()
+        data['aggregate'] = aggregate_dict["aggregate"]
+        data['aggregate_function'] = aggregate_dict["function"]
+        data['all_aggregates'] = self.model.get('aggregates')
 
         # This seems hacky.
         data['keyrefs'] = {}
