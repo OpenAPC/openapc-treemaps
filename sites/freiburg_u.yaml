@@ -1,0 +1,24 @@
+name: University of Freiburg
+slug: freiburg_u
+tagline: University of Freiburg APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+country: DEU
+state: BW
+level: kommune
+dataset: 'freiburg_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
