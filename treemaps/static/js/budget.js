@@ -114,10 +114,7 @@ $(function(){
     }
     var path = parsePath(rawPath),
         rootDimension = path.hierarchy.drilldowns[0],
-        rootColor = null;
-        color = d3.scale.ordinal().range(OSDE.categoryColors),
         cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args);
-
     $hierarchyMenu.find('.btn').removeClass('active');
     $hierarchyMenu.find('.btn.' + path.hierarchyName).addClass('active');
 
@@ -151,95 +148,89 @@ $(function(){
 
     var baseCuts = $.extend({}, baseFilters, path.hierarchy.cuts);
     var sortKey = $('[data-sort-key].active').data('sort-key');
+    
+    getData(path.drilldown, cuts, sortKey).done(function(data) {
 
-    getData(rootDimension, baseCuts, sortKey).done(function(base) {
+      var dimension = path.drilldown;
 
-      $.each(base.cells, function(i, drilldown) {
-        drilldown._color = color(i);
-        var rootRef = site.keyrefs[rootDimension];
-        if (cuts[rootDimension] && cuts[rootDimension] == drilldown[rootRef]) {
-          rootColor = d3.rgb(drilldown._color);
+      if (dimension != rootDimension) {
+        var rootColor = d3.rgb(OSDE.labelToColor(cuts[rootDimension])),
+          color_scale = d3.scale.linear();
+        color_scale = color_scale.interpolate(d3.interpolateRgb)
+        color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
+        color_scale = color_scale.domain([data.total_cell_count, 0]);
+      }
+      data.all_aggregates = site.all_aggregates;
+      data.summary._value = data.summary[site.aggregate];
+      data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
+      data.other_aggregate_summaries = {};
+      $.each(site.all_aggregates, function(f, aggregate) {
+        if (aggregate.name != site.aggregate) {
+          data.other_aggregate_summaries[aggregate.name] = OSDE.format_value(data.summary[aggregate.name], aggregate.function);
+        }
+      });
+      data.summary._num_items = data.summary['apc_num_items'];
+
+      $.each(data.cells, function(e, cell) {
+        cell._current_label = cell[site.labelrefs[dimension]];
+        cell._current_key = cell[site.keyrefs[dimension]];
+        cell._value = cell[site.aggregate];
+        cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
+        cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
+        cell._small = cell._percentage < 0.01;
+        cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
+        cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
+        cell.other_aggregate_values = {};
+        $.each(site.all_aggregates, function(f, aggregate) {
+          if (aggregate.name != site.aggregate) {
+            cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
+          }
+        });
+        if (!path.bottom) {
+          var modifiers = {};
+          modifiers[dimension] = cell._current_key;
+          cell._url = makeUrl(path, modifiers);
+        } else if (cell.doi) {
+          cell._doi = "http://dx.doi.org/" + cell.doi;
+        }
+        else {
+          cell._no_url = true;
+        }
+        if (dimension != rootDimension) {
+          cell._color = color_scale(e);
+        }
+        else {
+          cell._color = OSDE.labelToColor(cell._current_key);
+        }
+        if (cell.doi) {
+          cell._doi = "http://dx.doi.org/" + cell.doi;
         }
       });
 
-      getData(path.drilldown, cuts, sortKey).done(function(data) {
-
-        var dimension = path.drilldown;
-
-        if (dimension != rootDimension) {
-          color = d3.scale.linear();
-          color = color.interpolate(d3.interpolateRgb)
-          color = color.range([rootColor.brighter(), rootColor.darker().darker()]);
-          color = color.domain([data.total_cell_count, 0]);
-        }
-
-        data.all_aggregates = site.all_aggregates;
-        data.summary._value = data.summary[site.aggregate];
-        data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
-        data.other_aggregate_summaries = {};
-        $.each(site.all_aggregates, function(f, aggregate) {
-          if (aggregate.name != site.aggregate) {
-            data.other_aggregate_summaries[aggregate.name] = OSDE.format_value(data.summary[aggregate.name], aggregate.function);
-          }
-        });
-        data.summary._num_items = data.summary['apc_num_items'];
-
-        $.each(data.cells, function(e, cell) {
-          cell._current_label = cell[site.labelrefs[dimension]];
-          cell._current_key = cell[site.keyrefs[dimension]];
-          cell._value = cell[site.aggregate];
-          cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
-          cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
-          cell._small = cell._percentage < 0.01;
-          cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
-          cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
-          cell.other_aggregate_values = {};
-          $.each(site.all_aggregates, function(f, aggregate) {
-            if (aggregate.name != site.aggregate) {
-              cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
-            }
-          });
-          if (!path.bottom) {
-            var modifiers = {};
-            modifiers[dimension] = cell._current_key;
-            cell._url = makeUrl(path, modifiers);
-          } else if (cell.doi) {
-            cell._doi = "http://dx.doi.org/" + cell.doi;
-          }
-          else {
-            cell._no_url = true;
-          }
-          cell._color = color(e);
-          
-          if (cell.doi) {
-            cell._doi = "http://dx.doi.org/" + cell.doi;
-          }
-        });
-
-        treemap.render(data, path.drilldown);
-        //store current sort key and set it again after rendering
-        if (!$('[data-sort-key].active').length) {
-          $('[data-sort-key="' + OSDE.default_sort + '"]').addClass('active');
-          var sort_key = OSDE.default_sort;
-        }
-        else {
-          var sort_key = $('[data-sort-key].active').data('sort-key');
-        }
-        table.render(data, path.drilldown);
-        
-        $('[data-sort-key]').removeClass('active');
-        $('[data-sort-key="' + sort_key + '"]').addClass('active');
-        
-        $('[data-sort-key]').each(function() {
-          $(this).click(function(e) {
-            $('[data-sort-key]').removeClass('active');
-            var $e = $(e.target);
-            $e.addClass('active');
-            update();
-          });
+      treemap.render(data, path.drilldown);
+      //store current sort key and set it again after rendering
+      if (!$('[data-sort-key].active').length) {
+        $('[data-sort-key="' + OSDE.default_sort + '"]').addClass('active');
+        var sort_key = OSDE.default_sort;
+      }
+      else {
+        var sort_key = $('[data-sort-key].active').data('sort-key');
+      }
+      table.render(data, path.drilldown);
+      
+      $('[data-sort-key]').removeClass('active');
+      $('[data-sort-key="' + sort_key + '"]').addClass('active');
+      
+      $('[data-sort-key]').each(function() {
+        $(this).click(function(e) {
+          $('[data-sort-key]').removeClass('active');
+          var $e = $(e.target);
+          $e.addClass('active');
+          update();
         });
       });
     });
+    /*});*/
     $embedCode.text(embedTemplate({
       name: site.name,
       baseurl: document.location.href.split('#')[0],

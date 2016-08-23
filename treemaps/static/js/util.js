@@ -7,7 +7,16 @@ OSDE.categoryColors = [
     "#6E3F7C", "#6A246D", "#8A4873", "#EB0080", "#EF58A0", "#C05A89"
     ];
     
-
+/*
+ * Map an entity name to a color by interpreting the last 24 bit
+ * of its MD5 hash as an RGB value.
+ */
+OSDE.labelToColor = function(args) {
+    var hash = md5(args);
+    hash = hash.slice(26);
+    hash = "#" + hash;
+    return hash;
+}
 
 OSDE.parseArgs = function(args) {
 	var queryString = {};
