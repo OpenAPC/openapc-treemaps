@@ -38,9 +38,7 @@ $(function(){
       data: {
         drilldown: drilldowns.join('|'),
         cut: cutStr.join('|'),
-        order: sortkey + ':desc',
-        page: 0,
-        pagesize: 500
+        order: sortkey + ':desc'
       },
       dataType: 'json',
       cache: true
@@ -152,7 +150,6 @@ $(function(){
     getData(path.drilldown, cuts, sortKey).done(function(data) {
 
       var dimension = path.drilldown;
-
       if (dimension != rootDimension) {
         var rootColor = d3.rgb(OSDE.labelToColor(cuts[rootDimension])),
           color_scale = d3.scale.linear();
@@ -205,6 +202,24 @@ $(function(){
         if (cell.doi) {
           cell._doi = "http://dx.doi.org/" + cell.doi;
         }
+        if (data.total_cell_count > 500) {
+          data._reduction_hint = true;
+        }
+        //Construct the breadcrumb
+        var title = "";
+        $.each(path.hierarchy.drilldowns, function(i, drilldown) {
+          if (drilldown in path.args) {
+            title += path.args[drilldown];
+            title += " // ";
+          }
+        });
+        if (path.drilldown in OSDE.drilldownLabels) {
+          title += OSDE.drilldownLabels[path.drilldown];
+        }
+        else {
+          title += "Title";
+        }
+        data._title = title;
       });
 
       treemap.render(data, path.drilldown);

@@ -115,7 +115,7 @@
     </div>
     <table class="table table-condensed">
       <tr>
-        <th>Title</th>
+        <th>{{_title}} ({{total_cell_count}} entries{{#if _reduction_hint}}<span id=reduction_hint>*<span id="reduction_tooltip">Note: The treemap and table are both limited to a visualisation of 500 entries. The summarized values in the "Total" row are still correct nonetheless.</span></span>{{/if}})</th>
         {{#each all_aggregates}}
         <th class="num">{{label}}</th>
         {{/each}}
