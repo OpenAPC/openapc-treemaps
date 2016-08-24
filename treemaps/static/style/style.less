@@ -319,6 +319,28 @@ h1.page-header.site {
   }
 }
 
+#reduction_hint {
+  color: red;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+}
+
+#reduction_tooltip {
+  color: white;
+  display: inline-block;
+  position: absolute;
+  visibility: hidden;
+  background-color: black;
+  padding: 6px;
+  width: 400px;
+  border-radius: 5px;
+}
+
+#reduction_hint:hover #reduction_tooltip {
+  visibility: visible;
+}
+
 #sort-menu {
   padding-bottom: 0.5em;
 }
