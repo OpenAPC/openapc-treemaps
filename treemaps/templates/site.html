@@ -113,6 +113,11 @@
       <a class="btn btn-default" data-sort-key="{{name}}">{{label}}</a>
       {{/each}}
     </div>
+    <div id="facts_download_panel" class="btn-group btn-group-sm pull-right">
+      <a class="btn btn-default"><strong>Download as:</strong></a>
+      <a class="btn btn-default" href="{{_facts_url_csv}}">CSV</a>
+      <a class="btn btn-default" href="{{_facts_url_json}}">JSON</a>
+    </div>
     <table class="table table-condensed">
       <tr>
         <th>{{_title}} ({{total_cell_count}} entries{{#if _reduction_hint}}<span id=reduction_hint>*<span id="reduction_tooltip">Note: The treemap and table are both limited to a visualisation of 500 entries. The summarized values in the "Total" row are still correct nonetheless.</span></span>{{/if}})</th>
