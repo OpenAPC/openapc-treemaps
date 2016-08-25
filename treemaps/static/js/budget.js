@@ -22,9 +22,14 @@ $(function(){
       cutString = cutString.replace(/-/g, '\\-');
       return cutString;
   }
+  
+  function buildCutString(cutObject) {
+    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
+    return cutStr.join('|');
+  }
 
   function getData(drilldown, cut, sortkey) {
-    var cutStr = $.map(cut, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
+    var cutStr = buildCutString(cut);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
       sortkey = site["aggregate"];
@@ -37,7 +42,7 @@ $(function(){
       crossDomain: true,
       data: {
         drilldown: drilldowns.join('|'),
-        cut: cutStr.join('|'),
+        cut: cutStr,
         order: sortkey + ':desc'
       },
       dataType: 'json',
@@ -167,7 +172,29 @@ $(function(){
         }
       });
       data.summary._num_items = data.summary['apc_num_items'];
-
+      if (data.total_cell_count > 500) {
+        data._reduction_hint = true;
+      }
+      //Construct the breadcrumb
+      var title = "";
+      $.each(path.hierarchy.drilldowns, function(i, drilldown) {
+        if (drilldown in path.args) {
+          title += path.args[drilldown];
+          title += " // ";
+        }
+      });
+      if (path.drilldown in OSDE.drilldownLabels) {
+        title += OSDE.drilldownLabels[path.drilldown];
+      }
+      else {
+        title += "Title";
+      }
+      data._title = title;
+      
+      var cutStr = buildCutString(cuts);
+      data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+      data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
+      
       $.each(data.cells, function(e, cell) {
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
@@ -202,24 +229,6 @@ $(function(){
         if (cell.doi) {
           cell._doi = "http://dx.doi.org/" + cell.doi;
         }
-        if (data.total_cell_count > 500) {
-          data._reduction_hint = true;
-        }
-        //Construct the breadcrumb
-        var title = "";
-        $.each(path.hierarchy.drilldowns, function(i, drilldown) {
-          if (drilldown in path.args) {
-            title += path.args[drilldown];
-            title += " // ";
-          }
-        });
-        if (path.drilldown in OSDE.drilldownLabels) {
-          title += OSDE.drilldownLabels[path.drilldown];
-        }
-        else {
-          title += "Title";
-        }
-        data._title = title;
       });
 
       treemap.render(data, path.drilldown);
