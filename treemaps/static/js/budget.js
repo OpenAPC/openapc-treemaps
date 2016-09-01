@@ -11,6 +11,7 @@ $(function(){
 
   var $hierarchyMenu = $('#hierarchy-menu'),
       $infobox = $('#infobox'),
+      $plotbox = $('#plotbox'),
       $parent = $('#parent'),
       $filterValues = $('.site-filters .value'),
       treemap = new OSDE.TreeMap('#treemap'),
@@ -61,6 +62,19 @@ $(function(){
     }
     return false;
   });
+  
+  $('#plotbox-toggle').click(function(e) {
+    var $e = $(e.target);
+    if ($e.hasClass('active')) {
+      $e.removeClass('active');
+      $plotbox.slideUp();
+    } else {
+      $e.addClass('active');
+      $plotbox.slideDown();
+      generatePieChart();
+    }
+    return false;
+  });
 
   function parsePath(hash) {
     var path = {},
@@ -80,6 +94,14 @@ $(function(){
       path.args[path.hierarchy.drilldowns[i]] = decodeURIComponent(val);
     });
     return path;
+  }
+  
+  function getPathObject() {
+    var rawPath = window.location.hash.substring(1);
+    if (!rawPath.length) {
+      rawPath = site.default + '/'
+    }
+    return parsePath(rawPath);
   }
 
   function parentUrl(path) {
@@ -109,14 +131,89 @@ $(function(){
     });
     return url + OSDE.mergeArgs(args);
   }
+  
+  function generatePieChart() {
+    var $plot = $("#pie-plot");
+    $plot.empty();
+    var width = $plot.width(),
+        height = $plot.height(),
+        radius = (Math.min(width, height) / 2) - 100,
+        path = getPathObject();
+
+    var cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
+      cutStr = buildCutString(cuts),
+      csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(radius - 40);
+
+    var pie = d3.layout.pie();
+
+    d3.csv(csv_url, function(d) {
+      d.euro = +d.euro;
+      return d;
+    }, function(error, data) {
+      if (error) throw error;
+      
+      var reduced_data = {},
+        sum = 0;
+      for (var i in data) {
+        var key = data[i][path.drilldown];
+        if (!(key in reduced_data)) {
+          reduced_data[key] = data[i].euro;
+        }
+        else {
+          reduced_data[key] += data[i].euro;
+        }
+        sum += data[i].euro;
+      }
+      
+      var values = [],
+          labels = [];
+          show_label = [];
+      for (var key in reduced_data) {
+        labels.push(key);
+        values.push(reduced_data[key]);
+        if (reduced_data[key] < (sum / 20)) {
+          show_label.push(false);
+        }
+        else {
+          show_label.push(true);
+        }
+      }
+      
+      var svg = d3.select("#pie-plot")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      
+      var slices = svg.selectAll("path")
+        .data(pie(values))
+        .enter();
+        
+      slices.append("path")
+        .style("fill", function(d, i) { return OSDE.labelToColor(labels[i]); })
+        .attr("d", arc);
+        
+      slices.append("text")
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .text(function(d, i) { 
+          if (show_label[i]) {
+            return labels[i];
+          }
+          return "";
+        });
+    });
+  }
+  
 
   function update() {
-    var rawPath = window.location.hash.substring(1);
-    if (!rawPath.length) {
-      rawPath = site.default + '/'
-    }
-    var path = parsePath(rawPath),
-        rootDimension = path.hierarchy.drilldowns[0],
+    var path = getPathObject();
+    var rootDimension = path.hierarchy.drilldowns[0],
         cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args);
     $hierarchyMenu.find('.btn').removeClass('active');
     $hierarchyMenu.find('.btn.' + path.hierarchyName).addClass('active');
