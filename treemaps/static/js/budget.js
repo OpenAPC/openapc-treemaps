@@ -67,11 +67,15 @@ $(function(){
     var $e = $(e.target);
     if ($e.hasClass('active')) {
       $e.removeClass('active');
-      $plotbox.slideUp();
+      $plotbox.slideUp(400);
     } else {
       $e.addClass('active');
-      $plotbox.slideDown();
-      generatePieChart();
+      var $plots = $(".plot");
+      var $loader = $("<img src='/static/img/plot-loading.gif' alt='generating plot...'>");
+      $plots.empty().append($loader);
+      $plotbox.slideDown(400, function() {
+        generatePieChart();
+      });
     }
     return false;
   });
@@ -133,11 +137,12 @@ $(function(){
   }
   
   function generatePieChart() {
+    
     var $plot = $("#pie-plot");
-    $plot.empty();
+    
     var width = $plot.width(),
         height = $plot.height(),
-        radius = (Math.min(width, height) / 2) - 100,
+        radius = (Math.min(width, height) / 2) - 30,
         path = getPathObject();
 
     var cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
@@ -147,6 +152,10 @@ $(function(){
     var arc = d3.svg.arc()
         .outerRadius(radius)
         .innerRadius(radius - 40);
+        
+    var labelArc = d3.svg.arc()
+        .outerRadius(radius - 20)
+        .innerRadius(radius - 20);
 
     var pie = d3.layout.pie();
 
@@ -182,13 +191,13 @@ $(function(){
           show_label.push(true);
         }
       }
-      
+      $plot.empty();
       var svg = d3.select("#pie-plot")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + (width / 2 - 75) + "," + height / 2 + ")");
       
       var slices = svg.selectAll("path")
         .data(pie(values))
@@ -199,11 +208,11 @@ $(function(){
         .attr("d", arc);
         
       slices.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
         .attr("dy", ".35em")
         .text(function(d, i) { 
           if (show_label[i]) {
-            return labels[i];
+            return OSDE.abbreviateLabel(labels[i]);
           }
           return "";
         });
@@ -340,7 +349,6 @@ $(function(){
         });
       });
     });
-    /*});*/
     $embedCode.text(embedTemplate({
       name: site.name,
       baseurl: document.location.href.split('#')[0],

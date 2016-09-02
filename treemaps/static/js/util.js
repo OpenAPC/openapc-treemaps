@@ -25,6 +25,39 @@ OSDE.labelToColor = function(args) {
     return hash;
 }
 
+/*
+ * Abbreviate long labels.
+ */ 
+OSDE.abbreviateLabel = function(label) {
+    // do not abbreviate shorter strings or single words
+    if (label.length > 25 && label.indexOf(" ") != -1) {
+        var words = label.split(" ");
+        var lastWord = words.slice(-1)[0];
+        // if the last word is in braces, simply return it
+        if (lastWord.slice(0, 1) == "(" && lastWord.slice(-1) == ")") {
+            return lastWord.slice(1, -1);
+        }
+        //Shorten the label by abbreviating longer words, longest first
+        var index_longest = 0;
+        var length_longest = 0;
+        while(label.length > 25 && index_longest != -1) {
+            index_longest = -1;
+            length_longest = 0;
+            for (var i in words) {
+                if (words[i].length > 3 && words[i].length > length_longest) {
+                    index_longest = i;
+                    length_longest = words[i].length;
+                }
+            }
+            if (index_longest > -1) {
+                words[index_longest] = words[index_longest][0] + ".";
+                label = words.join(" ");
+            }
+        } 
+    }
+    return label;
+}
+
 OSDE.parseArgs = function(args) {
 	var queryString = {};
 	args.split("&").forEach(function (pair) {
