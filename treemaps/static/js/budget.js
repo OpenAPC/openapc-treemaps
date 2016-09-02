@@ -70,15 +70,23 @@ $(function(){
       $plotbox.slideUp(400);
     } else {
       $e.addClass('active');
-      var $plots = $(".plot");
-      var $loader = $("<img src='/static/img/plot-loading.gif' alt='generating plot...'>");
-      $plots.empty().append($loader);
+      resetPlots();
       $plotbox.slideDown(400, function() {
-        generatePieChart();
+        generatePlots();
       });
     }
     return false;
   });
+  
+  function resetPlots() {
+    var $plots = $(".plot");
+    var $loader = $("<img src='/static/img/plot-loading.gif' alt='generating plot...'>");
+    $plots.empty().append($loader);
+  }
+  
+  function generatePlots() {
+    generatePieChart();
+  }
 
   function parsePath(hash) {
     var path = {},
@@ -150,12 +158,12 @@ $(function(){
       csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
 
     var arc = d3.svg.arc()
-        .outerRadius(radius)
-        .innerRadius(radius - 40);
+        .outerRadius(radius - 40)
+        .innerRadius(radius - 120);
         
     var labelArc = d3.svg.arc()
-        .outerRadius(radius - 20)
-        .innerRadius(radius - 20);
+        .outerRadius(radius - 80)
+        .innerRadius(radius - 80);
 
     var pie = d3.layout.pie();
 
@@ -197,7 +205,7 @@ $(function(){
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(" + (width / 2 - 75) + "," + height / 2 + ")");
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
       
       var slices = svg.selectAll("path")
         .data(pie(values))
@@ -208,13 +216,25 @@ $(function(){
         .attr("d", arc);
         
       slices.append("text")
-        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+        .attr("transform", function(d) {
+          var centroid = labelArc.centroid(d);
+          var x = centroid[0],
+              y = centroid[1];
+          var degrees = (Math.atan(x / -y) * 180) / Math.PI;
+          if (x * y > 0) {
+            degrees += 90;
+          }
+          else {
+            degrees -= 90;
+          }
+          return "translate(" + centroid + ") rotate(" + degrees + ")";
+        })
         .attr("dy", ".35em")
+        .attr("text-anchor", "middle")
         .text(function(d, i) { 
           if (show_label[i]) {
             return OSDE.abbreviateLabel(labels[i]);
           }
-          return "";
         });
     });
   }
@@ -348,6 +368,8 @@ $(function(){
           update();
         });
       });
+      resetPlots();
+      generatePlots();
     });
     $embedCode.text(embedTemplate({
       name: site.name,

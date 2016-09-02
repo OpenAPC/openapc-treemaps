@@ -30,7 +30,7 @@ OSDE.labelToColor = function(args) {
  */ 
 OSDE.abbreviateLabel = function(label) {
     // do not abbreviate shorter strings or single words
-    if (label.length > 25 && label.indexOf(" ") != -1) {
+    if (label.length > 30 && label.indexOf(" ") != -1) {
         var words = label.split(" ");
         var lastWord = words.slice(-1)[0];
         // if the last word is in braces, simply return it
@@ -40,7 +40,7 @@ OSDE.abbreviateLabel = function(label) {
         //Shorten the label by abbreviating longer words, longest first
         var index_longest = 0;
         var length_longest = 0;
-        while(label.length > 25 && index_longest != -1) {
+        while(label.length > 30 && index_longest != -1) {
             index_longest = -1;
             length_longest = 0;
             for (var i in words) {
