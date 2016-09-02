@@ -252,13 +252,7 @@ $(function(){
     getData(path.drilldown, cuts, sortKey).done(function(data) {
 
       var dimension = path.drilldown;
-      if (dimension != rootDimension) {
-        var rootColor = d3.rgb(OSDE.labelToColor(cuts[rootDimension])),
-          color_scale = d3.scale.linear();
-        color_scale = color_scale.interpolate(d3.interpolateRgb)
-        color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
-        color_scale = color_scale.domain([data.total_cell_count, 0]);
-      }
+
       data.all_aggregates = site.all_aggregates;
       data.summary._value = data.summary[site.aggregate];
       data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
@@ -317,12 +311,7 @@ $(function(){
         else {
           cell._no_url = true;
         }
-        if (dimension != rootDimension) {
-          cell._color = color_scale(e);
-        }
-        else {
-          cell._color = OSDE.labelToColor(cell._current_key);
-        }
+        cell._color = OSDE.labelToColor(cell._current_key);
         if (cell.doi) {
           cell._doi = "http://dx.doi.org/" + cell.doi;
         }
