@@ -236,7 +236,49 @@ $(function(){
             return OSDE.abbreviateLabel(labels[i]);
           }
         });
+        
+      svg = d3.select('#pie-plot > svg');
+      svg_data = svgBase64(svg);
+      svg.remove();
+      
+      buildPlot($("#pie-plot-area"), svg_data);
     });
+  }
+  
+  /*
+   * Convert a XML/HTML representation of an SVG to a base64-encoded data url
+   */
+  function svgBase64(svg) {
+    var svg_xml = svg
+        .attr("version", 1.1)
+        .attr("xmlns", "http://www.w3.org/2000/svg")
+        .node().parentNode.innerHTML;
+    return 'data:image/svg+xml;base64,'+ btoa(svg_xml);
+  }
+  
+  function buildPlot($plot_area, svg_data) {
+    
+    var $group = $plot_area.find(".download-group");
+    $group.empty();
+    $group.append($('<a class="btn btn-default"><strong>Download as:</strong></a>'));
+    
+    $plot_area.find(".plot").append($("<canvas width=550 height=550 />"));
+    var canvas = $plot_area.find("canvas")[0];
+        context = canvas.getContext("2d");
+    
+    var image = new Image;
+    image.src = svg_data;
+    image.onload = function() {
+      context.drawImage(image, 0, 0);
+      var png_data = canvas.toDataURL("image/png");
+      var $png_btn = $('<a download="test.png" href="' + png_data + '" class="btn btn-default">PNG</a>');
+      $group.append($png_btn);
+    };
+    
+    var $svg_btn = $('<a download="test.svg" href="' + svg_data + '" class="btn btn-default">SVG</a>');
+    $group.append($svg_btn);
+    
+    //<a href="#publisher/" class="btn btn-default publisher active">Publisher</a>'
   }
   
 
