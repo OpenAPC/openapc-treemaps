@@ -86,6 +86,7 @@ $(function(){
   
   function generatePlots() {
     generatePieChart();
+    generateWhiskerPlot();
   }
 
   function parsePath(hash) {
@@ -144,11 +145,86 @@ $(function(){
     return url + OSDE.mergeArgs(args);
   }
   
+  function generateWhiskerPlot() {
+    
+    var margin = {top: 10, right: 50, bottom: 20, left: 50},
+      width = 120 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+    
+    var $plot = $("#whisker-plot"),
+        path = getPathObject();
+        
+    var cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
+      cutStr = buildCutString(cuts),
+      csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+    
+    var min = Infinity,
+      max = -Infinity;
+
+    var chart = d3.box()
+      .whiskers(iqr(1.5))
+      .width(width)
+      .height(height);
+
+    d3.csv(csv_url, function(error, csv) {
+        if (error) throw error;
+        
+        var year_map = {};
+        csv.forEach(function(x) {
+            var year = +x.period,
+                euro = +x.euro;
+            if (year in year_map) {
+                year_map[year].push(euro);
+            }
+            else {
+                year_map[year] = [euro];
+            }
+            if (euro > max) max = euro;
+            if (euro < min) min = euro;
+        });
+      
+        var data = [],
+            years = Object.keys(year_map);
+            
+        years.sort();
+        
+        $.each(years, function(index, year) {
+            data.push([year, year_map[year]]);
+        });
+        console.log(data);
+      
+        chart.domain([min, max]);
+        var svg = d3.select("#whisker-plot").selectAll("svg")
+            .data(data)
+            .enter().append("svg")
+            .attr("class", "box")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.bottom + margin.top)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .call(chart);
+        });
+    
+  }
+  
+  // Returns a function to compute the interquartile range.
+  function iqr(k) {
+    return function(d, i) {
+      var q1 = d.quartiles[0],
+          q3 = d.quartiles[2],
+          iqr = (q3 - q1) * k,
+          i = -1,
+          j = d.length;
+      while (d[++i] < q1 - iqr);
+      while (d[--j] > q3 + iqr);
+      return [i, j];
+    };
+  }
+  
   function generatePieChart() {
     
-    var $plot = $("#pie-plot");
-    
-    var width = $plot.width(),
+    var $plot = $("#pie-plot"),   
+        width = $plot.width(),
         height = $plot.height(),
         radius = (Math.min(width, height) / 2) - 30,
         path = getPathObject();
@@ -256,6 +332,9 @@ $(function(){
     return 'data:image/svg+xml;base64,'+ btoa(svg_xml);
   }
   
+  /*
+   * Generate a canvas to display the plot and create the according download options 
+   */
   function buildPlot($plot_area, svg_data) {
     
     var $group = $plot_area.find(".download-group");
@@ -277,8 +356,6 @@ $(function(){
     
     var $svg_btn = $('<a download="test.svg" href="' + svg_data + '" class="btn btn-default">SVG</a>');
     $group.append($svg_btn);
-    
-    //<a href="#publisher/" class="btn btn-default publisher active">Publisher</a>'
   }
   
 

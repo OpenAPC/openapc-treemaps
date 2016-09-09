@@ -249,6 +249,32 @@ h1.page-header.site {
   height: 550px;
 }
 
+/* whisker plot */
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #ccc;
+}
+
+.box .xLabel {
+  font-weight: bold;
+}
+
 /* Tree maps */
 #treemap {
   min-height: 500px;

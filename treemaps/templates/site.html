@@ -101,6 +101,15 @@
             <div id="pie-plot" class="plot"></div>
           </div>
         </div>
+        <div class="row">
+          <div id="whisker-plot-area" class="col-md-12">
+            <p>
+              <strong>Box-and-Whisker Plot</strong>
+            </p>
+            <div class="btn-group btn-group-sm download-group"></div>
+            <div id="whisker-plot" class="plot"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -196,7 +205,8 @@
   {% assets filters="uglifyjs", output="gen/budget.%(version)s.js",
         "js/treemap.js",
         "js/table.js",
-        "js/budget.js" %}
+        "js/budget.js",
+        "js/box.js" %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
 {% endblock %}
