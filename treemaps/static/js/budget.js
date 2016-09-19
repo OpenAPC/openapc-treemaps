@@ -85,8 +85,19 @@ $(function(){
   }
   
   function generatePlots() {
-    generatePieChart();
-    generateWhiskerPlot();
+    var path = getPathObject(),
+        cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
+        cutStr = buildCutString(cuts),
+        csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+    d3.csv(csv_url, function(error, csv) {
+        if (error) { 
+            throw error;
+        }
+        else {
+            generatePieChart(path, csv);
+            generateWhiskerPlot(csv);
+        }
+    });
   }
 
   function parsePath(hash) {
@@ -145,66 +156,64 @@ $(function(){
     return url + OSDE.mergeArgs(args);
   }
   
-  function generateWhiskerPlot() {
+  function generateWhiskerPlot(csv) {
     
-    var margin = {top: 10, right: 50, bottom: 20, left: 50},
-      width = 120 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+    var margin = {top: 10, right: 50, bottom: 35, left: 60},
+        width = 120 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
     
-    var $plot = $("#whisker-plot"),
-        path = getPathObject();
-        
-    var cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
-      cutStr = buildCutString(cuts),
-      csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+    var $plot = $("#whisker-plot");
     
     var min = Infinity,
-      max = -Infinity;
+        max = -Infinity;
 
     var chart = d3.box()
-      .whiskers(iqr(1.5))
-      .width(width)
-      .height(height);
+        .whiskers(iqr(1.5))
+        .width(width)
+        .height(height);
 
-    d3.csv(csv_url, function(error, csv) {
-        if (error) throw error;
+    var year_map = {};
+    csv.forEach(function(x) {
+        var year = +x.period,
+            euro = +x.euro;
+        if (year in year_map) {
+            year_map[year].push(euro);
+        }
+        else {
+            year_map[year] = [euro];
+        }
+        if (euro > max) max = euro;
+        if (euro < min) min = euro;
+    });
+  
+    var data = [],
+        years = Object.keys(year_map);
         
-        var year_map = {};
-        csv.forEach(function(x) {
-            var year = +x.period,
-                euro = +x.euro;
-            if (year in year_map) {
-                year_map[year].push(euro);
-            }
-            else {
-                year_map[year] = [euro];
-            }
-            if (euro > max) max = euro;
-            if (euro < min) min = euro;
-        });
-      
-        var data = [],
-            years = Object.keys(year_map);
-            
-        years.sort();
-        
-        $.each(years, function(index, year) {
-            data.push([year, year_map[year]]);
-        });
-        console.log(data);
-      
-        chart.domain([min, max]);
-        var svg = d3.select("#whisker-plot").selectAll("svg")
-            .data(data)
-            .enter().append("svg")
-            .attr("class", "box")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.bottom + margin.top)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-            .call(chart);
-        });
+    years.sort();
     
+    $.each(years, function(index, year) {
+        data.push([year, year_map[year]]);
+    });
+  
+    chart.domain([min, max]);
+    
+    $plot.empty();
+    var svg = d3.select("#whisker-plot").append("svg")
+        .attr("width", 1100)
+        .attr("height", 500)
+        .selectAll("g")
+        .data(data)
+        .enter().append("g")
+        .attr("class", "box")
+        .attr("transform", function(d, i) {
+            return "translate(" + (margin.left + 90*i) + "," + margin.top + ")"
+        })
+        .call(chart);
+
+    svg = d3.selectAll('#whisker-plot > svg');
+    svg_data = svgBase64(svg);
+    svg.remove();
+    buildPlot($("#whisker-plot-area"), svg_data);
   }
   
   // Returns a function to compute the interquartile range.
@@ -221,17 +230,12 @@ $(function(){
     };
   }
   
-  function generatePieChart() {
+  function generatePieChart(path, csv) {
     
     var $plot = $("#pie-plot"),   
         width = $plot.width(),
         height = $plot.height(),
-        radius = (Math.min(width, height) / 2) - 30,
-        path = getPathObject();
-
-    var cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args),
-      cutStr = buildCutString(cuts),
-      csv_url = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+        radius = (Math.min(width, height) / 2) - 30;
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 40)
@@ -242,83 +246,76 @@ $(function(){
         .innerRadius(radius - 80);
 
     var pie = d3.layout.pie();
-
-    d3.csv(csv_url, function(d) {
-      d.euro = +d.euro;
-      return d;
-    }, function(error, data) {
-      if (error) throw error;
       
-      var reduced_data = {},
+    var reduced_data = {},
         sum = 0;
-      for (var i in data) {
-        var key = data[i][path.drilldown];
+    for (var i in csv) {
+        var key = csv[i][path.drilldown];
         if (!(key in reduced_data)) {
-          reduced_data[key] = data[i].euro;
+            reduced_data[key] = +csv[i].euro;
         }
         else {
-          reduced_data[key] += data[i].euro;
+            reduced_data[key] += +csv[i].euro;
         }
-        sum += data[i].euro;
-      }
-      
-      var values = [],
-          labels = [];
-          show_label = [];
-      for (var key in reduced_data) {
+        sum += +csv[i].euro;
+    }
+
+    var values = [],
+        labels = [];
+        show_label = [];
+    for (var key in reduced_data) {
         labels.push(key);
         values.push(reduced_data[key]);
         if (reduced_data[key] < (sum / 20)) {
-          show_label.push(false);
+            show_label.push(false);
         }
         else {
-          show_label.push(true);
+            show_label.push(true);
         }
-      }
-      $plot.empty();
-      var svg = d3.select("#pie-plot")
+    }
+    $plot.empty();
+    var svg = d3.select("#pie-plot")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
       
-      var slices = svg.selectAll("path")
+    var slices = svg.selectAll("path")
         .data(pie(values))
         .enter();
         
-      slices.append("path")
+    slices.append("path")
         .style("fill", function(d, i) { return OSDE.labelToColor(labels[i]); })
         .attr("d", arc);
         
-      slices.append("text")
+    slices.append("text")
         .attr("transform", function(d) {
-          var centroid = labelArc.centroid(d);
-          var x = centroid[0],
-              y = centroid[1];
-          var degrees = (Math.atan(x / -y) * 180) / Math.PI;
-          if (x * y > 0) {
-            degrees += 90;
-          }
-          else {
-            degrees -= 90;
-          }
-          return "translate(" + centroid + ") rotate(" + degrees + ")";
+            var centroid = labelArc.centroid(d);
+            var x = centroid[0],
+                y = centroid[1];
+            var degrees = (Math.atan(x / -y) * 180) / Math.PI;
+            if (x * y > 0) {
+                degrees += 90;
+            }
+            else {
+                degrees -= 90;
+            }
+            return "translate(" + centroid + ") rotate(" + degrees + ")";
         })
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
         .text(function(d, i) { 
-          if (show_label[i]) {
-            return OSDE.abbreviateLabel(labels[i]);
-          }
+            if (show_label[i]) {
+                return OSDE.abbreviateLabel(labels[i]);
+            }
         });
         
-      svg = d3.select('#pie-plot > svg');
-      svg_data = svgBase64(svg);
-      svg.remove();
+    svg = d3.select('#pie-plot > svg');
+    svg_data = svgBase64(svg);
+    svg.remove();
       
-      buildPlot($("#pie-plot-area"), svg_data);
-    });
+    buildPlot($("#pie-plot-area"), svg_data);
   }
   
   /*
@@ -340,20 +337,18 @@ $(function(){
     var $group = $plot_area.find(".download-group");
     $group.empty();
     $group.append($('<a class="btn btn-default"><strong>Download as:</strong></a>'));
-    
-    $plot_area.find(".plot").append($("<canvas width=550 height=550 />"));
-    var canvas = $plot_area.find("canvas")[0];
+
+    $plot_area.find(".plot").append($("<canvas width=1100 height=550 />"));
+    var canvas = $plot_area.find("canvas")[0],
         context = canvas.getContext("2d");
-    
     var image = new Image;
     image.src = svg_data;
     image.onload = function() {
-      context.drawImage(image, 0, 0);
-      var png_data = canvas.toDataURL("image/png");
-      var $png_btn = $('<a download="test.png" href="' + png_data + '" class="btn btn-default">PNG</a>');
-      $group.append($png_btn);
+        context.drawImage(image, 0, 0);
+        var png_data = canvas.toDataURL("image/png");
+        var $png_btn = $('<a download="test.png" href="' + png_data + '" class="btn btn-default">PNG</a>');
+        $group.append($png_btn);
     };
-    
     var $svg_btn = $('<a download="test.svg" href="' + svg_data + '" class="btn btn-default">SVG</a>');
     $group.append($svg_btn);
   }
@@ -487,8 +482,10 @@ $(function(){
           update();
         });
       });
-      resetPlots();
-      generatePlots();
+      if ($('#plotbox').is(':visible')) {
+        resetPlots();
+        generatePlots();
+      }
     });
     /*});*/
     $embedCode.text(embedTemplate({

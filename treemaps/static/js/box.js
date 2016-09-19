@@ -1,5 +1,5 @@
 /*
- * Additional functions to support whisker plots in d3.js, from
+ * Additional functions to support whisker plots in d3.js, based on
  * http://bl.ocks.org/mbostock/4061502
  * 
  * Licensed under the GNU General Public License, version 3
@@ -24,11 +24,9 @@ d3.box = function() {
   function box(g) {
     g.each(function(box_data, i) {
       var d = box_data[1],
-        xLabel = box_data[0] + " (" + d.length + ")"
-        
-      console.log(d);
+        xLabel = [box_data[0], "(" + d.length + ")"] // year + num articles
+
       d = d.map(value).sort(d3.ascending);
-      console.log(d);
       var g = d3.select(this),
           n = d.length,
           min = d[0],
@@ -70,7 +68,8 @@ d3.box = function() {
           .data(whiskerData ? [whiskerData] : []);
 
       center.enter().insert("line", "rect")
-          .attr("class", "center")
+          .style("stroke-dasharray", 3,3)
+          .style("fill", "#fff").style("stroke", "#000").style("stroke-width", "1.5px")
           .attr("x1", width / 2)
           .attr("y1", function(d) { return x0(d[0]); })
           .attr("x2", width / 2)
@@ -100,7 +99,7 @@ d3.box = function() {
           .data([quartileData]);
 
       box.enter().append("rect")
-          .attr("class", "box")
+          .style("fill", "#fff").style("stroke", "#000").style("stroke-width", "1.5px")
           .attr("x", 0)
           .attr("y", function(d) { return x0(d[2]); })
           .attr("width", width)
@@ -120,7 +119,7 @@ d3.box = function() {
           .data([quartileData[1]]);
 
       medianLine.enter().append("line")
-          .attr("class", "median")
+          .style("fill", "#fff").style("stroke", "#000").style("stroke-width", "1.5px")
           .attr("x1", 0)
           .attr("y1", x0)
           .attr("x2", width)
@@ -140,7 +139,7 @@ d3.box = function() {
           .data(whiskerData || []);
 
       whisker.enter().insert("line", "circle, text")
-          .attr("class", "whisker")
+          .style("fill", "#fff").style("stroke", "#000").style("stroke-width", "1.5px")
           .attr("x1", 0)
           .attr("y1", x0)
           .attr("x2", width)
@@ -170,7 +169,8 @@ d3.box = function() {
           .data(outlierIndices, Number);
 
       outlier.enter().insert("circle", "text")
-          .attr("class", "outlier")
+          .style("stroke", "#ccc")
+          .style("fill", "none")
           .attr("r", 5)
           .attr("cx", width / 2)
           .attr("cy", function(i) { return x0(d[i]); })
@@ -199,7 +199,7 @@ d3.box = function() {
           .data(quartileData);
 
       boxTick.enter().append("text")
-          .attr("class", "box")
+          .style("font", "10px sans-serif")
           .attr("dy", ".3em")
           .attr("dx", function(d, i) { return i & 1 ? 6 : -6 })
           .attr("x", function(d, i) { return i & 1 ? width : 0 })
@@ -222,7 +222,7 @@ d3.box = function() {
           .data(whiskerData || []);
 
       whiskerTick.enter().append("text")
-          .attr("class", "whisker")
+          .style("font", "10px sans-serif")
           .attr("dy", ".3em")
           .attr("dx", 6)
           .attr("x", width)
@@ -247,12 +247,22 @@ d3.box = function() {
           .remove();
     
       //Add labels to x-axis
-      g.append("text")
-        .attr("class", "xLabel")
+      labelGroup = g.append("g");
+      labelGroup.append("text")
+        .style("font", "12px sans-serif")
+        .style("font-weight", "bold")
         .attr("dy", ".3em")
         .attr("dx", -6)
         .attr("y", height + 15)
-        .text(xLabel);
+        .text(xLabel[0]);
+      labelGroup.append("text")
+        .style("font", "12px sans-serif")
+        .style("font-weight", "bold")
+        .attr("dy", ".3em")
+        .attr("dx", -6)
+        .attr("y", height + 30)
+        .text(xLabel[1]);
+        
     });
     d3.timer.flush();
   }
