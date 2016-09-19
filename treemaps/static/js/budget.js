@@ -490,6 +490,7 @@ $(function(){
       resetPlots();
       generatePlots();
     });
+    /*});*/
     $embedCode.text(embedTemplate({
       name: site.name,
       baseurl: document.location.href.split('#')[0],
