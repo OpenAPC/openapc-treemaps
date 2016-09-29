@@ -1,0 +1,27 @@
+name: Helmholtz-Zentrum Dresden-Rossendorf
+slug: hzdr
+tagline: Helmholtz-Zentrum Dresden-Rossendorf APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+country: DEU
+state: SN
+level: kommune
+dataset: 'hzdr'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
