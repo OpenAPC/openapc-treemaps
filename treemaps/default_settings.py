@@ -4,7 +4,7 @@ SECRET_KEY = 'no'
 
 SITES_FOLDER = 'sites/'
 
-SLICER_URL = 'http://olap.intact-project.org/'
+SLICER_URL = 'https://olap.intact-project.org/'
 
 FREEZER_DESTINATION = '../build'
 FREEZER_REMOVE_EXTRA_FILES = True
