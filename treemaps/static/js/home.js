@@ -13,9 +13,17 @@ $(function() {
             'scale': 1800,
             'center': [-3, 55.0]
         },
+        'USA': {
+            'scale': 550,
+            'center': [-96, 35.0]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
+        },
+        'NORTH_AMERICA': {
+            'scale': 600,
+            'center': [-80, 30]
         },
         'WORLD': {
             'scale': 105,
