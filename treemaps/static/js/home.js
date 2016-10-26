@@ -1,6 +1,6 @@
 $(function() {
     
-    var COUNTRY_MAPS = {
+    var MAP_PARAMETERS = {
         'DEU': {
             'scale': 2500,
             'center': [10.5, 51.3]
@@ -12,12 +12,29 @@ $(function() {
         'GBR': {
             'scale': 1800,
             'center': [-3, 55.0]
+        },
+        'USA': {
+            'scale': 550,
+            'center': [-96, 35.0]
+        },
+        'EUROPE': {
+            'scale': 700,
+            'center': [10.5, 50]
+        },
+        'NORTH_AMERICA': {
+            'scale': 600,
+            'center': [-80, 30]
+        },
+        'WORLD': {
+            'scale': 105,
+            'center': [10, -30]
         }
     };
     
 	var sites = JSON.parse($('#sites-data').html()),
 		selectedEntity = null;
-        currentMap = null;
+        hierarchieStack = [];
+        currentMap = 'WORLD';
 
 	var $map = $('#map'),
 		$welcome = $('#default-welcome'),
@@ -33,27 +50,22 @@ $(function() {
     	.attr("width", width)
     	.attr("height", height);
     
-    d3.json("/static/img/EUROPE.topo.json", showMap);
+    d3.json("/static/img/" + currentMap + ".topo.json", showMap);
 
     function showMap(error, de) {
     	var subunits = topojson.feature(de, de.objects.subunits);
         
-        var scale = 700;
-        var center = [10.5, 50];
-        if (currentMap) {
-            scale = COUNTRY_MAPS[currentMap]['scale'];
-            center = COUNTRY_MAPS[currentMap]['center'];
-        }
+        var scale = MAP_PARAMETERS[currentMap]['scale'];
+        var center = MAP_PARAMETERS[currentMap]['center'];
 
 	    var projection = d3.geo.mercator()
 	        .center(center)
 	        .scale(scale)
 	        .translate([width / 2, height / 2]);
 
-
 	    var path = d3.geo.path()
 	        .projection(projection);
-
+        
 	    svg.selectAll(".subunit")
 	        .data(subunits.features)
 	      .enter().append("path")
@@ -83,9 +95,11 @@ $(function() {
 	        })
 	        .on("click", function(d) {
                 var code = d.properties.code;
-                if (hasStates(code)) {
+                if (hasSubunits(code)) {
+                    hierarchieStack.push(currentMap);
                     currentMap = code;
                     selectedEntity = null;
+                    $('#backbutton').remove();
                     d3.select("#map>svg").remove();
                     svg = d3.select("#map").append("svg")
                         .attr("width", width)
@@ -129,33 +143,41 @@ $(function() {
                     d3.select(this).transition().duration(400).style({'fill':'#BBB'});
                 }
             });
-            if (currentMap) {
+            if (hierarchieStack.length > 0) {
                 $backbutton = $('<button id="backbutton">back</button>');
                 $backbutton.on("click", function() {
-                    currentMap = null;
+                    $(this).remove();
+                    currentMap = hierarchieStack.pop();
                     selectedEntity = null;
+                    renderListing(null);
                     d3.select("#map>svg").remove();
                     svg = d3.select("#map").append("svg")
                         .attr("width", width)
                         .attr("height", height);
-                    d3.json("/static/img/EUROPE.topo.json", showMap);
-                    $(this).remove();
+                    d3.json("/static/img/" + currentMap + ".topo.json", showMap);
                 });
                 $('#map').append($backbutton);
             }
     }
     
-    // Determine if a political entity (country or state) has sites
+    // Determine if a geographical entity (continent, country or state) has sites
     function hasSites(entityCode) {
-        var entitySites = $.grep(sites.sites, function(site) {return site.country == entityCode || site.state == entityCode; });
+        var entitySites = $.grep(sites.sites, function(site) {return site.continent == entityCode || site.country == entityCode || site.state == entityCode; });
         return entitySites.length > 0;
     }
     
     
-    //Determine if a political entity (usually a country) consists of states
-    function hasStates(countryCode) {
-        var sitesWithStates = $.grep(sites.sites, function(site) {return site.country == countryCode && site.state && site.state.length > 0; });
-        return sitesWithStates.length > 0;
+    //Determine if a geographical entity (continent or country) consists of subunits
+    function hasSubunits(countryCode) {
+        var countriesInContinent = $.grep(sites.sites, function(site) {return site.continent == countryCode && site.country && site.country.length > 0; });
+        if (countriesInContinent.length > 0) {
+            return true;
+        }
+        var statesInCountry = $.grep(sites.sites, function(site) {return site.country == countryCode && site.state && site.state.length > 0; });
+        if (statesInCountry.length > 0) {
+            return true;
+        }
+        return false;
     }
 
     function renderListing(entity) {
@@ -165,14 +187,14 @@ $(function() {
     		return;
     	}
     	$welcome.hide();
-		var entitySites = $.grep(sites.sites, function(site) { return site.country == entity.code || site.state == entity.code; });
+		var entitySites = $.grep(sites.sites, function(site) { return site.continent == entity.code || site.country == entity.code || site.state == entity.code; });
 		$listing.html(listingTemplate({
 			'sites': entitySites,
             'length': entitySites.length,
 			'only_one': entitySites.length == 1,
 			'no_sites': entitySites.length == 0,
 			'country': entity,
-            'list_sites': !hasStates(entity.code) //Only list the sites if the country does not have a lower-level map
+            'list_sites': !hasSubunits(entity.code) //Only list the sites if the country does not have a lower-level map
 		}));
 		$listing.fadeIn(100);
     }
