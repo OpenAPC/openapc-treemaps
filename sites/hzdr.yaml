@@ -1,14 +1,14 @@
-name: Ludwig-Maximilians-Universität München
-slug: muenchen_lmu
-tagline: Ludwig-Maximilians-Universität München APC data
+name: Helmholtz-Zentrum Dresden-Rossendorf
+slug: hzdr
+tagline: Helmholtz-Zentrum Dresden-Rossendorf APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: DEU
-state: BY
+state: SN
 level: kommune
-dataset: 'muenchen_lmu'
+dataset: 'hzdr'
 default: publisher
 
 filters:
