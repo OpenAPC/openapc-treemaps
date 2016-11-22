@@ -13,6 +13,10 @@ $(function() {
             'scale': 1800,
             'center': [-3, 55.0]
         },
+        'NLD': {
+            'scale': 5500,
+            'center': [5, 52.0]
+        },
         'USA': {
             'scale': 550,
             'center': [-96, 35.0]
