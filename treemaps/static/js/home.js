@@ -17,6 +17,10 @@ $(function() {
             'scale': 5500,
             'center': [5, 52.0]
         },
+        'GRC': {
+            'scale': 3000,
+            'center': [24, 38.0]
+        },
         'USA': {
             'scale': 550,
             'center': [-96, 35.0]
