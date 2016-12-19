@@ -1,0 +1,28 @@
+name: Plymouth University
+slug: plymouth_u
+tagline: Plymouth University APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+continent: EUROPE
+country: GBR
+state: ENG
+level: kommune
+dataset: 'plymouth_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
