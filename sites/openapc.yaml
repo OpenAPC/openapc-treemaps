@@ -15,6 +15,9 @@ filters:
   - field: 'is_hybrid'
     name: 'Hybrid Status'
     nullable: true
+  - field: 'country'
+    name: 'Country'
+    nullable: true
 
 hierarchies:
     institution:
