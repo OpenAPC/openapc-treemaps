@@ -25,6 +25,10 @@ $(function() {
             'scale': 550,
             'center': [-96, 35.0]
         },
+        'CAN': {
+            'scale': 350,
+            'center': [-96, 60.0]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
