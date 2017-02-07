@@ -21,6 +21,10 @@ $(function() {
             'scale': 3000,
             'center': [24, 38.0]
         },
+        'ITA': {
+            'scale': 2100,
+            'center': [13, 42.0]
+        },
         'USA': {
             'scale': 550,
             'center': [-96, 35.0]
