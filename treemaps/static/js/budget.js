@@ -215,7 +215,7 @@ $(function(){
           modifiers[dimension] = cell._current_key;
           cell._url = makeUrl(path, modifiers);
         } else if (cell.doi) {
-          cell._doi = "http://dx.doi.org/" + cell.doi;
+          cell._doi = "https://doi.org/" + cell.doi;
         }
         else {
           cell._no_url = true;
@@ -227,7 +227,7 @@ $(function(){
           cell._color = OSDE.labelToColor(cell._current_key);
         }
         if (cell.doi) {
-          cell._doi = "http://dx.doi.org/" + cell.doi;
+          cell._doi = "https://doi.org/" + cell.doi;
         }
       });
 
