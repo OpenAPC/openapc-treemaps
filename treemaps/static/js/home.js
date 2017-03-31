@@ -25,6 +25,10 @@ $(function() {
             'scale': 2100,
             'center': [13, 42.0]
         },
+        'ESP': {
+            'scale': 2200,
+            'center': [-2.5, 40.0]
+        },
         'USA': {
             'scale': 550,
             'center': [-96, 35.0]
