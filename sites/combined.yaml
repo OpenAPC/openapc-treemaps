@@ -1,0 +1,40 @@
+name: Combined (Cost data from OpenAPC and Offsetting datasets)
+slug: combined
+tagline: "Combined datasets"
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+level: bund
+dataset: combined
+default: institution
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+  - field: 'country'
+    name: 'Country'
+    nullable: true
+
+hierarchies:
+    institution:
+        name: Institution
+        drilldowns:
+            - institution
+            - journal_full_title
+            - doi
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - institution
+    journal:
+        name: Journal
+        drilldowns:
+            - journal_full_title
+            - institution
+            - doi
