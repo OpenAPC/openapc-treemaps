@@ -5,4 +5,4 @@ node_modules/
 treemaps/static/vendor/
 treemaps/static/gen/
 treemaps/static/.webassets-cache/
-treemaps.egg-info
+openapc_treemaps.egg-info/
