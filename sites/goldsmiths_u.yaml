@@ -1,6 +1,6 @@
-name: University of Durham
-slug: durham_u
-tagline: University of Durham APC data
+name: Goldsmiths, University of London
+slug: goldsmiths_u
+tagline: Goldsmiths, University of London APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
@@ -8,7 +8,7 @@ continent: EUROPE
 country: GBR
 state: ENG
 level: kommune
-dataset: 'durham_u'
+dataset: 'goldsmiths_u'
 default: publisher
 
 filters:

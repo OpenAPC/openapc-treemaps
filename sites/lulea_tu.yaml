@@ -1,14 +1,14 @@
-name: University of Durham
-slug: durham_u
-tagline: University of Durham APC data
+name: Luleå University of Technology
+slug: lulea_tu
+tagline: Luleå University of Technology APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: GBR
-state: ENG
+country: SWE
+state: SE-BD
 level: kommune
-dataset: 'durham_u'
+dataset: 'lulea_tu'
 default: publisher
 
 filters:

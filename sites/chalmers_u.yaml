@@ -1,14 +1,14 @@
-name: University of Durham
-slug: durham_u
-tagline: University of Durham APC data
+name: Chalmers University of Technology
+slug: chalmers_u
+tagline: Chalmers University of Technology APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: GBR
-state: ENG
+country: SWE
+state: SE-O
 level: kommune
-dataset: 'durham_u'
+dataset: 'chalmers_u'
 default: publisher
 
 filters:

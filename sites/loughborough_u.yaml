@@ -1,6 +1,6 @@
-name: Loughborough University
+name: University of Loughborough
 slug: loughborough_u
-tagline: Loughborough University APC data
+tagline: University of Loughborough APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv

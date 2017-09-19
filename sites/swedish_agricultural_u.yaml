@@ -1,14 +1,14 @@
-name: University of Durham
-slug: durham_u
-tagline: University of Durham APC data
+name: Swedish University of Agricultural Sciences
+slug: swedish_agricultural_u
+tagline: Swedish University of Agricultural Sciences APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: GBR
-state: ENG
+country: SWE
+state: SE-C
 level: kommune
-dataset: 'durham_u'
+dataset: 'swedish_agricultural_u'
 default: publisher
 
 filters:

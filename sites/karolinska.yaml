@@ -1,14 +1,14 @@
-name: University of Durham
-slug: durham_u
-tagline: University of Durham APC data
+name: Karolinska Institutet
+slug: karolinska
+tagline: Karolinska Institutet APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: GBR
-state: ENG
+country: SWE
+state: SE-AB
 level: kommune
-dataset: 'durham_u'
+dataset: 'karolinska'
 default: publisher
 
 filters:

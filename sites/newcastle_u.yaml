@@ -1,6 +1,6 @@
-name: Newcastle University
+name: University of Newcastle
 slug: newcastle_u
-tagline: Newcastle University APC data
+tagline: University of Newcastle APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
