@@ -45,7 +45,10 @@ OSDE.mergeArgs = function(args) {
 };
 
 OSDE.format_value = function(num, aggregate_function) {
-    if (["sum", "avg"].indexOf(aggregate_function) > -1) {
+    if (aggregate_function == "stddev" && num == null) {
+        return "NA";
+    }
+    if (["sum", "avg", "stddev"].indexOf(aggregate_function) > -1) {
         return accounting.formatMoney(num, "€", 0, ".");
     }
     return num;
