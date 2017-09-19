@@ -29,6 +29,10 @@ $(function() {
             'scale': 2200,
             'center': [-2.5, 40.0]
         },
+        'SWE': {
+            'scale': 1050,
+            'center': [16, 63.0]
+        },
         'USA': {
             'scale': 550,
             'center': [-96, 35.0]
