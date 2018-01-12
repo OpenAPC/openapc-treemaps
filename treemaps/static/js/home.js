@@ -41,6 +41,10 @@ $(function() {
             'scale': 350,
             'center': [-96, 60.0]
         },
+        'NOR': {
+            'scale': 950,
+            'center': [16, 65.5]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
