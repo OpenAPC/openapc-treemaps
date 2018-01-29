@@ -54,8 +54,8 @@ $(function() {
             'center': [-80, 30]
         },
         'WORLD': {
-            'scale': 105,
-            'center': [10, -30]
+            'scale': 100,
+            'center': [20, -30]
         }
     };
     
