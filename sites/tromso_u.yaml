@@ -1,0 +1,28 @@
+name: University of Tromsø - The Arctic University of Norway
+slug: tromso_u
+tagline: University of Tromsø - The Arctic University of Norway APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+continent: EUROPE
+country: NOR
+state: NO.TR
+level: kommune
+dataset: 'tromso_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

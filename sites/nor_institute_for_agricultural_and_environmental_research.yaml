@@ -1,0 +1,28 @@
+name: Norwegian Institute for Agricultural and Environmental Research
+slug: nor_institute_for_agricultural_and_environmental_research
+tagline: Norwegian Institute for Agricultural and Environmental Research APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+continent: EUROPE
+country: NOR
+state: NO.AK
+level: kommune
+dataset: 'nor_institute_for_agricultural_and_environmental_research'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
