@@ -9,6 +9,10 @@ $(function() {
             'scale': 4000,
             'center': [13.3, 47.6]
         },
+        'CHE': {
+            'scale': 6500,
+            'center': [8.3, 46.8]
+        },
         'GBR': {
             'scale': 1800,
             'center': [-3, 55.0]
