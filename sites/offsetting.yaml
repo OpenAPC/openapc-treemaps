@@ -6,7 +6,7 @@ source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/offsetting/offsetting.csv
 level: bund
 dataset: offsetting
-default: institution
+default: contract
 
 filters:
   - field: 'period'
@@ -24,6 +24,7 @@ hierarchies:
         name: Institution
         drilldowns:
             - institution
+            - contract
             - journal_full_title
             - doi
     publisher:
@@ -32,9 +33,17 @@ hierarchies:
             - publisher
             - journal_full_title
             - institution
+            - doi
     journal:
         name: Journal
         drilldowns:
             - journal_full_title
             - institution
+            - doi
+    contract:
+        name: Contract
+        drilldowns:
+            - contract
+            - institution
+            - journal_full_title
             - doi
