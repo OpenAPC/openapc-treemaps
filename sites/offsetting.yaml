@@ -31,7 +31,7 @@ hierarchies:
         name: Publisher
         drilldowns:
             - publisher
-            - journal_full_title
+            - contract
             - institution
             - doi
     journal:
