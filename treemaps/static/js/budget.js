@@ -29,11 +29,13 @@ $(function(){
   }
 
   function getData(drilldown, cut, sortkey) {
+    console.log(site)
     var cutStr = buildCutString(cut);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
       sortkey = site["aggregate"];
     }
+    console.log(sortkey)
     if (site.keyrefs[drilldown] != site.labelrefs[drilldown]) {
       drilldowns.push(site.labelrefs[drilldown]);
     }
@@ -195,7 +197,9 @@ $(function(){
       data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
       data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
       
+      if (site.dataset != "offsetting_coverage") {data._show_percentage = true;}
       $.each(data.cells, function(e, cell) {
+        if (site.dataset != "offsetting_coverage") {cell._show_percentage = true;}
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
         cell._value = cell[site.aggregate];

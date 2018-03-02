@@ -124,7 +124,9 @@
         {{#each all_aggregates}}
         <th class="num">{{label}}</th>
         {{/each}}
+        {{#if _show_percentage}}
         <th class="num">Percentage</th>
+        {{/if}}
       </tr>
       {{#each cells}}
         <tr {{#if _small}}class="small"{{/if}}>
@@ -144,7 +146,9 @@
           {{#each other_aggregate_values}}
           <td class="num">{{this}}</td>
           {{/each}}
+          {{#if _show_percentage}}
           <td class="num">{{_percentage_fmt}}</td>
+          {{/if}}
         </tr>
       {{/each}}
       <tr>
@@ -163,7 +167,9 @@
         {{#each other_aggregate_summaries}}
           <th class="num">{{this}}</th>
           {{/each}}
+        {{#if _show_percentage}}
         <th class="num">100%</th>
+        {{/if}}
       </tr>
     </table>
   {% endraw %}</script>
