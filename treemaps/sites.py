@@ -110,8 +110,9 @@ class Site(_DataObject):
             return self.data.get('aggregate')
         sum_aggs = []
         count_aggs = []
-        print self.model.get('aggregates')
         for agg in self.model.get('aggregates'):
+            if agg.get("info") == 'primary':
+                return {"aggregate": agg['ref'], "function": agg.get('function')}
             if agg.get('function') == 'sum':
                 sum_aggs.append(agg['ref'])
             elif agg.get('function') == 'count':
@@ -121,7 +122,7 @@ class Site(_DataObject):
         elif len(count_aggs) == 1:
             return {"aggregate": count_aggs[0], "function": "count"}
         else:
-            raise ValueError('Neither a singular sum aggregate nor a singular count aggregate found!')
+            raise ValueError('Neither a singular sum aggregate nor a singular count aggregate found and no aggregate declared as primary!')
 
     def to_dict(self):
         data = self.data.copy()
