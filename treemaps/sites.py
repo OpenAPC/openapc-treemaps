@@ -103,26 +103,21 @@ class Site(_DataObject):
         if self._model is None:
             res = requests.get(os.path.join(self.api_base, 'model'))
             self._model = res.json()
+            aggregate_refs = [agg['ref'] for agg in self._model.get('aggregates')]
+            for item in self.data.get('table_items'):
+                if item['type'] == 'aggregate' and item['name'] not in aggregate_refs:
+                    raise ValueError('Aggregate reference "' + item['name'] + '" not found in cube model!')
         return self._model
 
     def get_aggregate(self):
-        if 'aggregate' in self.data:
-            return self.data.get('aggregate')
-        sum_aggs = []
-        count_aggs = []
+        if 'primary_aggregate' not in self.data:
+            raise ValueError('No primary aggregate assigned in yaml file (key "primary_aggregate")!')
+        primary = self.data.get('primary_aggregate')
         for agg in self.model.get('aggregates'):
-            if agg.get("info") == 'primary':
+            if agg.get('ref') == primary:
                 return {"aggregate": agg['ref'], "function": agg.get('function')}
-            if agg.get('function') == 'sum':
-                sum_aggs.append(agg['ref'])
-            elif agg.get('function') == 'count':
-                count_aggs.append(agg['ref'])
-        if len(sum_aggs) == 1:
-            return {"aggregate": sum_aggs[0], "function": "sum"}
-        elif len(count_aggs) == 1:
-            return {"aggregate": count_aggs[0], "function": "count"}
         else:
-            raise ValueError('Neither a singular sum aggregate nor a singular count aggregate found and no aggregate declared as primary!')
+            raise ValueError('Primary aggregate "' + primary + '" not found in any aggregate ref!')
 
     def to_dict(self):
         data = self.data.copy()

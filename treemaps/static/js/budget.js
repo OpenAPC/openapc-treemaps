@@ -29,13 +29,11 @@ $(function(){
   }
 
   function getData(drilldown, cut, sortkey) {
-    console.log(site)
     var cutStr = buildCutString(cut);
     var drilldowns = [site.keyrefs[drilldown]]
     if (!sortkey) {
       sortkey = site["aggregate"];
     }
-    console.log(sortkey)
     if (site.keyrefs[drilldown] != site.labelrefs[drilldown]) {
       drilldowns.push(site.labelrefs[drilldown]);
     }
@@ -164,6 +162,7 @@ $(function(){
         color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
+      /*
       data.all_aggregates = site.all_aggregates;
       data.summary._value = data.summary[site.aggregate];
       data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
@@ -174,6 +173,23 @@ $(function(){
         }
       });
       data.summary._num_items = data.summary['apc_num_items'];
+      */
+      
+      data.table_items = site.table_items;
+      $.each(data.table_items, function(f, item) {
+        if (item.type == "aggregate") {
+          item._summary = data.summary[item.name];
+          item._summary_fmt =  OSDE.format_value(item._summary, item.format);
+          var agg = site.all_aggregates.find(function(aggregate) {
+            return aggregate.ref == item.name;
+          });
+          item.label = agg.label;
+        }
+        if (item.type == "total_percentage") {
+          item._summary_fmt = "100%";
+        }
+      });
+      
       if (data.total_cell_count > 500) {
         data._reduction_hint = true;
       }
@@ -197,11 +213,33 @@ $(function(){
       data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
       data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
       
-      if (site.dataset != "offsetting_coverage") {data._show_percentage = true;}
+      console.log(site);
+      console.log(data)
       $.each(data.cells, function(e, cell) {
-        if (site.dataset != "offsetting_coverage") {cell._show_percentage = true;}
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
+        cell._values = [];
+        $.each(data.table_items, function(g, item) {
+            if (item.name == site.primary_aggregate) {
+                cell._value = cell[item.name]
+                cell._value_fmt = OSDE.format_value(cell._value, item.format);
+                cell._percentage = cell._value / item._summary;
+            }
+            if (item.type == "aggregate") {
+                var formatted_value = OSDE.format_value(cell[item.name], item.format);
+                cell._values.push(formatted_value);
+            }
+            else if (item.type == "total_percentage") {
+                var related = data.table_items.find(function(table_item) {
+                    return table_item.name == item.relates_to;
+                });
+                var value = cell[related.name] / related._summary;
+                var formatted_value = OSDE.format_value(value, item.format);
+                cell._values.push(formatted_value);
+                cell._small = value < 0.01;
+            }
+        });
+        /*
         cell._value = cell[site.aggregate];
         cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
         cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
@@ -214,6 +252,7 @@ $(function(){
             cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
           }
         });
+        */
         if (!path.bottom) {
           var modifiers = {};
           modifiers[dimension] = cell._current_key;
@@ -233,6 +272,7 @@ $(function(){
         if (cell.doi) {
           cell._doi = "https://doi.org/" + cell.doi;
         }
+        console.log(cell);
       });
 
       treemap.render(data, path.drilldown);

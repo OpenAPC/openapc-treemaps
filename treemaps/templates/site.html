@@ -109,8 +109,8 @@
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
     <div id="sort-menu" class="btn-group btn-group-sm">
       <a class="btn btn-default"><strong>Sort by:</strong></a>
-      {{#each all_aggregates}}
-      <a class="btn btn-default" data-sort-key="{{name}}">{{label}}</a>
+      {{#each table_items}}
+      <a class="btn btn-default" data-sort-key="{{name}}">{{this.label}}</a>
       {{/each}}
     </div>
     <div id="facts_download_panel" class="btn-group btn-group-sm pull-right">
@@ -121,12 +121,9 @@
     <table class="table table-condensed">
       <tr>
         <th>{{_title}} ({{total_cell_count}} entries{{#if _reduction_hint}}<span id=reduction_hint>*<span id="reduction_tooltip">Note: The treemap and table are both limited to a visualisation of 500 entries. The summarized values in the "Total" row are still correct nonetheless.</span></span>{{/if}})</th>
-        {{#each all_aggregates}}
-        <th class="num">{{label}}</th>
+        {{#each table_items}}
+        <th class="num">{{this.label}}</th>
         {{/each}}
-        {{#if _show_percentage}}
-        <th class="num">Percentage</th>
-        {{/if}}
       </tr>
       {{#each cells}}
         <tr {{#if _small}}class="small"{{/if}}>
@@ -142,13 +139,9 @@
               {{_current_label}}
             {{/if}}
           </td>
-          <td class="num">{{_value_fmt}}</td>
-          {{#each other_aggregate_values}}
+          {{#each _values}}
           <td class="num">{{this}}</td>
           {{/each}}
-          {{#if _show_percentage}}
-          <td class="num">{{_percentage_fmt}}</td>
-          {{/if}}
         </tr>
       {{/each}}
       <tr>
@@ -163,13 +156,9 @@
         <th>
           Total
         </th>
-        <th class="num">{{summary._value_fmt}}</th>
-        {{#each other_aggregate_summaries}}
-          <th class="num">{{this}}</th>
-          {{/each}}
-        {{#if _show_percentage}}
-        <th class="num">100%</th>
-        {{/if}}
+        {{#each table_items}}
+        <th class="num">{{this._summary_fmt}}</th>
+        {{/each}}
       </tr>
     </table>
   {% endraw %}</script>
