@@ -1,14 +1,14 @@
-name: Swansea University
-slug: swansea_u
-tagline: Swansea University APC data
+name: Osnabrück University
+slug: osnabrueck_u
+tagline: Osnabrück University APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: GBR
-state: WLS
+country: DEU
+state: NI
 level: kommune
-dataset: 'swansea_u'
+dataset: 'osnabrueck_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
