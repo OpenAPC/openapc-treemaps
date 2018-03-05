@@ -178,6 +178,8 @@ $(function(){
       data.table_items = site.table_items;
       $.each(data.table_items, function(f, item) {
         if (item.type == "aggregate") {
+          // Sorting takes place in the OLAP backend, so we can only use aggregates here
+          item.sort_key = true;
           item._summary = data.summary[item.name];
           item._summary_fmt =  OSDE.format_value(item._summary, item.format);
           var agg = site.all_aggregates.find(function(aggregate) {
@@ -185,7 +187,11 @@ $(function(){
           });
           item.label = agg.label;
         }
-        if (item.type == "total_percentage") {
+        else if (item.type == "cross_item_percentage") {
+          item._summary = data.summary[item.fraction_item] / data.summary[item.total_item];
+          item._summary_fmt = OSDE.format_value(item._summary, item.format);
+        }
+        else if (item.type == "total_percentage") {
           item._summary_fmt = "100%";
         }
       });
@@ -221,6 +227,7 @@ $(function(){
         cell._values = [];
         $.each(data.table_items, function(g, item) {
             if (item.name == site.primary_aggregate) {
+                // treemap relevant fields
                 cell._value = cell[item.name]
                 cell._value_fmt = OSDE.format_value(cell._value, item.format);
                 cell._percentage = cell._value / item._summary;
@@ -237,6 +244,11 @@ $(function(){
                 var formatted_value = OSDE.format_value(value, item.format);
                 cell._values.push(formatted_value);
                 cell._small = value < 0.01;
+            }
+            else if (item.type == "cross_item_percentage") {
+                var value = cell[item.fraction_item] / cell[item.total_item];
+                var formatted_value = OSDE.format_value(value, item.format);
+                cell._values.push(formatted_value);
             }
         });
         /*

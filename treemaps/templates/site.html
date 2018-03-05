@@ -110,7 +110,9 @@
     <div id="sort-menu" class="btn-group btn-group-sm">
       <a class="btn btn-default"><strong>Sort by:</strong></a>
       {{#each table_items}}
+      {{#if this.sort_key}}
       <a class="btn btn-default" data-sort-key="{{name}}">{{this.label}}</a>
+      {{/if}}
       {{/each}}
     </div>
     <div id="facts_download_panel" class="btn-group btn-group-sm pull-right">

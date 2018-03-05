@@ -55,15 +55,7 @@ OSDE.format_value = function(num, format) {
     }
     if (format == "percentage") {
         var percentage = (num * 100).toFixed(2) + '%';
-        return percentage.replace('.', ',');
+        return percentage;
     }
-    /*
-    if (aggregate_function == "stddev" && num == null) {
-        return "NA";
-    }
-    if (["sum", "avg", "stddev"].indexOf(aggregate_function) > -1) {
-        return accounting.formatMoney(num, "€", 0, ".");
-    }
-    * */
     return num;
 }

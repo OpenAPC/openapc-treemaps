@@ -111,7 +111,7 @@ class Site(_DataObject):
 
     def get_aggregate(self):
         if 'primary_aggregate' not in self.data:
-            raise ValueError('No primary aggregate assigned in yaml file (key "primary_aggregate")!')
+            raise ValueError('No primary aggregate assigned in yaml file (key "primary_aggregate") for site "' + self.data.get('slug') + '"!')
         primary = self.data.get('primary_aggregate')
         for agg in self.model.get('aggregates'):
             if agg.get('ref') == primary:
