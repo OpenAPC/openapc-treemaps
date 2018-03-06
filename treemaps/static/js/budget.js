@@ -162,18 +162,6 @@ $(function(){
         color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
-      /*
-      data.all_aggregates = site.all_aggregates;
-      data.summary._value = data.summary[site.aggregate];
-      data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
-      data.other_aggregate_summaries = {};
-      $.each(site.all_aggregates, function(f, aggregate) {
-        if (aggregate.name != site.aggregate) {
-          data.other_aggregate_summaries[aggregate.name] = OSDE.format_value(data.summary[aggregate.name], aggregate.function);
-        }
-      });
-      data.summary._num_items = data.summary['apc_num_items'];
-      */
       
       data.table_items = site.table_items;
       $.each(data.table_items, function(f, item) {
@@ -247,24 +235,15 @@ $(function(){
             }
             else if (item.type == "cross_item_percentage") {
                 var value = cell[item.fraction_item] / cell[item.total_item];
-                var formatted_value = OSDE.format_value(value, item.format);
-                cell._values.push(formatted_value);
+                if (cell[item.total_item] == 0) {
+                    cell._values.push("NA");
+                }
+                else {
+                    cell._values.push(OSDE.format_value(value, item.format));
+                }
             }
         });
-        /*
-        cell._value = cell[site.aggregate];
-        cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
-        cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
-        cell._small = cell._percentage < 0.01;
-        cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
-        cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
-        cell.other_aggregate_values = {};
-        $.each(site.all_aggregates, function(f, aggregate) {
-          if (aggregate.name != site.aggregate) {
-            cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
-          }
-        });
-        */
+        
         if (!path.bottom) {
           var modifiers = {};
           modifiers[dimension] = cell._current_key;
