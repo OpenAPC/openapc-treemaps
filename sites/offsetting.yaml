@@ -45,6 +45,7 @@ hierarchies:
             - publisher
             - journal_full_title
             - institution
+            - doi
     journal:
         name: Journal
         drilldowns:
