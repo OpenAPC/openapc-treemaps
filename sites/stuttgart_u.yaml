@@ -1,0 +1,28 @@
+name: University of Stuttgart
+slug: stuttgart_u
+tagline: University of Stuttgart APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+continent: EUROPE
+country: DEU
+state: BW
+level: kommune
+dataset: 'stuttgart_u'
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
