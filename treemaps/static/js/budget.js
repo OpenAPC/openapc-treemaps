@@ -162,16 +162,28 @@ $(function(){
         color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
-      data.all_aggregates = site.all_aggregates;
-      data.summary._value = data.summary[site.aggregate];
-      data.summary._value_fmt = OSDE.format_value(data.summary._value, site.aggregate_function);
-      data.other_aggregate_summaries = {};
-      $.each(site.all_aggregates, function(f, aggregate) {
-        if (aggregate.name != site.aggregate) {
-          data.other_aggregate_summaries[aggregate.name] = OSDE.format_value(data.summary[aggregate.name], aggregate.function);
+      
+      data.table_items = site.table_items;
+      $.each(data.table_items, function(f, item) {
+        if (item.type == "aggregate") {
+          // Sorting takes place in the OLAP backend, so we can only use aggregates here
+          item.sort_key = true;
+          item._summary = data.summary[item.name];
+          item._summary_fmt =  OSDE.format_value(item._summary, item.format);
+          var agg = site.all_aggregates.find(function(aggregate) {
+            return aggregate.ref == item.name;
+          });
+          item.label = agg.label;
+        }
+        else if (item.type == "cross_item_percentage") {
+          item._summary = data.summary[item.fraction_item] / data.summary[item.total_item];
+          item._summary_fmt = OSDE.format_value(item._summary, item.format);
+        }
+        else if (item.type == "total_percentage") {
+          item._summary_fmt = "100%";
         }
       });
-      data.summary._num_items = data.summary['apc_num_items'];
+      
       if (data.total_cell_count > 500) {
         data._reduction_hint = true;
       }
@@ -195,21 +207,43 @@ $(function(){
       data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
       data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
       
+      console.log(site);
+      console.log(data)
       $.each(data.cells, function(e, cell) {
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
-        cell._value = cell[site.aggregate];
-        cell._value_fmt = OSDE.format_value(cell._value, site.aggregate_function);
-        cell._percentage = cell[site.aggregate] / data.summary[site.aggregate];
-        cell._small = cell._percentage < 0.01;
-        cell._percentage_fmt = (cell._percentage * 100).toFixed(2) + '%';
-        cell._percentage_fmt = cell._percentage_fmt.replace('.', ',');
-        cell.other_aggregate_values = {};
-        $.each(site.all_aggregates, function(f, aggregate) {
-          if (aggregate.name != site.aggregate) {
-            cell.other_aggregate_values[aggregate.name] = OSDE.format_value(cell[aggregate.name], aggregate.function);
-          }
+        cell._values = [];
+        $.each(data.table_items, function(g, item) {
+            if (item.name == site.primary_aggregate) {
+                // treemap relevant fields
+                cell._value = cell[item.name]
+                cell._value_fmt = OSDE.format_value(cell._value, item.format);
+                cell._percentage = cell._value / item._summary;
+            }
+            if (item.type == "aggregate") {
+                var formatted_value = OSDE.format_value(cell[item.name], item.format);
+                cell._values.push(formatted_value);
+            }
+            else if (item.type == "total_percentage") {
+                var related = data.table_items.find(function(table_item) {
+                    return table_item.name == item.relates_to;
+                });
+                var value = cell[related.name] / related._summary;
+                var formatted_value = OSDE.format_value(value, item.format);
+                cell._values.push(formatted_value);
+                cell._small = value < 0.01;
+            }
+            else if (item.type == "cross_item_percentage") {
+                var value = cell[item.fraction_item] / cell[item.total_item];
+                if (cell[item.total_item] == 0) {
+                    cell._values.push("NA");
+                }
+                else {
+                    cell._values.push(OSDE.format_value(value, item.format));
+                }
+            }
         });
+        
         if (!path.bottom) {
           var modifiers = {};
           modifiers[dimension] = cell._current_key;
@@ -229,6 +263,7 @@ $(function(){
         if (cell.doi) {
           cell._doi = "https://doi.org/" + cell.doi;
         }
+        console.log(cell);
       });
 
       treemap.render(data, path.drilldown);
