@@ -1,14 +1,14 @@
-name: University of Stuttgart
-slug: stuttgart_u
-tagline: University of Stuttgart APC data
+name: Technische Universität Darmstadt
+slug: tu_darmstadt
+tagline: Technische Universität Darmstadt APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: DEU
-state: BW
+state: HE
 level: kommune
-dataset: 'stuttgart_u'
+dataset: 'tu_darmstadt'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
