@@ -5,6 +5,10 @@ $(function() {
             'scale': 2500,
             'center': [10.5, 51.3]
         },
+        'FRA': {
+            'scale': 2100,
+            'center': [2, 46.5]
+        },
         'AUT': {
             'scale': 4000,
             'center': [13.3, 47.6]
