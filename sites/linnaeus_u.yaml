@@ -1,14 +1,14 @@
-name: Malmö University
-slug: malmo_u
-tagline: Malmö University APC data
+name: Linnaeus University
+slug: linnaeus_u
+tagline: Linnaeus University APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: SWE
-state: SE-M
+state: SE-G
 level: kommune
-dataset: 'malmo_u'
+dataset: 'linnaeus_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
