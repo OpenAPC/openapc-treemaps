@@ -207,8 +207,6 @@ $(function(){
       data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
       data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
       
-      console.log(site);
-      console.log(data)
       $.each(data.cells, function(e, cell) {
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
@@ -263,7 +261,6 @@ $(function(){
         if (cell.doi) {
           cell._doi = "https://doi.org/" + cell.doi;
         }
-        console.log(cell);
       });
 
       treemap.render(data, path.drilldown);
