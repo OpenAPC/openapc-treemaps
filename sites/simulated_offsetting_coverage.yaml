@@ -1,0 +1,49 @@
+name: Simulated Offsetting Coverage
+slug: simulated_offsetting_coverage
+tagline: "Simulated Offsetting Coverage"
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/offsetting/offsetting.csv
+level: bund
+dataset: 'simulated_offsetting_coverage'
+default: publisher
+
+primary_aggregate: 'num_offsetting_articles'
+
+table_items:
+  - name: 'num_offsetting_articles'
+    type: 'aggregate'
+    format: 'number'
+  - name: 'num_journal_oa_articles'
+    type: 'aggregate'
+    format: 'number'
+  - name: 'num_journal_total_articles'
+    type: 'aggregate'
+    format: 'number'
+  - name: 'oa_percentage'
+    type: 'cross_item_percentage'
+    format: 'percentage'
+    fraction_item: 'num_journal_oa_articles'
+    total_item: 'num_journal_total_articles'
+    label: 'Journal OA share'
+  - name: 'offsetting_coverage'
+    type: 'cross_item_percentage'
+    format: 'percentage'
+    fraction_item: 'num_offsetting_articles'
+    total_item: 'num_journal_oa_articles'
+    label: 'OA share covered by offsetting'
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
