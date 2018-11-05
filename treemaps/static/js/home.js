@@ -53,6 +53,10 @@ $(function() {
             'scale': 950,
             'center': [16, 65.5]
         },
+        'CZE': {
+            'scale': 4500,
+            'center': [15.5, 50]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
