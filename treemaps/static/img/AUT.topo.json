@@ -7,7 +7,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"VO",
+            "code":"AUT-VO",
             "name":"Vorarlberg"
           },
           "arcs":[
@@ -20,7 +20,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"BU",
+            "code":"AUT-BU",
             "name":"Burgenland"
           },
           "arcs":[
@@ -34,7 +34,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"ST",
+            "code":"AUT-ST",
             "name":"Steiermark"
           },
           "arcs":[
@@ -51,7 +51,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"KA",
+            "code":"AUT-KA",
             "name":"Kärnten"
           },
           "arcs":[
@@ -66,7 +66,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"OO",
+            "code":"AUT-OO",
             "name":"Oberösterreich"
           },
           "arcs":[
@@ -81,7 +81,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"SZ",
+            "code":"AUT-SZ",
             "name":"Salzburg"
           },
           "arcs":[
@@ -99,7 +99,7 @@
         {
           "type":"MultiPolygon",
           "properties":{
-            "code":"TR",
+            "code":"AUT-TR",
             "name":"Tirol"
           },
           "arcs":[
@@ -141,7 +141,7 @@
         {
           "type":"Polygon",
           "properties":{
-            "code":"WI",
+            "code":"AUT-WI",
             "name":"Wien"
           },
           "arcs":[
