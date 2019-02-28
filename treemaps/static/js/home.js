@@ -57,6 +57,10 @@ $(function() {
             'scale': 4500,
             'center': [15.5, 50]
         },
+        'QAT': {
+            'scale': 17000,
+            'center': [51.2, 25.35]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
@@ -64,6 +68,10 @@ $(function() {
         'NORTH_AMERICA': {
             'scale': 600,
             'center': [-80, 30]
+        },
+        'WESTERN_ASIA': {
+            'scale': 850,
+            'center': [42, 29]
         },
         'WORLD': {
             'scale': 105,
