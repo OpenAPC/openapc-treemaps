@@ -1,14 +1,14 @@
-name: Technische Universität Wien
-slug: tu_wien
-tagline: Technische Universität Wien APC data
+name: Université de La Réunion
+slug: reunion_u
+tagline: Université de La Réunion APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: AUT
-state: AUT-WI
+country: FRA
+state: FR-RE
 level: kommune
-dataset: 'tu_wien'
+dataset: 'reunion_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

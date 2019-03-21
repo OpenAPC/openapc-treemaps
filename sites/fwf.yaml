@@ -6,7 +6,7 @@ source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: AUT
-state: WI
+state: AUT-WI
 level: kommune
 dataset: 'fwf'
 default: publisher

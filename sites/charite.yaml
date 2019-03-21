@@ -1,14 +1,14 @@
-name: Technische Universität Wien
-slug: tu_wien
-tagline: Technische Universität Wien APC data
+name: Charité - Universitätsmedizin Berlin
+slug: charite
+tagline: Charité - Universitätsmedizin Berlin APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: AUT
-state: AUT-WI
+country: DEU
+state: BE
 level: kommune
-dataset: 'tu_wien'
+dataset: 'charite'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

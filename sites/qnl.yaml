@@ -1,14 +1,14 @@
-name: Technische Universität Wien
-slug: tu_wien
-tagline: Technische Universität Wien APC data
+name: Qatar National Library
+slug: qnl
+tagline: Qatar National Library APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
-continent: EUROPE
-country: AUT
-state: AUT-WI
+continent: WESTERN_ASIA
+country: QAT
+state: QA-RA
 level: kommune
-dataset: 'tu_wien'
+dataset: 'qnl'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
