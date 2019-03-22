@@ -1,12 +1,9 @@
-name: OpenAIRE (FP7 Post-Grant OA Pilot)
+name: OpenAIRE (OpenAPC articles also present in OpenAIRE)
 slug: openaire
-tagline: OpenAIRE (FP7 Post-Grant OA Pilot) APC data
+tagline: OpenAIRE
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
-continent: EUROPE
-country: GRC
-state: GR-I
 level: kommune
 dataset: 'openaire'
 default: publisher
