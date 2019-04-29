@@ -1,6 +1,6 @@
-name: GFZ German Research Centre for Geosciences
-slug: gfz_potsdam
-tagline: GFZ German Research Centre for Geosciences APC data
+name: Potsdam Institute for Climate Impact Research (PIK)
+slug: pik_potsdam
+tagline: Potsdam Institute for Climate Impact Research (PIK) APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
@@ -8,7 +8,7 @@ continent: EUROPE
 country: DEU
 state: BB
 level: kommune
-dataset: 'gfz_potsdam'
+dataset: 'pik_potsdam'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
