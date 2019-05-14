@@ -31,6 +31,9 @@ filters:
   - field: 'country'
     name: 'Country'
     nullable: true
+  - field: 'agreement'
+    name: Agreement
+    nullable: true
 
 hierarchies:
     institution:
