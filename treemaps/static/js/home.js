@@ -57,6 +57,10 @@ $(function() {
             'scale': 4500,
             'center': [15.5, 50]
         },
+        'HUN': {
+            'scale': 4500,
+            'center': [19.5, 47]
+        },
         'QAT': {
             'scale': 17000,
             'center': [51.2, 25.35]
