@@ -1,17 +1,17 @@
-name: Offsetting Coverage
-slug: offsetting_coverage
-tagline: "Offsetting Coverage"
+name: Springer Compact Coverage
+slug: springer_compact_coverage
+tagline: "Springer Compact Coverage"
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
-data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/offsetting/offsetting.csv
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_agreements/transformative_agreements.csv
 level: bund
-dataset: 'offsetting_coverage'
+dataset: 'springer_compact_coverage'
 default: publisher
 
 primary_aggregate: 'offsetting_articles'
 
 table_items:
-  - name: 'offsetting_articles'
+  - name: 'springer_compact_articles'
     type: 'aggregate'
     format: 'number'
   - name: 'journal_oa_articles'
@@ -26,12 +26,12 @@ table_items:
     fraction_item: 'journal_oa_articles'
     total_item: 'journal_total_articles'
     label: 'Journal OA share'
-  - name: 'offsetting_coverage'
+  - name: 'springer_compact_coverage'
     type: 'cross_item_percentage'
     format: 'percentage'
-    fraction_item: 'offsetting_articles'
+    fraction_item: 'springer_compact_articles'
     total_item: 'journal_oa_articles'
-    label: 'OA share covered by offsetting'
+    label: 'OA share covered by SCA'
 
 filters:
   - field: 'period'
