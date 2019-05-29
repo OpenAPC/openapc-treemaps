@@ -1,11 +1,11 @@
-name: Offsetting 
-slug: offsetting
-tagline: "Offsetting Data"
+name: Transformative Agreements 
+slug: transformative_agreements
+tagline: "Transformative Agreements"
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
-data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/offsetting/offsetting.csv
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_agreements/transformative_agreements.csv
 level: bund
-dataset: offsetting
+dataset: transformative_agreements
 default: institution
 
 primary_aggregate: 'num_items'
