@@ -8,7 +8,7 @@ level: bund
 dataset: 'springer_compact_coverage'
 default: publisher
 
-primary_aggregate: 'offsetting_articles'
+primary_aggregate: 'springer_compact_articles'
 
 table_items:
   - name: 'springer_compact_articles'
