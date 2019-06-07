@@ -61,6 +61,10 @@ $(function() {
             'scale': 4500,
             'center': [19.5, 47]
         },
+        'FIN': {
+            'scale': 1200,
+            'center': [25, 65.5]
+        },
         'QAT': {
             'scale': 17000,
             'center': [51.2, 25.35]
