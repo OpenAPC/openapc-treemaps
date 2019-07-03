@@ -1,14 +1,14 @@
-name: Université de Franche-Comté
-slug: france_comte_u
-tagline: Université de Franche-Comté APC data
+name: University of Jyväskylä
+slug: jyvaskyla_u
+tagline: University of Jyväskylä APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: FRA
-state: FR-BFC
+country: FIN
+state: FI-08
 level: kommune
-dataset: 'france_comte_u'
+dataset: 'jyvaskyla_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

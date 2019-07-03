@@ -1,14 +1,14 @@
-name: Université de Franche-Comté
-slug: france_comte_u
-tagline: Université de Franche-Comté APC data
+name: Commissariat à l'énergie atomique et aux énergies alternatives (CEA)
+slug: cea
+tagline: Commissariat à l'énergie atomique et aux énergies alternatives (CEA) APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: FRA
-state: FR-BFC
+state: FR-IDF
 level: kommune
-dataset: 'france_comte_u'
+dataset: 'cea'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

@@ -1,14 +1,14 @@
-name: Université de Franche-Comté
-slug: france_comte_u
-tagline: Université de Franche-Comté APC data
+name: GEOMAR - Helmholtz Centre for Ocean Research Kiel
+slug: geomar
+tagline: GEOMAR - Helmholtz Centre for Ocean Research Kiel APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: FRA
-state: FR-BFC
+country: DEU
+state: SH
 level: kommune
-dataset: 'france_comte_u'
+dataset: 'geomar'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
