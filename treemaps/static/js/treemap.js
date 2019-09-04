@@ -14,17 +14,21 @@ OSDE.TreeMap = function(elementID) {
 		$treemap.empty();
 
 		treemap = d3.layout.treemap()
-		  .size([width, height])
-		  .sticky(true)
-      .sort(function(a, b) { return a.value - b.value; })
-      .value(function(d) { return d.value; });
+            .size([width, height])
+            .sticky(true)
+            .sort(function(a, b) { return a.value - b.value; })
+            .value(function(d) {
+                if (d.value == null) {
+                    return 1;
+                } 
+                return d.value; 
+            });
 
 		div = d3.select("#treemap").append("div")
 		  .style("position", "relative")
 		  .style("width", width + "px")
 		  .style("height", height + "px");
 	}
-
 	self.render = function render(data, dimension) {
 		// TODO: remove elements, don't create each time. 
 		create();

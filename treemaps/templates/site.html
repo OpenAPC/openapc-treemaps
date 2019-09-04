@@ -111,7 +111,7 @@
 {% block js %}
   <script id="table-template" type="text/x-handlebars-template">{% raw %}
     <div id="sort-menu" class="btn-group btn-group-sm">
-      <a class="btn btn-default"><strong>Sort by:</strong></a>
+      <a class="btn btn-default"><strong>Measure:</strong></a>
       {{#each table_items}}
       {{#if this.sort_key}}
       <a class="btn btn-default" data-sort-key="{{name}}">{{this.label}}</a>

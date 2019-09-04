@@ -206,13 +206,16 @@ $(function(){
       var cutStr = buildCutString(cuts);
       data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
       data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
-      
       $.each(data.cells, function(e, cell) {
         cell._current_label = cell[site.labelrefs[dimension]];
         cell._current_key = cell[site.keyrefs[dimension]];
         cell._values = [];
         $.each(data.table_items, function(g, item) {
-            if (item.name == site.primary_aggregate) {
+            var treemap_key = site.primary_aggregate;
+            if (typeof sortKey !== "undefined") {
+                treemap_key = sortKey;
+            }
+            if (item.name == treemap_key) {
                 // treemap relevant fields
                 cell._value = cell[item.name]
                 cell._value_fmt = OSDE.format_value(cell._value, item.format);
@@ -262,7 +265,6 @@ $(function(){
           cell._doi = "https://doi.org/" + cell.doi;
         }
       });
-
       treemap.render(data, path.drilldown);
       //store current sort key and set it again after rendering
       if (!$('[data-sort-key].active').length) {
