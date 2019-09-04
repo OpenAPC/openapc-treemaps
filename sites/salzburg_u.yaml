@@ -1,14 +1,14 @@
-name: Dalarna University
-slug: dalarna_u
-tagline: Dalarna University APC data
+name: University of Salzburg
+slug: salzburg_u
+tagline: University of Salzburg APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: SWE
-state: SE-W
+country: AUT
+state: AUT-SZ
 level: kommune
-dataset: 'dalarna_u'
+dataset: 'salzburg_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

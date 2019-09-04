@@ -1,14 +1,14 @@
-name: Borås University College
-slug: boras_uc
-tagline: Borås University College APC data
+name: Swedish School of Sport and Health Sciences
+slug: swedish_school_sport_health_sciences
+tagline: Swedish School of Sport and Health Sciences APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: SWE
-state: SE-O
+state: SE-AB
 level: kommune
-dataset: 'boras_uc'
+dataset: 'swedish_school_sport_health_sciences'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

@@ -1,14 +1,14 @@
-name: University College West
-slug: west_uc
-tagline: University College West APC data
+name: Karlstad University
+slug: karlstad_u
+tagline: Karlstad University APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: SWE
-state: SE-O
+state: SE-S
 level: kommune
-dataset: 'west_uc'
+dataset: 'karlstad_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
