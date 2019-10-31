@@ -65,6 +65,10 @@ $(function() {
             'scale': 1200,
             'center': [25, 65.5]
         },
+        'SRB': {
+            'scale': 5000,
+            'center': [21, 44.2]
+        },
         'QAT': {
             'scale': 17000,
             'center': [51.2, 25.35]
