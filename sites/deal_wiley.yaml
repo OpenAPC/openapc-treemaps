@@ -1,0 +1,64 @@
+name: DEAL Wiley
+slug: deal_wiley
+tagline: "Wiley DEAL data (hybrid)"
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_agreements/transformative_agreements.csv
+level: bund
+dataset: deal_wiley
+default: institution
+intro_note: 'This treemap starts to visualise cost data on articles published under the German DEAL agreement with Wiley. Gold OA articles (Hybrid Status = FALSE) have been paid for with regular APCs, a DEAL discount of 20% is included. According to the agreements between participating institutions and the MPDL Services GmbH the indivdual PAR fee per institution is calculated by the institutional amount of subscription expenditures divided by the number of accepted articles in Wiley hybrid journals in a certain period (Hybrid Status = TRUE). APCs and PAR fees both represent institutional (average) costs per article. Please note that publishing in Wiley hybrid journals under the DEAL agreement is only possible since the second half of 2019. The institutional costs per article in Wiley hybrid journals will therefore decrease in 2020.'
+
+primary_aggregate: "apc_amount_sum"
+
+table_items:
+  - name: 'apc_amount_sum'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'apc_num_items'
+    type: 'aggregate'
+    format: 'number'
+  - name: 'apc_amount_avg'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'apc_amount_stddev'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'percentage'
+    type: 'total_percentage'
+    format: 'percentage'
+    relates_to: 'apc_amount_sum'
+    label: 'Percentage'
+    
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+  - field: 'country'
+    name: 'Country'
+    nullable: true
+
+hierarchies:
+    institution:
+        name: Institution
+        drilldowns:
+            - institution
+            - journal_full_title
+            - doi
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - institution
+            - doi
+    journal:
+        name: Journal
+        drilldowns:
+            - journal_full_title
+            - institution
+            - doi
