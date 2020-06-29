@@ -37,7 +37,7 @@ filters:
   - field: 'country'
     name: 'Country'
     nullable: true
-  - field: 'backlist'
+  - field: 'backlist_oa'
     name: 'Backlist OA'
     nullable: true
   - field: 'doab'
