@@ -10,7 +10,7 @@ setup(
     keywords='',
     author='Christoph Broschinski',
     author_email='openapc@uni-bielefeld.de',
-    url='http://www.intact-project.org',
+    url='https://openapc.net',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     namespace_packages=[],

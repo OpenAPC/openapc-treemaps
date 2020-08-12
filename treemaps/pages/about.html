@@ -3,14 +3,13 @@ title: About this site
 
 ## Open APC
 
-The [Open APC initiative](https://intact-project.org/openapc) releases datasets on fees paid for open access journal articles by universities and research institutions under an open database license.
-Open APC, which is also supported by the [DINI Working Group Electronic Publishing](https://dini.de/english/), is located at [Bielefeld University Library](http://www.ub.uni-bielefeld.de/english/).
-Since October 2015 Open APC ist part of the [INTACT](https://intact-project.org) project.
+The [OpenAPC initiative](https://openapc.net) releases data sets on fees paid for open access journal articles by universities and research institutions under an open database license.
+OpenAPC is operated by [Bielefeld University Library](http://www.ub.uni-bielefeld.de/english/).
 
 ## Data Access
    
-Main place for Open APC to collect and maintain its data is [GitHub](https://github.com/OpenAPC), where the core data file is kept and redacted in CSV format.
-This site and its open [backend](https://olap.intact-project.org) were established to improve accessibility and re-use of the data, which means that there are 3 ways to access the Open APC dataset, differing in their tradeoff between flexibility and ease of handling:
+Main place for OpenAPC to collect and maintain its data is [GitHub](https://github.com/OpenAPC), where all core data files are kept and redacted in CSV format.
+This site and its open [backend](https://olap.openapc.net) were established to improve accessibility and re-use of the data, which means that there are 3 ways to access the OpenAPC data sets, differing in their tradeoff between flexibility and ease of handling:
 
 * Raw data
 
@@ -20,28 +19,13 @@ This site and its open [backend](https://olap.intact-project.org) were establish
 
 * OLAP
 
-    Since the raw CSV data can be difficult to analyze without tool support, a more elegant method is querying the Open APC [OLAP Server](https://olap.intact-project.org).
-    This service implements an [online analytical processing](https://en.wikipedia.org/wiki/Online_analytical_processing) framework based on [cubes](http://cubes.databrewery.org/), forming the backend of treemaps.intact-project.org.
-
-    Some example queries:
-
-    <https://olap.intact-project.org/cube/openapc/aggregate?drilldown=publisher&cut=period:2014>
-
-    *(How much did every individual publisher receive in 2014?)*
-
-    <https://olap.intact-project.org/cube/openapc/aggregate?drilldown=journal_full_title&cut=institution:Bielefeld U>
-
-    *(What journals did Bielefeld University pay for?)*
-
-    <https://olap.intact-project.org/cube/openapc/facts?cut=institution:Regensburg%20U|period:2013>
-
-    *(List detailed facts about every article Regensburg University paid for in 2013)*
-
-    **Note**: The query return format is JSON. If you want to view the results directly in your browser, it is highly advisable to use an addon or extension that properly formats JSON, like [JSONView](http://jsonview.com) for Firefox and Chrome.
+    Since the raw CSV data can be difficult to analyze without tool support, a more elegant method is querying the OpenAPC [OLAP Server](https://olap.openapc.net).
+    This service implements an [online analytical processing](https://en.wikipedia.org/wiki/Online_analytical_processing) framework based on [cubes](http://cubes.databrewery.org/), forming the backend of treemaps.openapc.net.
+    For usage instructions have a look at this [HOWTO](https://github.com/OpenAPC/openapc-olap/blob/master/HOWTO.md). 
 
 * Treemaps
 
-    The treemaps on this site present the most easy and intutitive way to browse and inspect the Open APC data. It is possible to either view the data for single institutions or the [whole data set](/apcdata/openapc/).
+    The treemaps on this site present the most easy and intutitive way to browse and inspect the OpenAPC data. It is possible to either view the data for single institutions or the [whole data set](/apcdata/openapc/).
 
 ## Acknowledgements
 

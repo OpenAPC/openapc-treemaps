@@ -1,7 +1,7 @@
 ## openapc-treemaps
 
-openapc-treemaps implements a [visual frontend](http://treemaps.intact-project.org) for the [OpenAPC project](https://github.com/OpenAPC/openapc-de), which collects and disseminates information on fee-based Open Access publishing from participating universities and research institutes as part of the DFG-funded project [INTACT](http://intact-project.org).
-The data is provided by a small backend OLAP service named [openapc-olap](http://olap.intact-project.org) ([GitHub](https://github.com/OpenAPC/openapc-olap)).
+openapc-treemaps implements a [visual frontend](https://treemaps.openapc.net) for the [OpenAPC project](https://github.com/OpenAPC/openapc-de), which collects and disseminates information on fee-based Open Access publishing from participating universities and research institutes.
+The data is provided by a small backend OLAP service named [openapc-olap](https://olap.openapc.net) ([GitHub](https://github.com/OpenAPC/openapc-olap)).
 openapc-treemaps is based on the project [OffenerHaushalt](http://offenerhaushalt.de/) ([GitHub](https://github.com/okfde/offenerhaushalt.de)) by the [Open Knowlege Foundation](http://okfn.de/).
 
 ### Building the site
