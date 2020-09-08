@@ -69,6 +69,10 @@ $(function() {
             'scale': 5000,
             'center': [21, 44.2]
         },
+        'BEL': {
+            'scale': 7000,
+            'center': [4.5, 50.5]
+        },
         'QAT': {
             'scale': 17000,
             'center': [51.2, 25.35]
