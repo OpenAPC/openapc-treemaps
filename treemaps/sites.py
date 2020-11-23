@@ -1,14 +1,19 @@
+from __future__ import absolute_import
 import yaml
 import requests
 import os
 from slugify import slugify
 
-from treemaps.core import app
+from .treemaps.core import app
+
+try:
+    unicode  # python2
+except NameError:
+    unicode = str  # python3
 
 
 def urlpath(*a):
-    a = [p.strip('/') for p in a]
-    return '/'.join(a)
+    return '/'.join(p.strip('/') for p in a)
 
 
 class _DataObject(object):
@@ -133,13 +138,13 @@ class Site(_DataObject):
         data['labelrefs'] = {}
         for dim in self.model.get('dimensions'):
             name = dim['name']
-            #data['keyrefs'][name] = dim['key_ref']
-            #data['labelrefs'][name] = dim['label_ref']
+            # data['keyrefs'][name] = dim['key_ref']
+            # data['labelrefs'][name] = dim['label_ref']
             data['keyrefs'][name] = name
             data['labelrefs'][name] = name
-            #for attr in dim.get('attributes').values():
-             #   data['keyrefs'][attr['ref']] = attr['ref']
-             #   data['labelrefs'][attr['ref']] = attr['ref']
+            # for attr in dim.get('attributes').values():
+            #     data['keyrefs'][attr['ref']] = attr['ref']
+            #     data['labelrefs'][attr['ref']] = attr['ref']
 
         data['filters'] = self.filters
         return data
