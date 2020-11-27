@@ -41,6 +41,9 @@ filters:
   - field: 'country'
     name: 'Country'
     nullable: true
+  - field: 'opt_out'
+    name: 'Opt Out'
+    nullable: true
 
 hierarchies:
     institution:
