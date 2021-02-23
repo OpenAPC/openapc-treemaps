@@ -70,8 +70,9 @@ class Filter(_DataObject):
                     'key': value.get(self.key_ref),
                     'label': value.get(self.label_ref)
                 })
+            reverse_sort = True if self.field == 'period' else False
             self._values = list(sorted(self._values,
-                                key=lambda v: v.get('label')))
+                                key=lambda v: v.get('label'), reverse=reverse_sort))
         return self._values
 
     @property
