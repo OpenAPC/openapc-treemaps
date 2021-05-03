@@ -1,14 +1,14 @@
-name: University of Bern
-slug: bern_u
-tagline: University of Bern APC data
+name: Institut Laue-Langevin
+slug: laue_langevin
+tagline: Institut Laue-Langevin APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: CHE
-state: CH.BE
+country: FRA
+state: FR-ARA
 level: kommune
-dataset: 'bern_u'
+dataset: 'laue_langevin'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

@@ -1,14 +1,14 @@
-name: University of Bern
-slug: bern_u
-tagline: University of Bern APC data
+name: DIPF | Leibniz-Institut für Bildungsforschung und Bildungsinformation
+slug: dipf
+tagline: DIPF | Leibniz-Institut für Bildungsforschung und Bildungsinformation APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: CHE
-state: CH.BE
+country: DEU
+state: HE
 level: kommune
-dataset: 'bern_u'
+dataset: 'dipf'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
