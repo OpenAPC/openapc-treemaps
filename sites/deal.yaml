@@ -1,13 +1,18 @@
-name: DEAL Wiley
-slug: deal_wiley
-tagline: "Wiley DEAL data (hybrid)"
+name: DEAL
+slug: deal
+tagline: "DEAL data"
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_agreements/transformative_agreements.csv
 level: bund
-dataset: deal_wiley
+dataset: deal
 default: institution
-intro_note: 'This treemap visualises cost data on articles published under the German DEAL agreements with Wiley and Springer Nature. Gold OA articles (Hybrid Status = FALSE) have been paid for with regular APCs, a DEAL discount of 20% is included. For hybrid articles a so-called "equivalent APC" is calculated by dividing the annual institutional prepayment amount (former subscription expenditures) by the number of accepted articles in hybrid journals for the same year (Hybrid Status = TRUE). APCs and Equivalent APCs both represent institutional (average) costs per article. Please note that publishing in Wiley hybrid journals under the DEAL agreement was only possible since the second half of 2019, the Wiley prepayment amount for 2019 per institution has therefore been halved centrally by OpenAPC. Please find more details <a href="https://github.com/OpenAPC/openapc-de/wiki/DEAL-Wiley">here</a>.'
+intro_note: 'This treemap visualises cost data on articles published under the German DEAL agreements with Wiley and Springer Nature. Gold OA articles (Hybrid Status = FALSE) have been paid for with regular APCs, a DEAL discount of 20% is included. For hybrid articles a so-called "equivalent APC" is calculated by dividing the annual institutional prepayment amount (former subscription expenditures) by the number of accepted articles in hybrid journals for the same year (Hybrid Status = TRUE). APCs and Equivalent APCs both represent institutional (average) costs per article. Some points to be aware of: 
+<ul>
+ <li>Publishing in Wiley hybrid journals under the DEAL agreement was only possible since the second half of 2019, the Wiley prepayment amount for 2019 per institution has therefore been halved centrally by OpenAPC.</li>
+ <li>The Springer DEAL for Gold OA articles started in the second half of 2020. Since we cannot reliably distinguish if a 2020 Springer article was published in the first or second half of the year, the full set of 2020 Springer Gold OA articles was included.</li>
+</ul>
+Find more details <a href="https://github.com/OpenAPC/openapc-de/wiki/DEAL-Wiley">here</a>.'
 
 primary_aggregate: "apc_amount_sum"
 
@@ -32,14 +37,14 @@ table_items:
     
 
 filters:
+  - field: 'publisher'
+    name: 'Publisher'
+    nullable: true
   - field: 'period'
     name: 'Year'
     nullable: true
   - field: 'is_hybrid'
     name: 'Hybrid Status'
-    nullable: true
-  - field: 'country'
-    name: 'Country'
     nullable: true
   - field: 'opt_out'
     name: 'Opt Out'
