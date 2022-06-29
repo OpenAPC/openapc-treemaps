@@ -77,6 +77,18 @@ $(function() {
             'scale': 17000,
             'center': [51.2, 25.35]
         },
+        'MWI': {
+            'scale': 3700,
+            'center': [34, -13.5]
+        },
+        'VNM': {
+            'scale': 2000,
+            'center': [105, 16]
+        },
+        'THA': {
+            'scale': 1900,
+            'center': [101, 13]
+        },
         'EUROPE': {
             'scale': 700,
             'center': [10.5, 50]
@@ -88,6 +100,14 @@ $(function() {
         'WESTERN_ASIA': {
             'scale': 850,
             'center': [42, 29]
+        },
+        'EASTERN_AFRICA': {
+            'scale': 650,
+            'center': [38, -5]
+        },
+        'SOUTH_EASTERN_ASIA': {
+            'scale': 600,
+            'center': [115, 10]
         },
         'WORLD': {
             'scale': 105,
