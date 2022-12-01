@@ -1,7 +1,7 @@
 import logging
 
 from flask import Flask
-from flask.ext.assets import Environment
+from flask_assets import Environment
 from flask_frozen import Freezer
 from flask_flatpages import FlatPages
 

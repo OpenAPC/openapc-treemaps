@@ -23,7 +23,7 @@ class SiteCollection(object):
         self.sites = []
         for site_file in os.listdir(directory):
             with open(os.path.join(directory, site_file), 'rb') as fh:
-                site = Site(yaml.load(fh))
+                site = Site(yaml.unsafe_load(fh))
                 if not site.data.get('skip'):
                     self.sites.append(site)
 
@@ -44,7 +44,7 @@ class Filter(_DataObject):
     def __init__(self, site, data):
         self.site = site
         self.data = data
-        self.default = unicode(data.get('default'))
+        self.default = data.get('default')
         self.field = self.data.get('field')
         self.dimension = self.field.split('.')[0]
         self.label_ref = None
