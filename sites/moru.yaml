@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: Mahidol Oxford Tropical Medicine Research Unit
+slug: moru
+tagline: Mahidol Oxford Tropical Medicine Research Unit APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
-continent: EUROPE
-country: FRA
-state: FR-PAC
+continent: SOUTH_EASTERN_ASIA
+country: THA
+state: TH-10
 level: kommune
-dataset: 'avignon_u'
+dataset: 'moru'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

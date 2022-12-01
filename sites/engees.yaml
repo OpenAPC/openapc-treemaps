@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: École nationale du génie de l'eau et de l'environnement de Strasbourg
+slug: engees
+tagline: École nationale du génie de l'eau et de l'environnement de Strasbourg APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: FRA
-state: FR-PAC
+state: FR-GES
 level: kommune
-dataset: 'avignon_u'
+dataset: 'engees'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

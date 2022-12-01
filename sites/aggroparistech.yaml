@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: AgroParisTech
+slug: aggroparistech
+tagline: AgroParisTech APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: FRA
-state: FR-PAC
+state: FR-IDF
 level: kommune
-dataset: 'avignon_u'
+dataset: 'aggroparistech'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

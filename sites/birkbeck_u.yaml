@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: Birkbeck, University of London
+slug: birkbeck_u
+tagline: Birkbeck, University of London APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: FRA
-state: FR-PAC
+country: GBR
+state: ENG
 level: kommune
-dataset: 'avignon_u'
+dataset: 'birkbeck_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
