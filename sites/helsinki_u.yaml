@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: University of Helsinki
+slug: helsinki_u
+tagline: University of Helsinki APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: FRA
-state: FR-PAC
+country: FIN
+state: FI-18
 level: kommune
-dataset: 'avignon_u'
+dataset: 'helsinki_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

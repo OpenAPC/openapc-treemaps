@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: Paul-Drude-Institut für Festkörperelektronik
+slug: pdi
+tagline: Paul-Drude-Institut für Festkörperelektronik APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
-country: FRA
-state: FR-PAC
+country: DEU
+state: BE
 level: kommune
-dataset: 'avignon_u'
+dataset: 'pdi'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

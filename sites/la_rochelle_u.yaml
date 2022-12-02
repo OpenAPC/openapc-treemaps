@@ -1,6 +1,6 @@
-name: Université de La Rochelle
+name: La Rochelle Université
 slug: la_rochelle_u
-tagline: Université de La Rochelle APC data
+tagline: La Rochelle Université APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv

@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: Université de technologie de Troyes
+slug: troyes_u
+tagline: Université de technologie de Troyes APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 continent: EUROPE
 country: FRA
-state: FR-PAC
+state: FR-GES
 level: kommune
-dataset: 'avignon_u'
+dataset: 'troyes_u'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"

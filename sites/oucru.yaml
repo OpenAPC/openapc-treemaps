@@ -1,14 +1,14 @@
-name: Avignon Université
-slug: avignon_u
-tagline: Avignon Université APC data
+name: Oxford University Clinical Research Unit
+slug: oucru
+tagline: Oxford University Clinical Research Unit APC data
 source: Open APC
 source_url: https://github.com/OpenAPC/openapc-de
 data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
-continent: EUROPE
-country: FRA
-state: FR-PAC
+continent: SOUTH_EASTERN_ASIA
+country: VNM
+state: VN-SG
 level: kommune
-dataset: 'avignon_u'
+dataset: 'oucru'
 default: publisher
 
 primary_aggregate: "apc_amount_sum"
