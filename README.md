@@ -8,7 +8,7 @@ openapc-treemaps is based on the project [OffenerHaushalt](http://offenerhaushal
 
 Build instructions are identical to the original project OffenerHaushalt. Requirements:
 
-* Python 2.x, virtualenv
+* Python 3.10, virtualenv
 * node.js with npm, and global installs of: uglify-js, less, bower
 
 When you have openapc-treemaps checked out, follow these steps:
@@ -20,14 +20,14 @@ pip install -r requirements.txt
 python setup.py develop
 ```
 
-You can then run the site like a normal Flask application:
+You can then run the site using the Flask script cli:
 ```bash
-python treemaps/manage.py runserver
+flask --app treemaps.web run -h 0.0.0.0
 ```
 
 Having verified that the application work, you can build a frozen version of all the contents in this database by running:
 ```bash
-python treemaps/manage.py freeze
+python freeze.py
 ```
 
 This will make a plain HTML version of the visualizations.
