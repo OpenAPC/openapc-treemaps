@@ -31,9 +31,6 @@ filters:
   - field: 'country'
     name: 'Country'
     nullable: true
-  - field: 'agreement'
-    name: Agreement
-    nullable: true
 
 hierarchies:
     institution:
@@ -54,4 +51,11 @@ hierarchies:
         drilldowns:
             - journal_full_title
             - institution
+            - doi
+    agreement:
+        name: Agreement
+        drilldowns:
+            - agreement
+            - institution
+            - journal_full_title
             - doi
