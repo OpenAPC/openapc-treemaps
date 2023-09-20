@@ -1,0 +1,49 @@
+name: Université Louis Lumière - Lyon II
+slug: lyon2_u
+tagline: Université Louis Lumière - Lyon II APC data
+source: Open APC
+source_url: https://github.com/OpenAPC/openapc-de
+data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
+continent: EUROPE
+country: FRA
+state: FR-ARA
+level: kommune
+dataset: 'lyon2_u'
+default: publisher
+
+primary_aggregate: "apc_amount_sum"
+
+table_items:
+  - name: 'apc_amount_sum'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'apc_num_items'
+    type: 'aggregate'
+    format: 'number'
+  - name: 'apc_amount_avg'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'apc_amount_stddev'
+    type: 'aggregate'
+    format: 'monetary'
+  - name: 'percentage'
+    type: 'total_percentage'
+    format: 'percentage'
+    relates_to: 'apc_amount_sum'
+    label: 'Percentage'
+
+filters:
+  - field: 'period'
+    name: 'Year'
+    nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi
