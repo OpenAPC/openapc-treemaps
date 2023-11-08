@@ -2,7 +2,8 @@ venv/
 build/
 node_modules/
 *.pyc
-treemaps/static/vendor/
+treemaps/static/vendor
 treemaps/static/gen/
 treemaps/static/.webassets-cache/
 openapc_treemaps.egg-info/
+yarn.lock
