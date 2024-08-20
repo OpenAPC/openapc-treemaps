@@ -9,7 +9,7 @@ openapc-treemaps is based on the project [OffenerHaushalt](http://offenerhaushal
 Build instructions are identical to the original project OffenerHaushalt. Requirements:
 
 * Python 3.10, virtualenv
-* node.js with npm, and global installs of: uglify-js, less, bower
+* node.js >= v21.1.0 with npm, and global installs of: uglify-js + less
 
 When you have openapc-treemaps checked out, follow these steps:
 ```bash
