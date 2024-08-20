@@ -11,7 +11,20 @@ OSDE.drilldownLabels = {
     "journal_full_title": "Journals",
     "institution": "Institutions",
     "publisher": "Publishers",
-    "doi": "Articles"
+    "doi": "Articles",
+    "cost_type": "Cost Data"
+}
+
+OSDE.costTypeColors = {
+    "apc": "#a0cb59",
+    "Colour charges": "#ffa500",
+    "Cover": "#ff0000",
+    "Other": "#ee00ee",
+    "Page charges": "#2f4f4f",
+    "Permission": "#006400",
+    "Publication charges": "#0000ff",
+    "Reprint": "#ffff00",
+    "Submission fee": "#00ffff"
 }
 
 /*

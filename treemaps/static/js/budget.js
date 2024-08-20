@@ -103,7 +103,7 @@ $(function(){
 
     $.each(path.hierarchy.drilldowns, function(i, drilldown) {
       if (args[drilldown]) {
-        url += args[drilldown] + '/';
+        url += encodeURIComponent(args[drilldown]) + '/';
         delete args[drilldown];
       }
     });
@@ -153,7 +153,6 @@ $(function(){
     var sortKey = $('[data-sort-key].active').data('sort-key');
     
     getData(path.drilldown, cuts, sortKey).done(function(data) {
-
       var dimension = path.drilldown;
       if (dimension != rootDimension) {
         var rootColor = d3.rgb(OSDE.labelToColor(cuts[rootDimension])),
@@ -163,7 +162,12 @@ $(function(){
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
       
-      data.table_items = site.table_items;
+      data.table_items = [];
+      $.each(site.table_items, function(f, item) {
+        if (item.not_shown_in != path.hierarchyName) {
+          data.table_items.push(item);
+        }
+      });
       $.each(data.table_items, function(f, item) {
         if (item.type == "aggregate") {
           // Sorting takes place in the OLAP backend, so we can only use aggregates here
@@ -173,7 +177,9 @@ $(function(){
           var agg = site.all_aggregates.find(function(aggregate) {
             return aggregate.ref == item.name;
           });
-          item.label = agg.label;
+          if (!Object.hasOwn(item, "label")) {
+            item.label = agg.label;
+          }
         }
         else if (item.type == "cross_item_percentage") {
           item._summary = data.summary[item.fraction_item] / data.summary[item.total_item];
@@ -255,14 +261,14 @@ $(function(){
         else {
           cell._no_url = true;
         }
-        if (dimension != rootDimension) {
+        if (dimension == "cost_type") {
+            cell._color = OSDE.costTypeColors[cell._current_key];
+        }
+        else if (dimension != rootDimension) {
           cell._color = color_scale(e);
         }
         else {
           cell._color = OSDE.labelToColor(cell._current_key);
-        }
-        if (cell.doi) {
-          cell._doi = "https://doi.org/" + cell.doi;
         }
       });
       treemap.render(data, path.drilldown);
