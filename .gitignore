@@ -1,5 +1,6 @@
 venv/
 build/
+sites/
 node_modules/
 *.pyc
 treemaps/static/vendor/
