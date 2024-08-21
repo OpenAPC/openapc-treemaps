@@ -51,12 +51,16 @@ filters:
 hierarchies:
     institution:
         name: Institution
+        cuts:
+            cost_type: apc
         drilldowns:
             - institution
             - journal_full_title
             - publication_key
     publisher:
         name: Publisher
+        cuts:
+            cost_type: apc
         drilldowns:
             - publisher
             - journal_full_title
@@ -64,6 +68,8 @@ hierarchies:
             - publication_key
     journal:
         name: Journal
+        cuts:
+            cost_type: apc
         drilldowns:
             - journal_full_title
             - institution
