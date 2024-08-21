@@ -161,12 +161,12 @@ $(function(){
         color_scale = color_scale.range([rootColor.brighter(), rootColor.darker().darker()]);
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
-      
       data.table_items = [];
       $.each(site.table_items, function(f, item) {
-        if (item.not_shown_in != path.hierarchyName) {
-          data.table_items.push(item);
+        if (item.not_shown_in && item.not_shown_in.includes(path.hierarchyName)) {
+          return;
         }
+        data.table_items.push(item);
       });
       $.each(data.table_items, function(f, item) {
         if (item.type == "aggregate") {
@@ -255,6 +255,13 @@ $(function(){
           var modifiers = {};
           modifiers[dimension] = cell._current_key;
           cell._url = makeUrl(path, modifiers);
+        } else if (cell.publication_key) {
+          if (cell.publication_key.startsWith("10.")) {
+            cell._url = "https://doi.org/" + cell.publication_key;
+          }
+          else {
+            cell._url = "https://" + cell.publication_key;
+          }
         } else if (cell.doi) {
           cell._doi = "https://doi.org/" + cell.doi;
         }

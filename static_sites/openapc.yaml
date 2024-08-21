@@ -17,6 +17,13 @@ table_items:
   - name: 'apc_num_items'
     type: 'aggregate'
     format: 'number'
+  - name: 'cost_data_num_items'
+    type: 'aggregate'
+    format: 'number'
+    not_shown_in:
+        - 'institution'
+        - 'publisher'
+        - 'journal'
   - name: 'apc_amount_avg'
     type: 'aggregate'
     format: 'monetary'
@@ -47,17 +54,25 @@ hierarchies:
         drilldowns:
             - institution
             - journal_full_title
-            - doi
+            - publication_key
     publisher:
         name: Publisher
         drilldowns:
             - publisher
             - journal_full_title
             - institution
-            - doi
+            - publication_key
     journal:
         name: Journal
         drilldowns:
             - journal_full_title
             - institution
-            - doi
+            - publication_key
+    additional_costs:
+        name: Additional Costs
+        drilldowns:
+            - institution
+            - publisher
+            - journal_full_title
+            - publication_key
+            - cost_type
