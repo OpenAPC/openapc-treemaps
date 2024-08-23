@@ -17,14 +17,14 @@ OSDE.drilldownLabels = {
 
 OSDE.costTypeColors = {
     "apc": "#a0cb59",
-    "Colour charges": "#ffa500",
-    "Cover": "#ff0000",
-    "Other": "#ee00ee",
-    "Page charges": "#2f4f4f",
-    "Permission": "#006400",
-    "Publication charges": "#0000ff",
-    "Reprint": "#ffff00",
-    "Submission fee": "#00ffff"
+    "colour charge": "#ffa500",
+    "cover charge": "#ff0000",
+    "other": "#ee00ee",
+    "page charge": "#2f4f4f",
+    "permission": "#006400",
+    "payment fee": "#0000ff",
+    "reprint": "#ffff00",
+    "submission fee": "#00ffff"
 }
 
 /*
