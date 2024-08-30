@@ -41,8 +41,8 @@ class SiteCollection(object):
 
 class Filter(_DataObject):
 
-    def __init__(self, site, data):
-        self.site = site
+    def __init__(self, hierarchy, data):
+        self.hierarchy = hierarchy
         self.data = data
         self.default = data.get('default')
         self.field = self.data.get('field')
@@ -53,26 +53,24 @@ class Filter(_DataObject):
 
     @property
     def values(self):
-        if self._values is None:
-            url = urlpath(self.site.api_base, 'members', self.dimension)
-            res = requests.get(url)
-            #raise Exception()
-            for dim in self.site.model.get('dimensions'):
-                dname = dim['name']
-                if dname != self.dimension:
-                    continue
-                self.key_ref = dname
-                self.label_ref = dname
+        url = urlpath(self.hierarchy.api_base, 'members', self.dimension)
+        res = requests.get(url)
+        for dim in self.hierarchy.model.get('dimensions'):
+            dname = dim['name']
+            if dname != self.dimension:
+                continue
+            self.key_ref = dname
+            self.label_ref = dname
 
-            self._values = []
-            for value in res.json().get('data'):
-                self._values.append({
-                    'key': value.get(self.key_ref),
-                    'label': value.get(self.label_ref)
-                })
-            reverse_sort = True if self.field == 'period' else False
-            self._values = list(sorted(self._values,
-                                key=lambda v: v.get('label'), reverse=reverse_sort))
+        self._values = []
+        for value in res.json().get('data'):
+            self._values.append({
+                'key': value.get(self.key_ref),
+                'label': value.get(self.label_ref)
+            })
+        reverse_sort = True if self.field == 'period' else False
+        self._values = list(sorted(self._values,
+                           key=lambda v: v.get('label'), reverse=reverse_sort))
         return self._values
 
     @property
@@ -88,15 +86,15 @@ class Filter(_DataObject):
         data['values'] = values
         return data
 
+class Hierarchie(_DataObject):
 
-class Site(_DataObject):
-
-    def __init__(self, data):
+    def __init__(self, data, internal_name):
+        self.internal_name = internal_name
         self.data = data
-        self.slug = slugify(data.get('slug', data.get('name')))
-        self.filters = [Filter(self, d) for d in data.get('filters', [])]
         self.api_base = urlpath(app.config['SLICER_URL'], 'cube',
-                                self.data.get('dataset'))
+                        data.get('cube'))
+        self.filters = [Filter(self, d) for d in data.get('filters', [])]
+        self.url = None
         self._model = None
 
     @property
@@ -122,29 +120,38 @@ class Site(_DataObject):
 
     def to_dict(self):
         data = self.data.copy()
-        data['slug'] = self.slug
         data['api'] = self.api_base
+        data['internal_name'] = self.internal_name
+        data['active'] = self.active
+        data['url'] = self.url
         aggregate_dict = self.get_aggregate()
         data['aggregate'] = aggregate_dict["aggregate"]
         data['aggregate_function'] = aggregate_dict["function"]
         data['all_aggregates'] = self.model.get('aggregates')
-
-        # This seems hacky.
+        data['filters'] = self.filters
         data['keyrefs'] = {}
         data['labelrefs'] = {}
         for dim in self.model.get('dimensions'):
             name = dim['name']
-            #data['keyrefs'][name] = dim['key_ref']
-            #data['labelrefs'][name] = dim['label_ref']
             data['keyrefs'][name] = name
             data['labelrefs'][name] = name
-            #for attr in dim.get('attributes').values():
-             #   data['keyrefs'][attr['ref']] = attr['ref']
-             #   data['labelrefs'][attr['ref']] = attr['ref']
-
-        data['filters'] = self.filters
         return data
 
+class Site(_DataObject):
+
+    def __init__(self, data):
+        self.data = data
+        self.slug = slugify(data.get('slug', data.get('name')))
+        hierarchie_dicts = data.get('hierarchies', {})
+        self.hierarchies = {internal_name: Hierarchie(data, internal_name) for internal_name, data in hierarchie_dicts.items()}
+        self.active_hierarchy = None
+
+    def to_dict(self):
+        data = self.data.copy()
+        data['slug'] = self.slug
+        data['hierarchies'] = self.hierarchies
+        data['active_hierarchy'] = self.active_hierarchy
+        return data
 
 def load_sites():
     return SiteCollection(app.config['SITES_FOLDER'])

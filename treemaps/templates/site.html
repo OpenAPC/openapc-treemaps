@@ -18,7 +18,7 @@
       <div class="btn-group btn-group-sm" id="hierarchy-menu">
         <a class="btn btn-default"><strong>View:</strong></a>
         {% for name, data in site.hierarchies.items() %}
-          <a class="btn btn-default {{name}}" href="#{{name}}/">{{data.name}}</a>
+          <a class="btn btn-default {{name}}" href="{{ url_for('site_hierarchy', slug=site.slug, hierarchy_name=name) }}">{{data.name}}</a>
         {% endfor %}
       </div>
       <div class="btn-group btn-group-sm">
@@ -30,32 +30,32 @@
     <div class="col-sm-12 col-md-7 site-menu site-filters">
       <div class="btn-group btn-group-sm pull-right">
         <a class="btn btn-default"><strong>Filter:</strong></a>
-          {% for filter in site.filters %}
-            <div class="btn-group btn-group-sm">
-              <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                {{filter.name}}: <strong data-field="{{filter.field}}">{{filter.default}}</strong>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                {% if filter.nullable %}
-                  <li>
-                    <a class="value {% if value==filter.default %}active{% endif %}" href="#"
-                      data-field="{{filter.field}}" data-value="">
-                      <i class="fa fa-check"></i> All
-                    </a>
-                  </li>
-                {% endif %}
-                {% for value in filter.values %}
-                  <li>
-                    <a class="value {% if value==filter.default %}active{% endif %}" href="#"
-                      data-field="{{filter.field}}" data-value="{{value.key}}">
-                      <i class="fa fa-check"></i> {{value.label}}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endfor %}
+        {% for filter in site.active_hierarchy.filters %}
+          <div class="btn-group btn-group-sm">
+            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{filter.name}}: <strong data-field="{{filter.field}}">{{filter.default}}</strong>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {% if filter.nullable %}
+                <li>
+                  <a class="value {% if value==filter.default %}active{% endif %}" href="#"
+                    data-field="{{filter.field}}" data-value="">
+                    <i class="fa fa-check"></i> All
+                  </a>
+                </li>
+              {% endif %}
+              {% for value in filter.values %}
+                <li>
+                  <a class="value {% if value==filter.default %}active{% endif %}" href="#"
+                    data-field="{{filter.field}}" data-value="{{value.key}}">
+                    <i class="fa fa-check"></i> {{value.label}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
       </div>
     </div>
     <div class="clearfix"></div>
@@ -168,14 +168,14 @@
     </table>
   {% endraw %}</script>
 
-  <script id="embed-template" type="text/x-handlebars-template">{% raw %}<iframe src="{{baseurl}}embed/full{{hash}}" width="100%" height="530px" frameborder="0" style="margin:0"></iframe>{% endraw %}
+  <script id="embed-template" type="text/x-handlebars-template">{% raw %}<iframe src="{{baseurl}}/embed/full{{hash}}" width="100%" height="530px" frameborder="0" style="margin:0"></iframe>{% endraw %}
   </script>
   
-  <script id="embed-template-reduced" type="text/x-handlebars-template">{% raw %}<iframe src="{{baseurl}}embed/reduced{{hash}}" width="100%" height="520px" frameborder="0" style="margin:0"></iframe>{% endraw %}
+  <script id="embed-template-reduced" type="text/x-handlebars-template">{% raw %}<iframe src="{{baseurl}}/embed/reduced{{hash}}" width="100%" height="520px" frameborder="0" style="margin:0"></iframe>{% endraw %}
   </script>
 
   <script id="site-config" type="application/json">{{site_json | safe }}</script>
-  {% assets filters="uglifyjs", output="gen/budget.%(version)s.js",
+  {% assets output="gen/budget.%(version)s.js",
         "js/treemap.js",
         "js/table.js",
         "js/budget.js" %}

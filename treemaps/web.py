@@ -1,4 +1,4 @@
-from flask import abort, render_template
+from flask import abort, render_template, redirect
 
 from treemaps.core import app, pages
 from treemaps.util import JSONEncoder
@@ -8,21 +8,42 @@ sites = load_sites()
 
 
 @app.route('/apcdata/<slug>/')
-def site(slug, template='site.html'):
+def site(slug):
     site = sites.get(slug)
+    default_hierarchy = site.data['default']
+    return redirect('/apcdata/' + slug + '/' + default_hierarchy)
+
+@app.route('/apcdata/<slug>/<hierarchy_name>')
+def site_hierarchy(slug, hierarchy_name, template='site.html'):
+    site = sites.get(slug)
+    if hierarchy_name not in site.hierarchies:
+        abort(404)
+    for name, hierarchy in site.hierarchies.items():
+        if name == hierarchy_name:
+            site.active_hierarchy = hierarchy
+            break
     site_json = JSONEncoder().encode(site)
     return render_template(template, site=site, site_json=site_json)
 
-
 @app.route('/apcdata/<slug>/embed/full')
-def embed_full(slug):
-    return site(slug, template='embed.html')
-
+def redirect_embed_full(slug):
+    site = sites.get(slug)
+    default_hierarchy = site.data['default']
+    return site_hierarchy(slug, default_hierarchy, template='embed.html')
 
 @app.route('/apcdata/<slug>/embed/reduced')
-def embed_reduced(slug):
-    return site(slug, template='embed_reduced.html')
-   
+def redirect_embed_reduced(slug):
+    site = sites.get(slug)
+    default_hierarchy = site.data['default']
+    return site_hierarchy(slug, default_hierarchy, template='embed_reduced.html')
+
+@app.route('/apcdata/<slug>/<hierarchy_name>/embed/full')
+def embed_full(slug, hierarchy_name):
+    return site_hierarchy(slug, hierarchy_name, template='embed.html')
+
+@app.route('/apcdata/<slug>/embed/reduced')
+def embed_reduced(slug, hierarchy_name):
+    return site_hierarchy(slug, hierarchy_name, template='embed_reduced.html')
 
 @app.route('/page/<path:path>.html')
 def page(path):
@@ -30,7 +51,6 @@ def page(path):
     template = page.meta.get('template', 'page.html')
     return render_template(template, page=page,
                            framed=page.meta.get('framed', True))
-
 
 @app.route('/')
 def index():

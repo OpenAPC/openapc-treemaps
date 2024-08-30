@@ -7,7 +7,7 @@
     <div class="pull-right col-md-2 site-menu site-filters">
       <div class="btn-group btn-group-sm pull-right">
         <a class="btn btn-default"><strong>Filter:</strong></a>
-          {% for filter in site.filters %}
+          {% for filter in site.active_hierarchy.filters %}
             <div class="btn-group btn-group-sm">
               <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 {{filter.name}}: <strong data-field="{{filter.field}}">{{filter.default}}</strong>

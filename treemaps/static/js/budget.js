@@ -5,7 +5,10 @@ $(function(){
       $embedCode = $('#embed-code')
       $embedCodeReduced = $('#embed-code-reduced')
       baseFilters = {};
-  $.each(site.filters, function(i, f) {
+      activeHierarchy = site.active_hierarchy;
+      activeHierarchyName = site.active_hierarchy.internal_name;
+
+  $.each(activeHierarchy.filters, function(i, f) {
     baseFilters[f.field] = f.default;
   });
 
@@ -15,30 +18,29 @@ $(function(){
       $filterValues = $('.site-filters .value'),
       treemap = new OSDE.TreeMap('#treemap'),
       table =  new OSDE.Table('#table');
-      
-      
+
   function escapeCutString(cutString) {
       cutString = cutString.replace(/,/g, '\\,');
       cutString = cutString.replace(/-/g, '\\-');
       return cutString;
   }
-  
+
   function buildCutString(cutObject) {
-    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return site.keyrefs[k] + ':' + escapeCutString(v); }});
+    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return activeHierarchy.keyrefs[k] + ':' + escapeCutString(v); }});
     return cutStr.join('|');
   }
 
   function getData(drilldown, cut, sortkey) {
     var cutStr = buildCutString(cut);
-    var drilldowns = [site.keyrefs[drilldown]]
+    var drilldowns = [activeHierarchy.keyrefs[drilldown]]
     if (!sortkey) {
-      sortkey = site["aggregate"];
+      sortkey = activeHierarchy["aggregate"];
     }
-    if (site.keyrefs[drilldown] != site.labelrefs[drilldown]) {
-      drilldowns.push(site.labelrefs[drilldown]);
+    if (activeHierarchy.keyrefs[drilldown] != activeHierarchy.labelrefs[drilldown]) {
+      drilldowns.push(activeHierarchy.labelrefs[drilldown]);
     }
     return $.ajax({
-      url: site.api + '/aggregate',
+      url: activeHierarchy.api + '/aggregate',
       crossDomain: true,
       data: {
         drilldown: drilldowns.join('|'),
@@ -66,9 +68,8 @@ $(function(){
     var path = {},
         location = hash.split('/'),
         levels = location.slice(1, location.length-1);
-
-    path.hierarchyName = location[0];
-    path.hierarchy = site.hierarchies[path.hierarchyName];
+    path.hierarchyName = activeHierarchyName;
+    path.hierarchy = activeHierarchy;
     path.hierarchy.cuts = path.hierarchy.cuts || {};
     path.level = levels.length;
     path.root = path.level == 0;
@@ -97,8 +98,8 @@ $(function(){
 
   function makeUrl(path, modifiers) {
     var args = $.extend({}, path.args, modifiers),
-        url = '#' + path.hierarchyName + '/';
-
+        //url = '#' + path.hierarchyName + '/';
+        url = '#/';
     if (!modifiers) args = {};
 
     $.each(path.hierarchy.drilldowns, function(i, drilldown) {
@@ -113,7 +114,7 @@ $(function(){
   function update() {
     var rawPath = window.location.hash.substring(1);
     if (!rawPath.length) {
-      rawPath = site.default + '/'
+      rawPath = activeHierarchyName + '/'
     }
     var path = parsePath(rawPath),
         rootDimension = path.hierarchy.drilldowns[0],
@@ -139,7 +140,7 @@ $(function(){
       }
     });
 
-    $.each(site.filters, function(i, f) {
+    $.each(activeHierarchy.filters, function(i, f) {
       var val = cuts[f.field], label = val;
       $.each(f.values, function(j, v) {
         if (v.key == val) {
@@ -162,7 +163,7 @@ $(function(){
         color_scale = color_scale.domain([data.total_cell_count, 0]);
       }
       data.table_items = [];
-      $.each(site.table_items, function(f, item) {
+      $.each(activeHierarchy.table_items, function(f, item) {
         if (item.not_shown_in && item.not_shown_in.includes(path.hierarchyName)) {
           return;
         }
@@ -174,7 +175,7 @@ $(function(){
           item.sort_key = true;
           item._summary = data.summary[item.name];
           item._summary_fmt =  OSDE.format_value(item._summary, item.format);
-          var agg = site.all_aggregates.find(function(aggregate) {
+          var agg = activeHierarchy.all_aggregates.find(function(aggregate) {
             return aggregate.ref == item.name;
           });
           if (!Object.hasOwn(item, "label")) {
@@ -210,14 +211,14 @@ $(function(){
       data._title = title;
       
       var cutStr = buildCutString(cuts);
-      data._facts_url_csv = site.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
-      data._facts_url_json = site.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
+      data._facts_url_csv = activeHierarchy.api + '/facts?format=csv&header=names&cut=' + encodeURIComponent(cutStr);
+      data._facts_url_json = activeHierarchy.api + '/facts?format=json_lines&cut=' + encodeURIComponent(cutStr);
       $.each(data.cells, function(e, cell) {
-        cell._current_label = cell[site.labelrefs[dimension]];
-        cell._current_key = cell[site.keyrefs[dimension]];
+        cell._current_label = cell[activeHierarchy.labelrefs[dimension]];
+        cell._current_key = cell[activeHierarchy.keyrefs[dimension]];
         cell._values = [];
         $.each(data.table_items, function(g, item) {
-            var treemap_key = site.primary_aggregate;
+            var treemap_key = activeHierarchy.primary_aggregate;
             if (typeof sortKey !== "undefined") {
                 treemap_key = sortKey;
             }
@@ -303,13 +304,13 @@ $(function(){
     });
     /*});*/
     $embedCode.text(embedTemplate({
-      name: site.name,
+      name: activeHierarchy.name,
       baseurl: document.location.href.split('#')[0],
       url: document.location.href,
       hash: document.location.hash,
     }));
     $embedCodeReduced.text(embedTemplateReduced({
-      name: site.name,
+      name: activeHierarchy.name,
       baseurl: document.location.href.split('#')[0],
       url: document.location.href,
       hash: document.location.hash,
