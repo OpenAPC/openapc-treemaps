@@ -303,15 +303,19 @@ $(function(){
       });
     });
     /*});*/
+    var siteurl = document.location.href.split('#')[0];
+    siteurl = siteurl.substring(0, siteurl.lastIndexOf(activeHierarchy.internal_name));
     $embedCode.text(embedTemplate({
       name: activeHierarchy.name,
-      baseurl: document.location.href.split('#')[0],
+      baseurl: siteurl,
+      hierarchy: activeHierarchy.internal_name,
       url: document.location.href,
       hash: document.location.hash,
     }));
     $embedCodeReduced.text(embedTemplateReduced({
       name: activeHierarchy.name,
-      baseurl: document.location.href.split('#')[0],
+      baseurl: siteurl,
+      hierarchy: activeHierarchy.internal_name,
       url: document.location.href,
       hash: document.location.hash,
     }));

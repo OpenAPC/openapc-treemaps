@@ -8,7 +8,7 @@ from flask_flatpages import FlatPages
 
 from treemaps import default_settings
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 
 app = Flask(__name__)
 app.config.from_object(default_settings)

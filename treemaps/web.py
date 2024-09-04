@@ -37,11 +37,11 @@ def redirect_embed_reduced(slug):
     default_hierarchy = site.data['default']
     return site_hierarchy(slug, default_hierarchy, template='embed_reduced.html')
 
-@app.route('/apcdata/<slug>/<hierarchy_name>/embed/full')
+@app.route('/apcdata/<slug>/embed/full/<hierarchy_name>')
 def embed_full(slug, hierarchy_name):
     return site_hierarchy(slug, hierarchy_name, template='embed.html')
 
-@app.route('/apcdata/<slug>/embed/reduced')
+@app.route('/apcdata/<slug>/embed/reduced/<hierarchy_name>')
 def embed_reduced(slug, hierarchy_name):
     return site_hierarchy(slug, hierarchy_name, template='embed_reduced.html')
 

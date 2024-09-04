@@ -25,6 +25,7 @@ class SiteCollection(object):
             with open(os.path.join(directory, site_file), 'rb') as fh:
                 site = Site(yaml.unsafe_load(fh))
                 if not site.data.get('skip'):
+                    print("Generating Site " + site.slug)
                     self.sites.append(site)
 
     def get(self, slug):
@@ -53,24 +54,28 @@ class Filter(_DataObject):
 
     @property
     def values(self):
-        url = urlpath(self.hierarchy.api_base, 'members', self.dimension)
-        res = requests.get(url)
-        for dim in self.hierarchy.model.get('dimensions'):
-            dname = dim['name']
-            if dname != self.dimension:
-                continue
-            self.key_ref = dname
-            self.label_ref = dname
+        if self._values is None:
+            url = urlpath(self.hierarchy.api_base, 'members', self.dimension)
+            res = requests.get(url)
+            msg = 'OLAP: Requesting filter values (Site: {}, hierarchy: {}, filter: {})'
+            msg = msg.format(self.hierarchy.site.slug, self.hierarchy.internal_name, self.dimension)
+            print(msg)
+            for dim in self.hierarchy.model.get('dimensions'):
+                dname = dim['name']
+                if dname != self.dimension:
+                    continue
+                self.key_ref = dname
+                self.label_ref = dname
 
-        self._values = []
-        for value in res.json().get('data'):
-            self._values.append({
-                'key': value.get(self.key_ref),
-                'label': value.get(self.label_ref)
-            })
-        reverse_sort = True if self.field == 'period' else False
-        self._values = list(sorted(self._values,
-                           key=lambda v: v.get('label'), reverse=reverse_sort))
+            self._values = []
+            for value in res.json().get('data'):
+                self._values.append({
+                    'key': value.get(self.key_ref),
+                    'label': value.get(self.label_ref)
+                })
+            reverse_sort = True if self.field == 'period' else False
+            self._values = list(sorted(self._values,
+                               key=lambda v: v.get('label'), reverse=reverse_sort))
         return self._values
 
     @property
@@ -88,7 +93,8 @@ class Filter(_DataObject):
 
 class Hierarchie(_DataObject):
 
-    def __init__(self, data, internal_name):
+    def __init__(self, site, data, internal_name):
+        self.site = site
         self.internal_name = internal_name
         self.data = data
         self.api_base = urlpath(app.config['SLICER_URL'], 'cube',
@@ -101,6 +107,9 @@ class Hierarchie(_DataObject):
     def model(self):
         if self._model is None:
             res = requests.get(os.path.join(self.api_base, 'model'))
+            msg = 'OLAP: Requesting model values (Site: {}, hierarchy: {})'
+            msg = msg.format(self.site.slug, self.internal_name)
+            print(msg)
             self._model = res.json()
             aggregate_refs = [agg['ref'] for agg in self._model.get('aggregates')]
             for item in self.data.get('table_items'):
@@ -143,7 +152,7 @@ class Site(_DataObject):
         self.data = data
         self.slug = slugify(data.get('slug', data.get('name')))
         hierarchie_dicts = data.get('hierarchies', {})
-        self.hierarchies = {internal_name: Hierarchie(data, internal_name) for internal_name, data in hierarchie_dicts.items()}
+        self.hierarchies = {internal_name: Hierarchie(self, data, internal_name) for internal_name, data in hierarchie_dicts.items()}
         self.active_hierarchy = None
 
     def to_dict(self):

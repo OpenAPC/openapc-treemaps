@@ -9,20 +9,20 @@ def page():
     for page in pages:
         yield {'path': page.path}
 
-
 @freezer.register_generator
 def site():
     for site in sites:
         yield {'slug': site.slug}
 
-
 @freezer.register_generator
 def embed_full():
     for site in sites:
-        yield {'slug': site.slug}
-        
-        
+        for hierarchy in site.hierarchies:
+            yield {'slug': site.slug, 'hierarchy_name': hierarchy}
+
 @freezer.register_generator
 def embed_reduced():
     for site in sites:
-        yield {'slug': site.slug}
+        for hierarchy in site.hierarchies:
+            yield {'slug': site.slug, 'hierarchy_name': hierarchy}
+
