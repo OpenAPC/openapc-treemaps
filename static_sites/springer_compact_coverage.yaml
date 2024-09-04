@@ -8,42 +8,40 @@ level: bund
 dataset: 'springer_compact_coverage'
 default: publisher
 
-primary_aggregate: 'springer_compact_articles'
-
-table_items:
-  - name: 'springer_compact_articles'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'journal_oa_articles'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'journal_total_articles'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'oa_percentage'
-    type: 'cross_item_percentage'
-    format: 'percentage'
-    fraction_item: 'journal_oa_articles'
-    total_item: 'journal_total_articles'
-    label: 'Journal OA share'
-  - name: 'springer_compact_coverage'
-    type: 'cross_item_percentage'
-    format: 'percentage'
-    fraction_item: 'springer_compact_articles'
-    total_item: 'journal_oa_articles'
-    label: 'OA share covered by SCA'
-
-filters:
-  - field: 'period'
-    name: 'Year'
-    nullable: true
-  - field: 'is_hybrid'
-    name: 'Hybrid Status'
-    nullable: true
-
 hierarchies:
     publisher:
         name: Publisher
+        cube: springer_compact_coverage
+        primary_aggregate: springer_compact_articles
+        table_items:
+          - name: 'springer_compact_articles'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'journal_oa_articles'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'journal_total_articles'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'oa_percentage'
+            type: 'cross_item_percentage'
+            format: 'percentage'
+            fraction_item: 'journal_oa_articles'
+            total_item: 'journal_total_articles'
+            label: 'Journal OA share'
+          - name: 'springer_compact_coverage'
+            type: 'cross_item_percentage'
+            format: 'percentage'
+            fraction_item: 'springer_compact_articles'
+            total_item: 'journal_oa_articles'
+            label: 'OA share covered by SCA'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
         drilldowns:
             - publisher
             - journal_full_title

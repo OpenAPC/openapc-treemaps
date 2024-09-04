@@ -8,39 +8,57 @@ level: bund
 dataset: transformative_agreements
 default: institution
 
-primary_aggregate: 'num_items'
-
-table_items:
-  - name: 'num_items'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'percentage'
-    type: 'total_percentage'
-    format: 'percentage'
-    relates_to: 'num_items'
-    label: 'Percentage'
-    
-    
-filters:
-  - field: 'period'
-    name: 'Year'
-    nullable: true
-  - field: 'is_hybrid'
-    name: 'Hybrid Status'
-    nullable: true
-  - field: 'country'
-    name: 'Country'
-    nullable: true
-
 hierarchies:
     institution:
         name: Institution
+        cube: transformative_agreements
+        primary_aggregate: num_items
+        table_items:
+          - name: 'num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'num_items'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - institution
             - journal_full_title
             - doi
     publisher:
         name: Publisher
+        cube: transformative_agreements
+        primary_aggregate: num_items
+        table_items:
+          - name: 'num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'num_items'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - publisher
             - journal_full_title
@@ -48,12 +66,54 @@ hierarchies:
             - doi
     journal:
         name: Journal
+        cube: transformative_agreements
+        primary_aggregate: num_items
+        table_items:
+          - name: 'num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'num_items'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - journal_full_title
             - institution
             - doi
     agreement:
         name: Agreement
+        cube: transformative_agreements
+        primary_aggregate: num_items
+        table_items:
+          - name: 'num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'num_items'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - agreement
             - institution

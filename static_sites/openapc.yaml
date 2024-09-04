@@ -8,74 +8,151 @@ level: bund
 dataset: openapc
 default: institution
 
-primary_aggregate: "apc_amount_sum"
-
-table_items:
-  - name: 'apc_amount_sum'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'apc_num_items'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'cost_data_num_items'
-    type: 'aggregate'
-    format: 'number'
-    not_shown_in:
-        - 'institution'
-        - 'publisher'
-        - 'journal'
-  - name: 'apc_amount_avg'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'apc_amount_stddev'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'percentage'
-    type: 'total_percentage'
-    format: 'percentage'
-    relates_to: 'apc_amount_sum'
-    label: 'Percentage'
-    
-
-filters:
-  - field: 'period'
-    name: 'Year'
-    nullable: true
-  - field: 'is_hybrid'
-    name: 'Hybrid Status'
-    nullable: true
-  - field: 'country'
-    name: 'Country'
-    nullable: true
-
 hierarchies:
     institution:
         name: Institution
-        cuts:
-            cost_type: apc
+        cube: openapc
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - institution
             - journal_full_title
-            - publication_key
+            - doi
     publisher:
         name: Publisher
-        cuts:
-            cost_type: apc
+        cube: openapc
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - publisher
             - journal_full_title
             - institution
-            - publication_key
+            - doi
     journal:
         name: Journal
-        cuts:
-            cost_type: apc
+        cube: openapc
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - journal_full_title
             - institution
-            - publication_key
+            - doi
     additional_costs:
         name: Additional Costs
+        cube: openapc_ac
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'cost_data_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true        
         drilldowns:
             - institution
             - publisher

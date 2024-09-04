@@ -14,51 +14,81 @@ intro_note: 'This treemap visualises cost data on articles published under the G
 </ul>
 Find more details <a href="https://github.com/OpenAPC/openapc-de/wiki/DEAL-Wiley">here</a>.'
 
-primary_aggregate: "apc_amount_sum"
-
-table_items:
-  - name: 'apc_amount_sum'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'apc_num_items'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'apc_amount_avg'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'apc_amount_stddev'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'percentage'
-    type: 'total_percentage'
-    format: 'percentage'
-    relates_to: 'apc_amount_sum'
-    label: 'Percentage'
-    
-
-filters:
-  - field: 'publisher'
-    name: 'Publisher'
-    nullable: true
-  - field: 'period'
-    name: 'Year'
-    nullable: true
-  - field: 'is_hybrid'
-    name: 'Hybrid Status'
-    nullable: true
-  - field: 'opt_out'
-    name: 'Opt Out'
-    nullable: true
-
 hierarchies:
     institution:
         name: Institution
+        cube: deal
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'publisher'
+            name: 'Publisher'
+            nullable: true
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'opt_out'
+            name: 'Opt Out'
+            nullable: true
         drilldowns:
             - institution
             - journal_full_title
             - doi
     publisher:
         name: Publisher
+        cube: deal
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'publisher'
+            name: 'Publisher'
+            nullable: true
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'opt_out'
+            name: 'Opt Out'
+            nullable: true
         drilldowns:
             - publisher
             - journal_full_title
@@ -66,6 +96,39 @@ hierarchies:
             - doi
     journal:
         name: Journal
+        cube: deal
+        primary_aggregate: apc_amount_sum
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'publisher'
+            name: 'Publisher'
+            nullable: true
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'opt_out'
+            name: 'Opt Out'
+            nullable: true
         drilldowns:
             - journal_full_title
             - institution

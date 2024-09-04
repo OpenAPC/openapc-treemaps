@@ -8,57 +8,120 @@ level: bund
 dataset: bpc
 default: publisher
 
-primary_aggregate: "bpc_amount_sum"
-
-table_items:
-  - name: 'bpc_amount_sum'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'bpc_num_items'
-    type: 'aggregate'
-    format: 'number'
-  - name: 'bpc_amount_avg'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'bpc_amount_stddev'
-    type: 'aggregate'
-    format: 'monetary'
-  - name: 'percentage'
-    type: 'total_percentage'
-    format: 'percentage'
-    relates_to: 'bpc_amount_sum'
-    label: 'Percentage'
-    
-
-filters:
-  - field: 'period'
-    name: 'Year'
-    nullable: true
-  - field: 'country'
-    name: 'Country'
-    nullable: true
-  - field: 'backlist_oa'
-    name: 'Backlist OA'
-    nullable: true
-  - field: 'doab'
-    name: 'in DOAB'
-    nullable: true
-
 hierarchies:
     institution:
         name: Institution
+        cube: bpc
+        primary_aggregate: bpc_amount_sum
+        table_items:
+          - name: 'bpc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'bpc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'bpc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
+          - field: 'backlist_oa'
+            name: 'Backlist OA'
+            nullable: true
+          - field: 'doab'
+            name: 'in DOAB'
+            nullable: true
         drilldowns:
             - institution
             - book_title
             - doi
     publisher:
         name: Publisher
+        cube: bpc
+        primary_aggregate: bpc_amount_sum
+        table_items:
+          - name: 'bpc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'bpc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'bpc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
+          - field: 'backlist_oa'
+            name: 'Backlist OA'
+            nullable: true
+          - field: 'doab'
+            name: 'in DOAB'
+            nullable: true
         drilldowns:
             - publisher
             - book_title
             - doi
     book_title:
         name: Title
+        cube: bpc
+        primary_aggregate: bpc_amount_sum
+        table_items:
+          - name: 'bpc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'bpc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'bpc_amount_sum'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
+          - field: 'backlist_oa'
+            name: 'Backlist OA'
+            nullable: true
+          - field: 'doab'
+            name: 'in DOAB'
+            nullable: true
         drilldowns:
             - book_title
             - institution
