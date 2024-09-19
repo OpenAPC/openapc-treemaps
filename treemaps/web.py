@@ -25,17 +25,17 @@ def site_hierarchy(slug, hierarchy_name, template='site.html'):
     site_json = JSONEncoder().encode(site)
     return render_template(template, site=site, site_json=site_json)
 
-@app.route('/apcdata/<slug>/embed/full')
+@app.route('/apcdata/<slug>/embed/full/')
 def redirect_embed_full(slug):
     site = sites.get(slug)
     default_hierarchy = site.data['default']
-    return site_hierarchy(slug, default_hierarchy, template='embed.html')
+    return redirect('/apcdata/' + slug + '/embed/full/' + default_hierarchy)
 
-@app.route('/apcdata/<slug>/embed/reduced')
+@app.route('/apcdata/<slug>/embed/reduced/')
 def redirect_embed_reduced(slug):
     site = sites.get(slug)
     default_hierarchy = site.data['default']
-    return site_hierarchy(slug, default_hierarchy, template='embed_reduced.html')
+    return redirect('/apcdata/' + slug + '/embed/reduced/' + default_hierarchy)
 
 @app.route('/apcdata/<slug>/embed/full/<hierarchy_name>')
 def embed_full(slug, hierarchy_name):
