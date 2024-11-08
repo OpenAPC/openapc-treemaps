@@ -13,6 +13,10 @@ $(function() {
             'scale': 4000,
             'center': [13.3, 47.6]
         },
+        'IRL': {
+            'scale': 4500,
+            'center': [-8, 53.4]
+        },
         'CHE': {
             'scale': 6500,
             'center': [8.3, 46.8]
