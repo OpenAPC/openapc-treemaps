@@ -11,7 +11,7 @@ default: institution
 hierarchies:
     institution:
         name: Institution
-        cube: openapc
+        cube: combined
         primary_aggregate: apc_amount_sum
         table_items:
           - name: 'apc_amount_sum'
@@ -47,7 +47,7 @@ hierarchies:
             - doi
     publisher:
         name: Publisher
-        cube: openapc
+        cube: combined
         primary_aggregate: apc_amount_sum
         table_items:
           - name: 'apc_amount_sum'
@@ -84,7 +84,7 @@ hierarchies:
             - doi
     journal:
         name: Journal
-        cube: openapc
+        cube: combined
         primary_aggregate: apc_amount_sum
         table_items:
           - name: 'apc_amount_sum'
