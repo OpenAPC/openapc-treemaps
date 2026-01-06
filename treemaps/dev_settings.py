@@ -1,11 +1,11 @@
-DEV = False
+DEV = True
 DEBUG = False
 ASSETS_DEBUG = False
 SECRET_KEY = 'no'
 
 SITES_FOLDER = 'sites/'
 
-SLICER_URL = 'https://olap.openapc.net/'
+SLICER_URL = 'https://olap-dev.ub.uni-bielefeld.de/'
 
 FREEZER_DESTINATION = '../build'
 FREEZER_REMOVE_EXTRA_FILES = True

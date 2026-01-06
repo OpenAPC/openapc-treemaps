@@ -3,6 +3,12 @@
 # Update script for openapc-treemaps, should be run after changes to the OLAP server have been made (update_olap.sh)
 # This script should be executed from ~/dev
 
+freezeparams=""
+if [[ $1 == "dev" ]]
+	then
+		echo "Using dev settings for treemaps server"
+		freezeparams=" --dev"
+fi
 # Delete old yamls, copy static files
 if [ -d  ~/dev/openapc-treemaps/sites ]
 	then
@@ -25,5 +31,5 @@ if [ -d build ]
 fi
 # Rebuild the site and copy it
 . venv/bin/activate
-python freeze.py
+python freeze.py $freezeparams
 sudo cp -r build/* /var/www/openapc-treemaps

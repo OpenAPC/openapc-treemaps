@@ -57,8 +57,8 @@ class Filter(_DataObject):
         if self._values is None:
             url = urlpath(self.hierarchy.api_base, 'members', self.dimension)
             res = requests.get(url)
-            msg = 'OLAP: Requesting filter values (Site: {}, hierarchy: {}, filter: {})'
-            msg = msg.format(self.hierarchy.site.slug, self.hierarchy.internal_name, self.dimension)
+            msg = 'OLAP: Requesting filter values from {}'
+            msg = msg.format(url)
             print(msg)
             for dim in self.hierarchy.model.get('dimensions'):
                 dname = dim['name']
@@ -106,9 +106,10 @@ class Hierarchie(_DataObject):
     @property
     def model(self):
         if self._model is None:
-            res = requests.get(os.path.join(self.api_base, 'model'))
-            msg = 'OLAP: Requesting model values (Site: {}, hierarchy: {})'
-            msg = msg.format(self.site.slug, self.internal_name)
+            url = os.path.join(self.api_base, 'model')
+            res = requests.get(url)
+            msg = 'OLAP: Requesting model values from {}'
+            msg = msg.format(url)
             print(msg)
             self._model = res.json()
             aggregate_refs = [agg['ref'] for agg in self._model.get('aggregates')]

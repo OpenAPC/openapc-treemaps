@@ -23,7 +23,8 @@ def site_hierarchy(slug, hierarchy_name, template='site.html'):
             site.active_hierarchy = hierarchy
             break
     site_json = JSONEncoder().encode(site)
-    return render_template(template, site=site, site_json=site_json)
+    return render_template(template, site=site, site_json=site_json, 
+                           dev=app.config['DEV'])
 
 @app.route('/apcdata/<slug>/embed/full/')
 def redirect_embed_full(slug):
@@ -58,4 +59,5 @@ def index():
     state_sites = [s for s in sites if s.level == 'land']
     local_sites = [s for s in sites if s.level not in ['land', 'bund']]
     return render_template('index.html', sites=sites, sites_json=sites_json,
-                           state_sites=state_sites, local_sites=local_sites)
+                           state_sites=state_sites, local_sites=local_sites,
+                           dev=app.config['DEV'])

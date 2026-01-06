@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.ERROR)
 
 app = Flask(__name__)
 app.config.from_object(default_settings)
-app.config.from_envvar('OFFENERHAUSHALT_SETTINGS', silent=True)
+app.config.from_envvar('TREEMAP_SETTINGS', silent=True)
 
 assets = Environment(app)
 freezer = Freezer(app)
