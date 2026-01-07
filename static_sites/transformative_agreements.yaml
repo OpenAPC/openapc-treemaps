@@ -11,7 +11,7 @@ default: institution
 hierarchies:
     institution:
         name: Institution
-        cube: transformative_agreements
+        cube: ta_count
         primary_aggregate: num_items
         table_items:
           - name: 'num_items'
@@ -38,7 +38,7 @@ hierarchies:
             - doi
     publisher:
         name: Publisher
-        cube: transformative_agreements
+        cube: ta_count
         primary_aggregate: num_items
         table_items:
           - name: 'num_items'
@@ -66,7 +66,7 @@ hierarchies:
             - doi
     journal:
         name: Journal
-        cube: transformative_agreements
+        cube: ta_count
         primary_aggregate: num_items
         table_items:
           - name: 'num_items'
@@ -91,9 +91,9 @@ hierarchies:
             - journal_full_title
             - institution
             - doi
-    agreement:
-        name: Agreement
-        cube: transformative_agreements
+    contract_name:
+        name: Contract
+        cube: ta_count
         primary_aggregate: num_items
         table_items:
           - name: 'num_items'
@@ -115,7 +115,7 @@ hierarchies:
             name: 'Country'
             nullable: true
         drilldowns:
-            - agreement
+            - contract_name
             - institution
             - journal_full_title
             - doi
