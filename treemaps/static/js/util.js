@@ -16,6 +16,7 @@ OSDE.drilldownLabels = {
 }
 
 OSDE.costTypeColors = {
+    // publications
     "apc": "#a0cb59",
     "colour charge": "#ffa500",
     "cover charge": "#ff0000",
@@ -24,7 +25,9 @@ OSDE.costTypeColors = {
     "permission": "#006400",
     "payment fee": "#0000ff",
     "reprint": "#ffff00",
-    "submission fee": "#00ffff"
+    "submission fee": "#00ffff",
+    // contracts
+    "publish and read": "#fac400",
 }
 
 /*
