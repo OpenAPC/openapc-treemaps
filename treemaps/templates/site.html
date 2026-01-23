@@ -39,7 +39,7 @@
             <ul class="dropdown-menu">
               {% if filter.nullable %}
                 <li>
-                  <a class="value {% if value==filter.default %}active{% endif %}" href="#"
+                  <a class="value button {% if value==filter.default %}active{% endif %}" href="#"
                     data-field="{{filter.field}}" data-value="">
                     <i class="fa fa-check"></i> All
                   </a>
@@ -47,10 +47,10 @@
               {% endif %}
               {% for value in filter.values %}
                 <li>
-                  <a class="value {% if value==filter.default %}active{% endif %}" href="#"
+                  <input type="checkbox" class="value checkbox {% if value==filter.default %}active{% endif %}"
                     data-field="{{filter.field}}" data-value="{{value.key}}">
-                    <i class="fa fa-check"></i> {{value.label}}
-                  </a>
+                   {{value.label}}
+                  </input>
                 </li>
               {% endfor %}
             </ul>

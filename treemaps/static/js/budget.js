@@ -9,24 +9,27 @@ $(function(){
       activeHierarchyName = site.active_hierarchy.internal_name;
 
   $.each(activeHierarchy.filters, function(i, f) {
-    baseFilters[f.field] = f.default;
+    baseFilters[f.field] = [f.default];
   });
 
   var $hierarchyMenu = $('#hierarchy-menu'),
       $infobox = $('#infobox'),
       $parent = $('#parent'),
-      $filterValues = $('.site-filters .value'),
+      $filterButtons = $('.site-filters .value.button'),
+      $filterBoxes = $('.site-filters .value.checkbox'),
       treemap = new OSDE.TreeMap('#treemap'),
       table =  new OSDE.Table('#table');
-
+  console.log($filterButtons);
   function escapeCutString(cutString) {
+      console.log(cutString);
       cutString = cutString.replace(/,/g, '\\,');
       cutString = cutString.replace(/-/g, '\\-');
       return cutString;
   }
 
   function buildCutString(cutObject) {
-    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return activeHierarchy.keyrefs[k] + ':' + escapeCutString(v); }});
+    console.log(cutObject)
+    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return activeHierarchy.keyrefs[k] + ':' + escapeCutString(v.join(";")); }});
     return cutStr.join('|');
   }
 
@@ -118,10 +121,18 @@ $(function(){
     }
     var path = parsePath(rawPath),
         rootDimension = path.hierarchy.drilldowns[0],
-        cuts = $.extend({}, baseFilters, path.hierarchy.cuts || {}, path.args);
+        cuts = $.extend(true, {}, baseFilters, path.hierarchy.cuts || {}, path.args);
+        console.log("baseFilters object:");
+    console.log(baseFilters);
+    console.log("path.hierarchy.cuts object:");
+    console.log(path.hierarchy.cuts);
+    console.log("path.args object:");
+    console.log(path.args);
+    console.log("cuts object:");
+    console.log(cuts)
     $hierarchyMenu.find('.btn').removeClass('active');
     $hierarchyMenu.find('.btn.' + path.hierarchyName).addClass('active');
-
+    console.log(path);
     $parent.unbind();
     if (path.root) {
       $parent.hide();
@@ -130,8 +141,8 @@ $(function(){
       $parent.attr('href', parentUrl(path));
     }
 
-    $filterValues.removeClass('active');
-    $filterValues.each(function(i, f) {
+    $filterButtons.removeClass('active');
+    $filterButtons.each(function(i, f) {
       var $f = $(f), field = $f.data('field'), value = $f.data('value'), modifiers = {};
       modifiers[field] = value;
       $f.attr('href', makeUrl(path, modifiers));
