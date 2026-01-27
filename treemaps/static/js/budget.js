@@ -15,21 +15,25 @@ $(function(){
   var $hierarchyMenu = $('#hierarchy-menu'),
       $infobox = $('#infobox'),
       $parent = $('#parent'),
-      $filterButtons = $('.site-filters .value.button'),
-      $filterBoxes = $('.site-filters .value.checkbox'),
+      $filterButtons = $('.site-filters .value'),
       treemap = new OSDE.TreeMap('#treemap'),
       table =  new OSDE.Table('#table');
-  console.log($filterButtons);
+
   function escapeCutString(cutString) {
-      console.log(cutString);
       cutString = cutString.replace(/,/g, '\\,');
       cutString = cutString.replace(/-/g, '\\-');
       return cutString;
   }
 
   function buildCutString(cutObject) {
-    console.log(cutObject)
-    var cutStr = $.map(cutObject, function(v, k) { if((v+'').length) { return activeHierarchy.keyrefs[k] + ':' + escapeCutString(v.join(";")); }});
+    var cutStr = $.map(cutObject, function(v, k) {
+      if (Array.isArray(v)) {
+        v = v.join(";");
+      }
+      if ((v + '').length) {
+        return activeHierarchy.keyrefs[k] + ':' + escapeCutString(v);
+      }
+    });
     return cutStr.join('|');
   }
 
@@ -67,6 +71,22 @@ $(function(){
     return false;
   });
 
+  function parseArgs(args) {
+    var queryString = {};
+    args.split("&").forEach(function (pair) {
+      if (pair === "") return;
+      var parts = pair.split("=");
+      if (parts.length == 1 || parts[1] == '') {
+          queryString[parts[0]] = [];
+          return;
+      }
+      parts[1] = decodeURIComponent(parts[1].replace(/\+/g, " "));
+      parts[1] = parts[1].split(";");
+      queryString[parts[0]] = parts[1];
+    });
+    return queryString;
+  }
+
   function parsePath(hash) {
     var path = {},
         location = hash.split('/'),
@@ -78,8 +98,7 @@ $(function(){
     path.root = path.level == 0;
     path.bottom = path.level >= (path.hierarchy.drilldowns.length - 1);
     path.drilldown = path.hierarchy.drilldowns[path.level];
-    path.args = OSDE.parseArgs(location[location.length-1]);
-
+    path.args = parseArgs(location[location.length-1]);
     $.each(levels, function(i, val) {
       path.args[path.hierarchy.drilldowns[i]] = decodeURIComponent(val);
     });
@@ -100,10 +119,26 @@ $(function(){
   }
 
   function makeUrl(path, modifiers) {
-    var args = $.extend({}, path.args, modifiers),
-        //url = '#' + path.hierarchyName + '/';
-        url = '#/';
-    if (!modifiers) args = {};
+    var args = structuredClone(path.args);
+    $.each(modifiers, function(key, value) {
+      if (value == '') { 
+        args[key] = [];
+        return;
+      }
+      if (!(key in args)) {
+        args[key] = [value];
+      }
+      else {
+        if (args[key].includes(value)) {
+          var index = args[key].indexOf(value);
+          args[key].splice(index, 1);
+        }
+        else {
+          args[key].push(value);
+        }
+      }
+    });
+    var url = '#/';
 
     $.each(path.hierarchy.drilldowns, function(i, drilldown) {
       if (args[drilldown]) {
@@ -122,17 +157,9 @@ $(function(){
     var path = parsePath(rawPath),
         rootDimension = path.hierarchy.drilldowns[0],
         cuts = $.extend(true, {}, baseFilters, path.hierarchy.cuts || {}, path.args);
-        console.log("baseFilters object:");
-    console.log(baseFilters);
-    console.log("path.hierarchy.cuts object:");
-    console.log(path.hierarchy.cuts);
-    console.log("path.args object:");
-    console.log(path.args);
-    console.log("cuts object:");
-    console.log(cuts)
     $hierarchyMenu.find('.btn').removeClass('active');
     $hierarchyMenu.find('.btn.' + path.hierarchyName).addClass('active');
-    console.log(path);
+
     $parent.unbind();
     if (path.root) {
       $parent.hide();
@@ -140,25 +167,25 @@ $(function(){
       $parent.show();
       $parent.attr('href', parentUrl(path));
     }
-
     $filterButtons.removeClass('active');
     $filterButtons.each(function(i, f) {
-      var $f = $(f), field = $f.data('field'), value = $f.data('value'), modifiers = {};
+      var $f = $(f), field = $f.data('field'), value = $f.data('value') + '', modifiers = {};
       modifiers[field] = value;
       $f.attr('href', makeUrl(path, modifiers));
-      if (cuts[field] == value) {
+      if (cuts[field].includes(value)) {
         $f.addClass('active');
       }
     });
 
     $.each(activeHierarchy.filters, function(i, f) {
-      var val = cuts[f.field], label = val;
-      $.each(f.values, function(j, v) {
-        if (v.key == val) {
-          label = v.label;
+      var val = cuts[f.field], labels = [];
+      $.each(f.values, function(i, v) {
+        if (val.includes(v["key"])) {
+          labels.push(v["label"]);
         }
       });
-      $('.site-filters strong[data-field="' + f.field + '"]').html(label || 'All');
+      var labelString = labels.join(";");
+      $('.site-filters strong[data-field="' + f.field + '"]').html(labelString || 'All');
     });
 
     var baseCuts = $.extend({}, baseFilters, path.hierarchy.cuts);

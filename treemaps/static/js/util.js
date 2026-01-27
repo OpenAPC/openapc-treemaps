@@ -41,28 +41,12 @@ OSDE.labelToColor = function(args) {
     return hash;
 }
 
-OSDE.parseArgs = function(args) {
-	var queryString = {};
-	args.split("&").forEach(function (pair) {
-    	if (pair === "") return;
-    	var parts = pair.split("=");
-        if (parts.length == 1) {
-            parts.push("");
-        }
-        parts[1] = decodeURIComponent(parts[1].replace(/\+/g, " "));
-        parts[1] = parts[1].split(";");
-        queryString[parts[0]] = parts[1];
-	});
-	return queryString;
-};
-
 OSDE.mergeArgs = function(args) {
-	var queryString = '';
-    console.log(args);
-	var query = $.map(args, function(v, k) {
-		return encodeURIComponent(k) + '=' + encodeURIComponent(v);
-	});
-	return query.join('&');
+    var query = $.map(args, function(v, k) {
+        v = v.join(";");
+        return encodeURIComponent(k) + '=' + encodeURIComponent(v);
+    });
+    return query.join('&');
 };
 
 OSDE.format_value = function(num, format) {
