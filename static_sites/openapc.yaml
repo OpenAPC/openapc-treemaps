@@ -41,6 +41,9 @@ hierarchies:
           - field: 'country'
             name: 'Country'
             nullable: true
+          - field: 'origin'
+            name: 'Origin'
+            nullable: true
         drilldowns:
             - institution
             - journal_full_title
@@ -76,6 +79,9 @@ hierarchies:
             nullable: true
           - field: 'country'
             name: 'Country'
+            nullable: true
+          - field: 'origin'
+            name: 'Origin'
             nullable: true
         drilldowns:
             - publisher
@@ -113,6 +119,9 @@ hierarchies:
             nullable: true
           - field: 'country'
             name: 'Country'
+            nullable: true
+          - field: 'origin'
+            name: 'Origin'
             nullable: true
         drilldowns:
             - journal_full_title
