@@ -141,7 +141,7 @@ $(function(){
     var url = '#/';
 
     $.each(path.hierarchy.drilldowns, function(i, drilldown) {
-      if (args[drilldown]) {
+      if (args[drilldown] && i < path.hierarchy.drilldowns.length - 1) {
         url += encodeURIComponent(args[drilldown]) + '/';
         delete args[drilldown];
       }
