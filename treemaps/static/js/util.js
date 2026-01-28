@@ -17,7 +17,8 @@ OSDE.drilldownLabels = {
 
 OSDE.costTypeColors = {
     // publications
-    "apc": "#a0cb59",
+    "APC": "#a0cb59",
+    "Equivalent APC": "#59b2cb",
     "colour charge": "#ffa500",
     "cover charge": "#ff0000",
     "other": "#ee00ee",
