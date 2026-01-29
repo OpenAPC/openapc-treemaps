@@ -44,6 +44,9 @@ hierarchies:
           - field: 'opt_out'
             name: 'Opt Out'
             nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true            
         drilldowns:
             - institution
             - contract_name
@@ -85,6 +88,9 @@ hierarchies:
           - field: 'opt_out'
             name: 'Opt Out'
             nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
         drilldowns:
             - publisher
             - contract_name
@@ -125,6 +131,9 @@ hierarchies:
             nullable: true
           - field: 'opt_out'
             name: 'Opt Out'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
             nullable: true
         drilldowns:
             - contract_name
