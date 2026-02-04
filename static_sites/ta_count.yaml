@@ -7,6 +7,7 @@ data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_
 level: bund
 dataset: ta_count
 default: institution
+intro_note: 'This treemap visualises data related to OA transformative agreements (or contracts in general). The data is drawn from two different data sets: The <a href="https://github.com/OpenAPC/openapc-de/blob/master/data/transformative_agreements/transformative_agreements.csv">OpenAPC TA article collection</a> and the <a href="https://github.com/OpenAPC/openapc-de/blob/master/data/contracts.csv">OpenAPC contracts collection</a>, and groups of articles in the former are linked to contracts records in the latter via a common group_id.</br>In contrast to almost all other OpenAPC treemaps, this visualisation is based on article counts as metric (instead of cost data in Euro). Its main purpose is to display contracts and linked articles which do not have any cost data assigned.'
 
 hierarchies:
     institution:
