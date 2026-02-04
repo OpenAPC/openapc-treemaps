@@ -16,7 +16,9 @@ OSDE.drilldownLabels = {
 }
 
 OSDE.costTypeColors = {
-    "apc": "#a0cb59",
+    // publications
+    "APC": "#a0cb59",
+    "Equivalent APC": "#59b2cb",
     "colour charge": "#ffa500",
     "cover charge": "#ff0000",
     "other": "#ee00ee",
@@ -24,7 +26,9 @@ OSDE.costTypeColors = {
     "permission": "#006400",
     "payment fee": "#0000ff",
     "reprint": "#ffff00",
-    "submission fee": "#00ffff"
+    "submission fee": "#00ffff",
+    // contracts
+    "publish and read": "#fac400",
 }
 
 /*
@@ -38,23 +42,12 @@ OSDE.labelToColor = function(args) {
     return hash;
 }
 
-OSDE.parseArgs = function(args) {
-	var queryString = {};
-	args.split("&").forEach(function (pair) {
-    	if (pair === "") return;
-    	var parts = pair.split("=");
-    	queryString[parts[0]] = parts[1] &&
-        	decodeURIComponent(parts[1].replace(/\+/g, " "));
-	});
-	return queryString;
-};
-
 OSDE.mergeArgs = function(args) {
-	var queryString = '';
-	var query = $.map(args, function(v, k) {
-		return encodeURIComponent(k) + '=' + encodeURIComponent(v);
-	});
-	return query.join('&');
+    var query = $.map(args, function(v, k) {
+        v = v.join(";");
+        return encodeURIComponent(k) + '=' + encodeURIComponent(v);
+    });
+    return query.join('&');
 };
 
 OSDE.format_value = function(num, format) {
