@@ -7,6 +7,7 @@ data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv
 level: bund
 dataset: openapc
 default: institution
+intro_note: 'This treemap visualises cost data on Open Access journal articles (APCs). Since switching to a new data model in OpenAPC v5 (February 2026), this visualisation is also based on article-level cost data from transformative agreements, which might not conform to the "traditional" definition of an APC in all cases. You may change this behavior using the <strong>Origin</strong> filter, setting it to <strong>APC DATA</strong> emulates the pre-v5 approach.'
 
 hierarchies:
     institution:
