@@ -144,6 +144,7 @@ hierarchies:
             nullable: true
         drilldowns:
             - contract_name
+            - institution
             - journal_full_title
             - doi
             - cost_type
